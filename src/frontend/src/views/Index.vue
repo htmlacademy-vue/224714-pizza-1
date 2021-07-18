@@ -4,7 +4,7 @@
       <div class="header__logo">
         <a href="index.html" class="logo">
           <img
-            src="~@/assets/img/logo.svg"
+            src="@/assets/img/logo.svg"
             alt="V!U!E! Pizza logo"
             width="90"
             height="40"
@@ -34,13 +34,11 @@
                   v-for="(dough, i) in doughs"
                   :key="i"
                 >
-                  <input
-                    type="radio"
-                    name="dough"
+                  <RadioButton
+                    :name="`dough`"
                     :value="dough.value"
-                    class="visually-hidden"
-                    :checked="dough.isChecked"
-                  />
+                    :isChecked="dough.isChecked"
+                  ></RadioButton>
                   <b>{{ dough.name }}</b>
                   <span>{{ dough.description }}</span>
                 </label>
@@ -58,13 +56,11 @@
                   v-for="(size, i) in sizes"
                   :key="i"
                 >
-                  <input
-                    type="radio"
-                    name="diameter"
+                  <RadioButton
+                    :name="`diameter`"
                     :value="size.value"
-                    class="visually-hidden"
-                    :checked="size.isChecked"
-                  />
+                    :isChecked="size.isChecked"
+                  ></RadioButton>
                   <span>{{ size.name }}</span>
                 </label>
               </div>
@@ -86,12 +82,11 @@
                     v-for="(sauce, i) in sauces"
                     :key="i"
                   >
-                    <input
-                      type="radio"
-                      name="sauce"
+                    <RadioButton
+                      :name="`sauce`"
                       :value="sauce.value"
-                      :checked="sauce.isChecked"
-                    />
+                      :isChecked="sauce.isChecked"
+                    ></RadioButton>
                     <span>{{ sauce.name }}</span>
                   </label>
                 </div>
@@ -108,31 +103,7 @@
                       <span :class="`filling filling--${ingredient.value}`">{{
                         ingredient.name
                       }}</span>
-
-                      <div class="counter counter--orange ingridients__counter">
-                        <button
-                          type="button"
-                          class="
-                            counter__button
-                            counter__button--disabled
-                            counter__button--minus
-                          "
-                        >
-                          <span class="visually-hidden">Меньше</span>
-                        </button>
-                        <input
-                          type="text"
-                          name="counter"
-                          class="counter__input"
-                          value="0"
-                        />
-                        <button
-                          type="button"
-                          class="counter__button counter__button--plus"
-                        >
-                          <span class="visually-hidden">Больше</span>
-                        </button>
-                      </div>
+                      <ItemCounter :name="`ingridients`"></ItemCounter>
                     </li>
                   </ul>
                 </div>
@@ -183,9 +154,12 @@ import {
   sauceMap,
   ingredientMap,
 } from "@/common/helpers.js";
+import RadioButton from "@/components/RadioButton";
+import ItemCounter from "../components/ItemCounter";
 
 export default {
   name: "Index",
+  components: { ItemCounter, RadioButton },
   data() {
     return {
       misc,
