@@ -1,23 +1,6 @@
 <template>
   <div>
-    <header class="header">
-      <div class="header__logo">
-        <a href="index.html" class="logo">
-          <img
-            src="@/assets/img/logo.svg"
-            alt="V!U!E! Pizza logo"
-            width="90"
-            height="40"
-          />
-        </a>
-      </div>
-      <div class="header__cart">
-        <a href="cart.html">0 ₽</a>
-      </div>
-      <div class="header__user">
-        <a href="#" class="header__login"><span>Войти</span></a>
-      </div>
-    </header>
+    <AppLayout></AppLayout>
 
     <main class="content">
       <form action="#" method="post">
@@ -40,22 +23,9 @@
               />
             </label>
 
-            <div class="content__constructor">
-              <div class="pizza pizza--foundation--big-tomato">
-                <div class="pizza__wrapper">
-                  <div class="pizza__filling pizza__filling--ananas"></div>
-                  <div class="pizza__filling pizza__filling--bacon"></div>
-                  <div class="pizza__filling pizza__filling--cheddar"></div>
-                </div>
-              </div>
-            </div>
+            <BuilderPizzaView></BuilderPizzaView>
 
-            <div class="content__result">
-              <p>Итого: 0 ₽</p>
-              <button type="button" class="button button--disabled" disabled>
-                Готовьте!
-              </button>
-            </div>
+            <BuilderPriceCounter></BuilderPriceCounter>
           </div>
         </div>
       </form>
@@ -76,13 +46,19 @@ import {
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
+import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
+import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
+import AppLayout from "../layouts/AppLayout";
 
 export default {
   name: "Index",
   components: {
+    AppLayout,
+    BuilderPizzaView,
     BuilderIngredientsSelector,
     BuilderSizeSelector,
     BuilderDoughSelector,
+    BuilderPriceCounter,
   },
   data() {
     return {
