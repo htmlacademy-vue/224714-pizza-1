@@ -1,10 +1,10 @@
 <template>
-  <div class="ingridients__filling">
+  <div class="ingredients__filling">
     <p>Начинка:</p>
 
-    <ul class="ingridients__list">
+    <ul class="ingredients__list">
       <li
-        class="ingridients__item"
+        class="ingredients__item"
         v-for="(ingredient, i) in ingredients"
         :key="i"
       >
@@ -12,7 +12,7 @@
           :ingredient-value="ingredient.value"
           :ingredient-name="ingredient.name"
         ></SelectorItem>
-        <ItemCounter :name="`ingridients`"></ItemCounter>
+        <ItemCounter :name="`ingredients`"></ItemCounter>
       </li>
     </ul>
   </div>

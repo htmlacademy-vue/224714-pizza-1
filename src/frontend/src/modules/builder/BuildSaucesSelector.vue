@@ -1,9 +1,9 @@
 <template>
-  <div class="ingridients__sauce">
+  <div class="ingredients__sauce">
     <p>Основной соус:</p>
 
     <label
-      class="radio ingridients__input"
+      class="radio ingredients__input"
       v-for="(sauce, i) in sauces"
       :key="i"
     >
