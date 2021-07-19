@@ -23,93 +23,12 @@
       <form action="#" method="post">
         <div class="content__wrapper">
           <h1 class="title title--big">Конструктор пиццы</h1>
-
-          <div class="content__dough">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">Выберите тесто</h2>
-
-              <div class="sheet__content dough">
-                <label
-                  :class="`dough__input dough__input--${dough.value}`"
-                  v-for="(dough, i) in doughs"
-                  :key="i"
-                >
-                  <RadioButton
-                    :name="`dough`"
-                    :value="dough.value"
-                    :isChecked="dough.isChecked"
-                  ></RadioButton>
-                  <b>{{ dough.name }}</b>
-                  <span>{{ dough.description }}</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="content__diameter">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">Выберите размер</h2>
-
-              <div class="sheet__content diameter">
-                <label
-                  :class="`diameter__input diameter__input--${size.value}`"
-                  v-for="(size, i) in sizes"
-                  :key="i"
-                >
-                  <RadioButton
-                    :name="`diameter`"
-                    :value="size.value"
-                    :isChecked="size.isChecked"
-                  ></RadioButton>
-                  <span>{{ size.name }}</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="content__ingridients">
-            <div class="sheet">
-              <h2 class="title title--small sheet__title">
-                Выберите ингридиенты
-              </h2>
-
-              <div class="sheet__content ingridients">
-                <div class="ingridients__sauce">
-                  <p>Основной соус:</p>
-
-                  <label
-                    class="radio ingridients__input"
-                    v-for="(sauce, i) in sauces"
-                    :key="i"
-                  >
-                    <RadioButton
-                      :name="`sauce`"
-                      :value="sauce.value"
-                      :isChecked="sauce.isChecked"
-                    ></RadioButton>
-                    <span>{{ sauce.name }}</span>
-                  </label>
-                </div>
-
-                <div class="ingridients__filling">
-                  <p>Начинка:</p>
-
-                  <ul class="ingridients__list">
-                    <li
-                      class="ingridients__item"
-                      v-for="(ingredient, i) in ingredients"
-                      :key="i"
-                    >
-                      <span :class="`filling filling--${ingredient.value}`">{{
-                        ingredient.name
-                      }}</span>
-                      <ItemCounter :name="`ingridients`"></ItemCounter>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+          <BuilderDoughSelector :doughs="doughs"></BuilderDoughSelector>
+          <BuilderSizeSelector :sizes="sizes"></BuilderSizeSelector>
+          <BuilderIngredientsSelector
+            :sauces="sauces"
+            :ingredients="ingredients"
+          ></BuilderIngredientsSelector>
 
           <div class="content__pizza">
             <label class="input">
@@ -154,12 +73,17 @@ import {
   sauceMap,
   ingredientMap,
 } from "@/common/helpers.js";
-import RadioButton from "@/components/RadioButton";
-import ItemCounter from "../components/ItemCounter";
+import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
+import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
+import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 
 export default {
   name: "Index",
-  components: { ItemCounter, RadioButton },
+  components: {
+    BuilderIngredientsSelector,
+    BuilderSizeSelector,
+    BuilderDoughSelector,
+  },
   data() {
     return {
       misc,
