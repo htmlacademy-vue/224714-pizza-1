@@ -5,6 +5,7 @@
     :value="value"
     class="visually-hidden"
     :checked="isChecked"
+    @change="$emit('valueChanged', value)"
   />
 </template>
 

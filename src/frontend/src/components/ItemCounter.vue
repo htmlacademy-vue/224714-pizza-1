@@ -6,7 +6,13 @@
     >
       <span class="visually-hidden">Меньше</span>
     </button>
-    <input type="text" name="counter" class="counter__input" :value="value" />
+    <input
+      type="text"
+      name="counter"
+      class="counter__input"
+      :value="value"
+      @change="$emit('valueChanged', { value: value, name: name })"
+    />
     <button type="button" class="counter__button counter__button--plus">
       <span class="visually-hidden">Больше</span>
     </button>
@@ -23,7 +29,6 @@ export default {
     },
     value: {
       type: Number,
-      required: true,
       default: 0,
     },
   },

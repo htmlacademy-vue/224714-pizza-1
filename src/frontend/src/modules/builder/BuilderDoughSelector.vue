@@ -13,6 +13,7 @@
             :name="`dough`"
             :value="dough.value"
             :isChecked="dough.isChecked"
+            @valueChanged="$emit('changeDough', $event)"
           ></RadioButton>
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>

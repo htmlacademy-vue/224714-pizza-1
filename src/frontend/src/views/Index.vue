@@ -6,11 +6,19 @@
       <form action="#" method="post">
         <div class="content__wrapper">
           <h1 class="title title--big">Конструктор пиццы</h1>
-          <BuilderDoughSelector :doughs="doughs"></BuilderDoughSelector>
-          <BuilderSizeSelector :sizes="sizes"></BuilderSizeSelector>
+          <BuilderDoughSelector
+            :doughs="doughs"
+            @changeDough="temporaryDataReceiver.dough = $event"
+          ></BuilderDoughSelector>
+          <BuilderSizeSelector
+            :sizes="sizes"
+            @changeSize="temporaryDataReceiver.size = $event"
+          ></BuilderSizeSelector>
           <BuilderIngredientsSelector
             :sauces="sauces"
             :ingredients="ingredients"
+            @changeSauce="temporaryDataReceiver.sauce = $event"
+            @changeFilling="temporaryDataReceiver.filling = $event"
           ></BuilderIngredientsSelector>
 
           <div class="content__pizza">
@@ -65,6 +73,7 @@ export default {
       misc,
       pizza,
       user,
+      temporaryDataReceiver: {},
     };
   },
   created() {},

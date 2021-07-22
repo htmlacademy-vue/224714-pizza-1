@@ -1,18 +1,37 @@
 <template>
-  <div class="content__constructor">
+  <AppDrop
+    class="content__constructor"
+    @drop="addIngredientToPizzaPicture($event)"
+  >
     <div class="pizza pizza--foundation--big-tomato">
       <div class="pizza__wrapper">
-        <div class="pizza__filling pizza__filling--ananas"></div>
-        <div class="pizza__filling pizza__filling--bacon"></div>
-        <div class="pizza__filling pizza__filling--cheddar"></div>
+        <BuilderFillingItemVisualization
+          v-for="(ingredient, i) in Ingredients"
+          :key="i"
+          :ingredient="ingredient"
+        ></BuilderFillingItemVisualization>
       </div>
     </div>
-  </div>
+  </AppDrop>
 </template>
 
 <script>
+import AppDrop from "@/components/AppDrop";
+import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
 export default {
   name: "BuilderPizzaView",
+  components: { BuilderFillingItemVisualization, AppDrop },
+  data() {
+    return {
+      Ingredients: [],
+    };
+  },
+  methods: {
+    addIngredientToPizzaPicture(ingredient) {
+      console.log(ingredient.value);
+      this.Ingredients.push(ingredient.value);
+    },
+  },
 };
 </script>
 
