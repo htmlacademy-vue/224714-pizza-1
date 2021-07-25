@@ -33,7 +33,7 @@
 
             <BuilderPizzaView></BuilderPizzaView>
 
-            <BuilderPriceCounter></BuilderPriceCounter>
+            <BuilderPriceCounter :price="price"></BuilderPriceCounter>
           </div>
         </div>
       </form>
@@ -73,7 +73,6 @@ export default {
       misc,
       pizza,
       user,
-      chosenOptions: {},
     };
   },
   created() {},
@@ -121,6 +120,44 @@ export default {
             .value,
         };
       });
+    },
+    defaultPizza() {
+      return {
+        dough: this.doughs.find((dough) => dough.isChecked),
+        sauce: this.sauces.find((sauce) => sauce.isChecked),
+        size: this.sizes.find((size) => size.isChecked),
+      };
+    },
+    chosenOptions() {
+      return {
+        dough: this.defaultPizza.dough.value,
+        sauce: this.defaultPizza.sauce.value,
+        size: this.defaultPizza.size.value,
+      };
+    },
+    price() {
+      return this.calculatePrice(this.chosenOptions);
+    },
+  },
+  methods: {
+    calculatePrice(chosenOptions) {
+      let doughPrice = this.doughs
+        ? this.doughs.find((dough) => dough.value === chosenOptions.dough).price
+        : 0;
+      let saucePrice = this.sauces
+        ? this.sauces.find((sauce) => sauce.value === chosenOptions.sauce).price
+        : 0;
+      let multiplier = this.sizes
+        ? this.sizes.find((size) => size.value === chosenOptions.size)
+            .multiplier
+        : 0;
+      let fillingPrice =
+        this.ingredients && this.chosenOptions.filling
+          ? this.ingredients.find(
+              (ingredient) => ingredient.value === chosenOptions.filling
+            ).price
+          : 0;
+      return multiplier * doughPrice + saucePrice + fillingPrice;
     },
   },
 };
