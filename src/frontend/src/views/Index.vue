@@ -8,17 +8,17 @@
           <h1 class="title title--big">Конструктор пиццы</h1>
           <BuilderDoughSelector
             :doughs="doughs"
-            @changeDough="chosenOptions.dough = $event"
+            @changeDough="changePizzachangePizzaOption('dough', $event)"
           ></BuilderDoughSelector>
           <BuilderSizeSelector
             :sizes="sizes"
-            @changeSize="chosenOptions.size = $event"
+            @changeSize="changePizzaOption('size', $event)"
           ></BuilderSizeSelector>
           <BuilderIngredientsSelector
             :sauces="sauces"
             :ingredients="ingredients"
-            @changeSauce="chosenOptions.sauce = $event"
-            @changeFilling="chosenOptions.filling = $event"
+            @changeSauce="changePizzaOption('sauce', $event)"
+            @valueChanged="changePizzaFilling($event)"
           ></BuilderIngredientsSelector>
 
           <div class="content__pizza">
@@ -73,9 +73,40 @@ export default {
       misc,
       pizza,
       user,
+      price: 0,
     };
   },
-  created() {},
+  created() {
+    this.calculatePrice(this.chosenOptions);
+  },
+  methods: {
+    changePizzaOption(option, newValue) {
+      this.chosenOptions[option] = newValue;
+      this.calculatePrice(this.chosenOptions);
+    },
+    changePizzaFilling(obj) {
+      console.log(obj);
+    },
+    calculatePrice(chosenOptions) {
+      let doughPrice = this.doughs
+        ? this.doughs.find((dough) => dough.value === chosenOptions.dough).price
+        : 0;
+      let saucePrice = this.sauces
+        ? this.sauces.find((sauce) => sauce.value === chosenOptions.sauce).price
+        : 0;
+      let multiplier = this.sizes
+        ? this.sizes.find((size) => size.value === chosenOptions.size)
+            .multiplier
+        : 1;
+      let fillingPrice =
+        this.ingredients && this.chosenOptions.filling
+          ? this.ingredients.find(
+              (ingredient) => ingredient.value === chosenOptions.filling
+            ).price
+          : 0;
+      this.price = multiplier * doughPrice + saucePrice + fillingPrice;
+    },
+  },
   computed: {
     doughs() {
       return this.pizza.dough.map((doughItem, index) => {
@@ -121,43 +152,21 @@ export default {
         };
       });
     },
-    defaultPizza() {
-      return {
-        dough: this.doughs.find((dough) => dough.isChecked),
-        sauce: this.sauces.find((sauce) => sauce.isChecked),
-        size: this.sizes.find((size) => size.isChecked),
-      };
-    },
     chosenOptions() {
       return {
-        dough: this.defaultPizza.dough.value,
-        sauce: this.defaultPizza.sauce.value,
-        size: this.defaultPizza.size.value,
+        dough: this.doughs.find((dough) => dough.isChecked).value,
+        sauce: this.sauces.find((sauce) => sauce.isChecked).value,
+        size: this.sizes.find((size) => size.isChecked).value,
       };
     },
-    price() {
-      return this.calculatePrice(this.chosenOptions);
-    },
   },
-  methods: {
-    calculatePrice(chosenOptions) {
-      let doughPrice = this.doughs
-        ? this.doughs.find((dough) => dough.value === chosenOptions.dough).price
-        : 0;
-      let saucePrice = this.sauces
-        ? this.sauces.find((sauce) => sauce.value === chosenOptions.sauce).price
-        : 0;
-      let multiplier = this.sizes
-        ? this.sizes.find((size) => size.value === chosenOptions.size)
-            .multiplier
-        : 0;
-      let fillingPrice =
-        this.ingredients && this.chosenOptions.filling
-          ? this.ingredients.find(
-              (ingredient) => ingredient.value === chosenOptions.filling
-            ).price
-          : 0;
-      return multiplier * doughPrice + saucePrice + fillingPrice;
+  watch: {
+    "chosenOptions.dough": {
+      handler: function (val) {
+        this.calculatePrice(this.chosenOptions);
+        console.log(val);
+      },
+      deep: true,
     },
   },
 };

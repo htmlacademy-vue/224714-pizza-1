@@ -12,8 +12,13 @@
       class="counter__input"
       :value="value"
       @change="$emit('valueChanged', { value: value, name: name })"
+      ref="counter"
     />
-    <button type="button" class="counter__button counter__button--plus">
+    <button
+      type="button"
+      class="counter__button counter__button--plus"
+      @click="$refs.counter.value += 1"
+    >
       <span class="visually-hidden">Больше</span>
     </button>
   </div>
