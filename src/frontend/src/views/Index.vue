@@ -8,7 +8,7 @@
           <h1 class="title title--big">Конструктор пиццы</h1>
           <BuilderDoughSelector
             :doughs="doughs"
-            @changeDough="changePizzachangePizzaOption('dough', $event)"
+            @changeDough="changePizzaOption('dough', $event)"
           ></BuilderDoughSelector>
           <BuilderSizeSelector
             :sizes="sizes"
@@ -31,7 +31,7 @@
               />
             </label>
 
-            <BuilderPizzaView></BuilderPizzaView>
+            <BuilderPizzaView @ingredientDropped=""></BuilderPizzaView>
 
             <BuilderPriceCounter :price="price"></BuilderPriceCounter>
           </div>
@@ -104,8 +104,11 @@ export default {
               (ingredient) => ingredient.value === chosenOptions.filling
             ).price
           : 0;
-      this.price = multiplier * doughPrice + saucePrice + fillingPrice;
+      this.price = multiplier * (doughPrice + saucePrice + fillingPrice);
     },
+    dropIngredient() {
+
+    }
   },
   computed: {
     doughs() {

@@ -8,13 +8,13 @@
         v-for="(ingredient, i) in ingredients"
         :key="i"
       >
-        <AppDrag :transfer-data="ingredient">
+        <AppDrag :transfer-data="ingredient" :draggable="isDraggable">
           <SelectorItem
             :ingredient-value="ingredient.value"
             :ingredient-name="ingredient.name"
           ></SelectorItem>
         </AppDrag>
-        <ItemCounter :name="`ingredients`" v-on="$listeners"></ItemCounter>
+        <ItemCounter :name="`ingredients`" v-on="$listeners" @disableDragging="isDraggable = !$event"></ItemCounter>
       </li>
     </ul>
   </div>
@@ -33,6 +33,11 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      isDraggable: true
+    }
+  }
 };
 </script>
 

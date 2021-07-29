@@ -30,6 +30,7 @@ export default {
     addIngredientToPizzaPicture(ingredient) {
       console.log(ingredient.value);
       this.Ingredients.push(ingredient.value);
+      this.$emit('ingredientDropped', ingredient.value);
     },
   },
 };
