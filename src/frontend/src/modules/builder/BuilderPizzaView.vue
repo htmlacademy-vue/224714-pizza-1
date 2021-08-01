@@ -3,7 +3,7 @@
     class="content__constructor"
     @drop="addIngredientToPizzaPicture($event)"
   >
-    <div class="pizza pizza--foundation--big-tomato">
+    <div :class="`pizza ${pizzaCssClass}`">
       <div class="pizza__wrapper">
         <BuilderFillingItemVisualization
           v-for="(ingredient, i) in Ingredients"
@@ -18,9 +18,17 @@
 <script>
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
+import EventBus from "@/common/event-bus";
+
 export default {
   name: "BuilderPizzaView",
   components: { BuilderFillingItemVisualization, AppDrop },
+  props: {
+    pizzaCssClass: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       Ingredients: [],
@@ -28,9 +36,8 @@ export default {
   },
   methods: {
     addIngredientToPizzaPicture(ingredient) {
-      console.log(ingredient.value);
       this.Ingredients.push(ingredient.value);
-      this.$emit('ingredientDropped', ingredient.value);
+      EventBus.$emit("ingredientDropped", ingredient.value);
     },
   },
 };

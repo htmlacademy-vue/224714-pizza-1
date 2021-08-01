@@ -31,7 +31,7 @@
               />
             </label>
 
-            <BuilderPizzaView @ingredientDropped=""></BuilderPizzaView>
+            <BuilderPizzaView :pizzaCssClass="pizzaCssClass"></BuilderPizzaView>
 
             <BuilderPriceCounter :price="price"></BuilderPriceCounter>
           </div>
@@ -50,13 +50,15 @@ import {
   sizeMap,
   sauceMap,
   ingredientMap,
+  doughClassMapping,
+  defaultPizzaCssClass,
 } from "@/common/helpers.js";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-import AppLayout from "../layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 
 export default {
   name: "Index",
@@ -74,6 +76,7 @@ export default {
       pizza,
       user,
       price: 0,
+      pizzaCssClass: defaultPizzaCssClass,
     };
   },
   created() {
@@ -83,9 +86,32 @@ export default {
     changePizzaOption(option, newValue) {
       this.chosenOptions[option] = newValue;
       this.calculatePrice(this.chosenOptions);
+      if (option === "sauce" || option === "dough") {
+        this.pizzaCssClass = `pizza--foundation--${doughClassMapping[this.chosenOptions.dough]}-${this.chosenOptions.sauce}`;
+      }
     },
-    changePizzaFilling(obj) {
-      console.log(obj);
+    changePizzaFilling(ingredient) {
+      console.log(ingredient);
+      if (this.chosenOptions["filling"] === undefined) {
+        this.$set(this.chosenOptions, "filling", {});
+      }
+      this.chosenOptions["filling"][ingredient.name] = ingredient.value;
+      this.calculatePrice(this.chosenOptions);
+    },
+    calculateFilling() {
+      let fillingTotal = 0;
+      if (this.chosenOptions["filling"] === undefined) {
+        return 0;
+      }
+      Object.keys(this.chosenOptions["filling"]).forEach((fillingItem) => {
+        const fillingItemPrice = this.ingredients.find(
+          (ingredient) => ingredient.value === fillingItem
+        ).price;
+        const fillingItemQuantity = this.chosenOptions["filling"][fillingItem];
+        fillingTotal += fillingItemPrice * fillingItemQuantity;
+      });
+      console.log(fillingTotal);
+      return fillingTotal;
     },
     calculatePrice(chosenOptions) {
       let doughPrice = this.doughs
@@ -98,17 +124,9 @@ export default {
         ? this.sizes.find((size) => size.value === chosenOptions.size)
             .multiplier
         : 1;
-      let fillingPrice =
-        this.ingredients && this.chosenOptions.filling
-          ? this.ingredients.find(
-              (ingredient) => ingredient.value === chosenOptions.filling
-            ).price
-          : 0;
+      let fillingPrice = this.calculateFilling();
       this.price = multiplier * (doughPrice + saucePrice + fillingPrice);
     },
-    dropIngredient() {
-
-    }
   },
   computed: {
     doughs() {
@@ -161,15 +179,6 @@ export default {
         sauce: this.sauces.find((sauce) => sauce.isChecked).value,
         size: this.sizes.find((size) => size.isChecked).value,
       };
-    },
-  },
-  watch: {
-    "chosenOptions.dough": {
-      handler: function (val) {
-        this.calculatePrice(this.chosenOptions);
-        console.log(val);
-      },
-      deep: true,
     },
   },
 };
