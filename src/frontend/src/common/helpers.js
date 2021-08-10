@@ -58,4 +58,4 @@ export const doughClassMapping = {
   large: "big",
 };
 
-export const defaultPizzaCssClass = 'pizza--foundation--small-tomato';
+export const defaultPizzaCssClass = "pizza--foundation--small-tomato";

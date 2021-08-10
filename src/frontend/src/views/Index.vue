@@ -87,7 +87,9 @@ export default {
       this.chosenOptions[option] = newValue;
       this.calculatePrice(this.chosenOptions);
       if (option === "sauce" || option === "dough") {
-        this.pizzaCssClass = `pizza--foundation--${doughClassMapping[this.chosenOptions.dough]}-${this.chosenOptions.sauce}`;
+        this.pizzaCssClass = `pizza--foundation--${
+          doughClassMapping[this.chosenOptions.dough]
+        }-${this.chosenOptions.sauce}`;
       }
     },
     changePizzaFilling(ingredient) {
