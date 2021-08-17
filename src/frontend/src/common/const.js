@@ -1,0 +1,3 @@
+export const FILLING_COUNTER_MIN_VALUE = 0;
+
+export const FILLING_COUNTER_MAX_VALUE = 3;

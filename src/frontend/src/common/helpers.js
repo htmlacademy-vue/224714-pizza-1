@@ -52,3 +52,15 @@ export const ingredientMap = [
   { name: "Пармезан", value: "parmesan" },
   { name: "Блю чиз", value: "blue_cheese" },
 ];
+
+export const doughClassMapping = {
+  light: "small",
+  large: "big",
+};
+
+export const defaultPizzaCssClass = "pizza--foundation--small-tomato";
+
+export const pizzaFillingMultipleClassMapping = {
+  2: "pizza__filling--second",
+  3: "pizza__filling--third",
+};

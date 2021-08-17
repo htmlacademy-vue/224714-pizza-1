@@ -1,14 +1,4 @@
-const path = require("path");
-
 module.exports = {
-  configureWebpack: {
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "src"),
-      },
-    },
-  },
-
   css: {
     loaderOptions: {
       sass: {
@@ -20,7 +10,7 @@ module.exports = {
   devServer: {
     proxy: {
       "^/api": {
-        target: "https://backend:3000/",
+        target: "http://backend:3000/",
         changeOrigin: false,
         pathRewrite: { "^/api/": "/" },
       },
