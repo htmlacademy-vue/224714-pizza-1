@@ -6,11 +6,11 @@
         <div class="ingredients__filling">
           <BuildSaucesSelector
             :sauces="sauces"
-            v-on="$listeners"
+            @changeSauce="$emit(`changeSauce`, $event)"
           ></BuildSaucesSelector>
           <BuildFillingSelector
             :ingredients="ingredients"
-            v-on="$listeners"
+            @changeFilling="$emit(`changeFilling`, $event)"
           ></BuildFillingSelector>
         </div>
       </div>

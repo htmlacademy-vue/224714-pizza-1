@@ -18,7 +18,7 @@
             :sauces="sauces"
             :ingredients="ingredients"
             @changeSauce="changePizzaOption('sauce', $event)"
-            @valueChanged="changePizzaFilling($event)"
+            @changeFilling="changePizzaFilling($event)"
           ></BuilderIngredientsSelector>
 
           <div class="content__pizza">
@@ -31,7 +31,7 @@
               />
             </label>
 
-            <BuilderPizzaView :pizzaCssClass="pizzaCssClass"></BuilderPizzaView>
+            <BuilderPizzaView :dough="dough" :sauce="sauce"></BuilderPizzaView>
 
             <BuilderPriceCounter :price="price"></BuilderPriceCounter>
           </div>
@@ -50,7 +50,6 @@ import {
   sizeMap,
   sauceMap,
   ingredientMap,
-  doughClassMapping,
   defaultPizzaCssClass,
 } from "@/common/helpers.js";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
@@ -71,116 +70,93 @@ export default {
     BuilderPriceCounter,
   },
   data() {
+    const doughs = pizza.dough.map((doughItem, index) => {
+      return {
+        name: doughItem.name,
+        image: doughItem.image,
+        description: doughItem.description,
+        price: doughItem.price,
+        value: doughMap.find((item) => item.name === doughItem.name).value,
+        isChecked: index === 0,
+      };
+    });
+    const sizes = pizza.sizes.map((sizeItem, index) => {
+      return {
+        name: sizeItem.name,
+        image: sizeItem.image,
+        multiplier: sizeItem.multiplier,
+        value: sizeMap.find((item) => item.multiplier === sizeItem.multiplier)
+          .value,
+        isChecked: index === 1,
+      };
+    });
+    const sauces = pizza.sauces.map((sauceItem, index) => {
+      return {
+        name: sauceItem.name,
+        price: sauceItem.price,
+        value: sauceMap.find((item) => item.name === sauceItem.name).value,
+        isChecked: index === 0,
+      };
+    });
+    const ingredients = pizza.ingredients.map((ingredientItem) => {
+      return {
+        name: ingredientItem.name,
+        price: ingredientItem.price,
+        value: ingredientMap.find((item) => item.name === ingredientItem.name)
+          .value,
+      };
+    });
     return {
       misc,
-      pizza,
       user,
-      price: 0,
+      sauces,
+      doughs,
+      sizes,
+      ingredients,
+      dough: doughs.find((dough) => dough.isChecked).value,
+      sauce: sauces.find((sauce) => sauce.isChecked).value,
+      size: sizes.find((size) => size.isChecked).value,
+      filling: {},
       pizzaCssClass: defaultPizzaCssClass,
     };
   },
-  created() {
-    this.calculatePrice(this.chosenOptions);
-  },
+  created() {},
   methods: {
     changePizzaOption(option, newValue) {
-      this.chosenOptions[option] = newValue;
-      this.calculatePrice(this.chosenOptions);
-      if (option === "sauce" || option === "dough") {
-        this.pizzaCssClass = `pizza--foundation--${
-          doughClassMapping[this.chosenOptions.dough]
-        }-${this.chosenOptions.sauce}`;
-      }
+      this[option] = newValue;
     },
     changePizzaFilling(ingredient) {
-      console.log(ingredient);
-      if (this.chosenOptions["filling"] === undefined) {
-        this.$set(this.chosenOptions, "filling", {});
-      }
-      this.chosenOptions["filling"][ingredient.name] = ingredient.value;
-      this.calculatePrice(this.chosenOptions);
+      this.$set(this.filling, ingredient.name, ingredient.value);
     },
     calculateFilling() {
       let fillingTotal = 0;
-      if (this.chosenOptions["filling"] === undefined) {
+      if (this.filling === undefined) {
         return 0;
       }
-      Object.keys(this.chosenOptions["filling"]).forEach((fillingItem) => {
+      Object.keys(this.filling).forEach((fillingItem) => {
         const fillingItemPrice = this.ingredients.find(
           (ingredient) => ingredient.value === fillingItem
         ).price;
-        const fillingItemQuantity = this.chosenOptions["filling"][fillingItem];
+        const fillingItemQuantity = this.filling[fillingItem];
         fillingTotal += fillingItemPrice * fillingItemQuantity;
       });
       console.log(fillingTotal);
       return fillingTotal;
     },
-    calculatePrice(chosenOptions) {
-      let doughPrice = this.doughs
-        ? this.doughs.find((dough) => dough.value === chosenOptions.dough).price
-        : 0;
-      let saucePrice = this.sauces
-        ? this.sauces.find((sauce) => sauce.value === chosenOptions.sauce).price
-        : 0;
-      let multiplier = this.sizes
-        ? this.sizes.find((size) => size.value === chosenOptions.size)
-            .multiplier
-        : 1;
-      let fillingPrice = this.calculateFilling();
-      this.price = multiplier * (doughPrice + saucePrice + fillingPrice);
-    },
   },
   computed: {
-    doughs() {
-      return this.pizza.dough.map((doughItem, index) => {
-        return {
-          name: doughItem.name,
-          image: doughItem.image,
-          description: doughItem.description,
-          price: doughItem.price,
-          value: doughMap.find((item) => item.name === doughItem.name).value,
-          isChecked: index === 0,
-        };
-      });
-    },
-    sizes() {
-      return this.pizza.sizes.map((sizeItem, index) => {
-        return {
-          name: sizeItem.name,
-          image: sizeItem.image,
-          multiplier: sizeItem.multiplier,
-          value: sizeMap.find((item) => item.multiplier === sizeItem.multiplier)
-            .value,
-          isChecked: index === 1,
-        };
-      });
-    },
-    sauces() {
-      return this.pizza.sauces.map((sauceItem, index) => {
-        return {
-          name: sauceItem.name,
-          price: sauceItem.price,
-          value: sauceMap.find((item) => item.name === sauceItem.name).value,
-          isChecked: index === 0,
-        };
-      });
-    },
-    ingredients() {
-      return this.pizza.ingredients.map((ingredientItem) => {
-        return {
-          name: ingredientItem.name,
-          price: ingredientItem.price,
-          value: ingredientMap.find((item) => item.name === ingredientItem.name)
-            .value,
-        };
-      });
-    },
-    chosenOptions() {
-      return {
-        dough: this.doughs.find((dough) => dough.isChecked).value,
-        sauce: this.sauces.find((sauce) => sauce.isChecked).value,
-        size: this.sizes.find((size) => size.isChecked).value,
-      };
+    price() {
+      let doughPrice = this.doughs
+        ? this.doughs.find((dough) => dough.value === this.dough).price
+        : 0;
+      let saucePrice = this.sauces
+        ? this.sauces.find((sauce) => sauce.value === this.sauce).price
+        : 0;
+      let multiplier = this.sizes
+        ? this.sizes.find((size) => size.value === this.size).multiplier
+        : 1;
+      let fillingPrice = this.calculateFilling();
+      return multiplier * (doughPrice + saucePrice + fillingPrice);
     },
   },
 };

@@ -6,7 +6,7 @@
         v-for="(ingredient, i) in ingredients"
         :key="i"
         :ingredient="ingredient"
-        v-on="$listeners"
+        @changeFilling="$emit(`changeFilling`, $event)"
       ></BuildFillingListItem>
     </ul>
   </div>

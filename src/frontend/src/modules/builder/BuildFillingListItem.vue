@@ -9,7 +9,7 @@
     <ItemCounter
       :name="`ingredients`"
       :ingredient="ingredient.value"
-      v-on="$listeners"
+      @valueChanged="$emit(`changeFilling`, $event)"
       @disableDragging="isDraggable = !$event"
     ></ItemCounter>
   </li>

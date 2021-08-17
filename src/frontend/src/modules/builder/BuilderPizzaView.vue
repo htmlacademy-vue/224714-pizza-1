@@ -19,12 +19,17 @@
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
 import EventBus from "@/common/event-bus";
+import { doughClassMapping } from "@/common/helpers";
 
 export default {
   name: "BuilderPizzaView",
   components: { BuilderFillingItemVisualization, AppDrop },
   props: {
-    pizzaCssClass: {
+    dough: {
+      type: String,
+      required: true,
+    },
+    sauce: {
       type: String,
       required: true,
     },
@@ -38,6 +43,13 @@ export default {
     addIngredientToPizzaPicture(ingredient) {
       this.Ingredients.push(ingredient.value);
       EventBus.$emit("ingredientDropped", ingredient.value);
+    },
+  },
+  computed: {
+    pizzaCssClass() {
+      return `pizza--foundation--${doughClassMapping[this.dough]}-${
+        this.sauce
+      }`;
     },
   },
 };
