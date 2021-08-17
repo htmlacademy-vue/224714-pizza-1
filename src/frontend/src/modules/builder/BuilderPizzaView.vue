@@ -6,9 +6,10 @@
     <div :class="`pizza ${pizzaCssClass}`">
       <div class="pizza__wrapper">
         <BuilderFillingItemVisualization
-          v-for="(ingredient, i) in Ingredients"
+          v-for="(fillingItem, i) in fillingItems"
           :key="i"
-          :ingredient="ingredient"
+          :fillingItem="fillingItem"
+          :filling="filling"
         ></BuilderFillingItemVisualization>
       </div>
     </div>
@@ -33,6 +34,10 @@ export default {
       type: String,
       required: true,
     },
+    filling: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,6 +51,11 @@ export default {
     },
   },
   computed: {
+    fillingItems() {
+      return Object.keys(this.filling).filter(
+        (fillingName) => this.filling[fillingName] !== 0
+      );
+    },
     pizzaCssClass() {
       return `pizza--foundation--${doughClassMapping[this.dough]}-${
         this.sauce

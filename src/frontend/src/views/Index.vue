@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppLayout></AppLayout>
+    <AppLayout :price="price"></AppLayout>
 
     <main class="content">
       <form action="#" method="post">
@@ -28,12 +28,20 @@
                 type="text"
                 name="pizza_name"
                 placeholder="Введите название пиццы"
+                v-model="pizzaName"
               />
             </label>
 
-            <BuilderPizzaView :dough="dough" :sauce="sauce"></BuilderPizzaView>
+            <BuilderPizzaView
+              :dough="dough"
+              :sauce="sauce"
+              :filling="filling"
+            ></BuilderPizzaView>
 
-            <BuilderPriceCounter :price="price"></BuilderPriceCounter>
+            <BuilderPriceCounter
+              :price="price"
+              :isBtnActive="isBtnActive"
+            ></BuilderPriceCounter>
           </div>
         </div>
       </form>
@@ -50,7 +58,6 @@ import {
   sizeMap,
   sauceMap,
   ingredientMap,
-  defaultPizzaCssClass,
 } from "@/common/helpers.js";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
@@ -58,6 +65,7 @@ import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSele
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
 import AppLayout from "@/layouts/AppLayout";
+import EventBus from "@/common/event-bus";
 
 export default {
   name: "Index",
@@ -117,10 +125,21 @@ export default {
       sauce: sauces.find((sauce) => sauce.isChecked).value,
       size: sizes.find((size) => size.isChecked).value,
       filling: {},
-      pizzaCssClass: defaultPizzaCssClass,
+      pizzaName: ``,
     };
   },
   created() {},
+  mounted() {
+    EventBus.$on("ingredientDropped", (ingredient) => {
+      let newValue;
+      if (this.filling[ingredient]) {
+        newValue = this.filling[ingredient] + 1;
+      } else {
+        newValue = 1;
+      }
+      this.changePizzaFilling({ name: ingredient, value: newValue });
+    });
+  },
   methods: {
     changePizzaOption(option, newValue) {
       this[option] = newValue;
@@ -157,6 +176,9 @@ export default {
         : 1;
       let fillingPrice = this.calculateFilling();
       return multiplier * (doughPrice + saucePrice + fillingPrice);
+    },
+    isBtnActive() {
+      return !!this.pizzaName.length && !!this.calculateFilling();
     },
   },
 };

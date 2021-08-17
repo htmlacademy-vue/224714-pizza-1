@@ -59,3 +59,8 @@ export const doughClassMapping = {
 };
 
 export const defaultPizzaCssClass = "pizza--foundation--small-tomato";
+
+export const pizzaFillingMultipleClassMapping = {
+  2: "pizza__filling--second",
+  3: "pizza__filling--third",
+};
