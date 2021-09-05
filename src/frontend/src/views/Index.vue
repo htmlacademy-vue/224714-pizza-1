@@ -1,7 +1,5 @@
 <template>
   <div>
-    <AppLayout :price="price"></AppLayout>
-
     <main class="content">
       <form action="#" method="post">
         <div class="content__wrapper">
@@ -46,6 +44,7 @@
         </div>
       </form>
     </main>
+    <router-view name="modal"></router-view>
   </div>
 </template>
 
@@ -64,13 +63,11 @@ import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-import AppLayout from "@/layouts/AppLayout";
 import EventBus from "@/common/event-bus";
 
 export default {
   name: "Index",
   components: {
-    AppLayout,
     BuilderPizzaView,
     BuilderIngredientsSelector,
     BuilderSizeSelector,
@@ -128,6 +125,14 @@ export default {
       pizzaName: ``,
     };
   },
+  watch: {
+    price: {
+      immediate: true,
+      handler(newVal) {
+        EventBus.$emit("priceChanged", newVal); //временное решение до появления store
+      },
+    },
+  },
   created() {},
   mounted() {
     EventBus.$on("ingredientDropped", (ingredient) => {
@@ -159,7 +164,6 @@ export default {
         const fillingItemQuantity = this.filling[fillingItem];
         fillingTotal += fillingItemPrice * fillingItemQuantity;
       });
-      console.log(fillingTotal);
       return fillingTotal;
     },
   },
