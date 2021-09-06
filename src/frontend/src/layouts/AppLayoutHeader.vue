@@ -1,25 +1,25 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <a @click="$router.push('/')" class="logo">
+      <router-link to="/">
         <img
           src="@/assets/img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
-      </a>
+      </router-link>
     </div>
     <div class="header__cart">
-      <a @click="$router.push({ name: 'Cart' })">{{ price }} ₽</a>
+      <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isLogged">
-      <a class="header__login" @click="$router.push(`${loginLink}`)"
-        ><span>Войти</span></a
+      <router-link class="header__login" to="`${loginLink}`"
+        ><span>Войти</span></router-link
       >
     </div>
     <div class="header__user" v-else>
-      <a @click="$router.push(`/profile`)">
+      <router-link to="/profile">
         <picture>
           <source
             type="image/webp"
@@ -37,7 +37,7 @@
           />
         </picture>
         <span>Василий Ложкин</span>
-      </a>
+      </router-link>
       <a href="#" class="header__logout"><span>Выйти</span></a>
     </div>
   </header>

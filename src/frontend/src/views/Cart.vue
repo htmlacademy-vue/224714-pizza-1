@@ -299,12 +299,11 @@
       </main>
       <section class="footer">
         <div class="footer__more">
-          <a
-            href=""
+          <router-link
             class="button button--border button--arrow"
-            @click="$router.push(`/`)"
-            >Хочу еще одну</a
-          >
+            to="/"
+            >Хочу еще одну
+          </router-link>
         </div>
         <p class="footer__text">
           Перейти к конструктору<br />чтоб собрать ещё одну пиццу
