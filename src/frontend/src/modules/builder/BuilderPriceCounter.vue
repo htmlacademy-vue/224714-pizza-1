@@ -1,11 +1,7 @@
 <template>
   <div class="content__result">
     <p>Итого: {{ price }} ₽</p>
-    <button
-      type="button"
-      class="button button--disabled"
-      :disabled="!isBtnActive"
-    >
+    <button type="button" class="button" :disabled="!isBtnActive">
       Готовьте!
     </button>
   </div>
