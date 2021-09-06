@@ -299,9 +299,7 @@
       </main>
       <section class="footer">
         <div class="footer__more">
-          <router-link
-            class="button button--border button--arrow"
-            to="/"
+          <router-link class="button button--border button--arrow" to="/"
             >Хочу еще одну
           </router-link>
         </div>
