@@ -129,7 +129,7 @@ export default {
     price: {
       immediate: true,
       handler(newVal) {
-        EventBus.$emit("priceChanged", newVal); //временное решение до появления store
+        this.$store.dispatch("builder/setPrice", newVal);
       },
     },
   },

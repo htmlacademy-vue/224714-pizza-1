@@ -52,7 +52,6 @@ export default {
   data() {
     return {
       isLogged: false,
-      price: 0,
     };
   },
   created() {
@@ -63,6 +62,9 @@ export default {
   computed: {
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
+    },
+    price() {
+      return this.$store.state.builder.price;
     },
   },
 };
