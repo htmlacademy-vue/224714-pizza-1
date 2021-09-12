@@ -14,7 +14,7 @@
       <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isLogged">
-      <router-link class="header__login" to="`${loginLink}`"
+      <router-link class="header__login" :to="loginLink"
         ><span>Войти</span></router-link
       >
     </div>
@@ -38,7 +38,9 @@
         </picture>
         <span>Василий Ложкин</span>
       </router-link>
-      <a href="#" class="header__logout"><span>Выйти</span></a>
+      <router-link to="/" class="header__logout"
+        ><span>Выйти</span></router-link
+      >
     </div>
   </header>
 </template>
