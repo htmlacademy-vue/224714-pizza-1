@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "AppLayoutHeader",
   data() {
@@ -55,12 +56,18 @@ export default {
   },
   created() {},
   computed: {
+    ...mapState("Builder", {
+      price: "price",
+    }),
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
     },
-    price() {
-      return this.$store.state.builder.price;
-    },
+    // price() {
+    //   return this.$store.state.builder.price;
+    // },
+    // price2() {
+    //   return this.price;
+    // },
   },
 };
 </script>

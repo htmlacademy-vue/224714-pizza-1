@@ -6,10 +6,7 @@ import modules from "@/store/modules";
 
 Vue.use(Vuex);
 
-const state = () => ({
-  pizza: [],
-  user: [],
-});
+const state = () => ({});
 
 const getters = {};
 
