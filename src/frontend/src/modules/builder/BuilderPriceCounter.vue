@@ -8,17 +8,20 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "BuilderPriceCounter",
   props: {
-    price: {
-      type: Number,
-      default: 0,
-    },
     isBtnActive: {
       type: Boolean,
       default: false,
     },
+  },
+  computed: {
+    ...mapState("Builder", {
+      price: "price",
+    }),
   },
 };
 </script>

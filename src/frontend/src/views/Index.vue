@@ -126,12 +126,12 @@ export default {
     };
   },
   watch: {
-    price: {
-      immediate: true,
-      handler(newVal) {
-        this.$store.dispatch("Builder/setPrice", newVal);
-      },
-    },
+    // price: {
+    //   immediate: true,
+    //   handler(newVal) {
+    //     this.$store.dispatch("Builder/setPrice", newVal);
+    //   },
+    // },
   },
   created() {},
   mounted() {
@@ -179,7 +179,9 @@ export default {
         ? this.sizes.find((size) => size.value === this.size).multiplier
         : 1;
       let fillingPrice = this.calculateFilling();
-      return multiplier * (doughPrice + saucePrice + fillingPrice);
+      const newPrice = multiplier * (doughPrice + saucePrice + fillingPrice);
+      this.$store.dispatch("Builder/setPrice", newPrice);
+      return newPrice;
     },
     isBtnActive() {
       return !!this.pizzaName.length && !!this.calculateFilling();
