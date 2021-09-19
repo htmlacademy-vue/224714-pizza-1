@@ -129,7 +129,7 @@ export default {
     price: {
       immediate: true,
       handler(newVal) {
-        this.$store.dispatch("builder/setPrice", newVal);
+        this.$store.dispatch("Builder/setPrice", newVal);
       },
     },
   },

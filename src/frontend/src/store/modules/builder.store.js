@@ -6,12 +6,12 @@ export default {
   },
   mutations: {
     setPrice(state, payload) {
-      state.price = payload.price;
+      state.price = payload;
     },
   },
   actions: {
-    setPrice(state, payload) {
-      this.commit("setPrice", payload);
+    setPrice(context, payload) {
+      context.commit("setPrice", payload);
     },
   },
 };

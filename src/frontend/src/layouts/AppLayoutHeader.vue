@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import EventBus from "@/common/event-bus";
 export default {
   name: "AppLayoutHeader",
   data() {
@@ -54,11 +53,7 @@ export default {
       isLogged: false,
     };
   },
-  created() {
-    EventBus.$on("priceChanged", (newPrice) => {
-      this.price = newPrice;
-    });
-  },
+  created() {},
   computed: {
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
