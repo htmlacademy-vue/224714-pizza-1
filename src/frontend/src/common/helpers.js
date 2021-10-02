@@ -64,3 +64,18 @@ export const pizzaFillingMultipleClassMapping = {
   2: "pizza__filling--second",
   3: "pizza__filling--third",
 };
+
+export const calculateFilling = (filling, ingredients) => {
+  let fillingTotal = 0;
+  if (filling === undefined) {
+    return 0;
+  }
+  Object.keys(filling).forEach((fillingItem) => {
+    const fillingItemPrice = ingredients.find(
+      (ingredient) => ingredient.value === fillingItem
+    ).price;
+    const fillingItemQuantity = filling[fillingItem];
+    fillingTotal += fillingItemPrice * fillingItemQuantity;
+  });
+  return fillingTotal;
+};

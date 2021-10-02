@@ -6,16 +6,16 @@
           <h1 class="title title--big">Конструктор пиццы</h1>
           <BuilderDoughSelector
             :doughs="doughs"
-            @changeDough="changePizzaOption('dough', $event)"
+            @changeDough="changePizzaOption('Dough', $event)"
           ></BuilderDoughSelector>
           <BuilderSizeSelector
             :sizes="sizes"
-            @changeSize="changePizzaOption('size', $event)"
+            @changeSize="changePizzaOption('Size', $event)"
           ></BuilderSizeSelector>
           <BuilderIngredientsSelector
             :sauces="sauces"
             :ingredients="ingredients"
-            @changeSauce="changePizzaOption('sauce', $event)"
+            @changeSauce="changePizzaOption('Sauce', $event)"
             @changeFilling="changePizzaFilling($event)"
           ></BuilderIngredientsSelector>
 
@@ -26,18 +26,13 @@
                 type="text"
                 name="pizza_name"
                 placeholder="Введите название пиццы"
-                v-model="pizzaName"
+                v-model="$store.state.Builder.pizzaName"
               />
             </label>
 
-            <BuilderPizzaView
-              :dough="dough"
-              :sauce="sauce"
-              :filling="filling"
-            ></BuilderPizzaView>
+            <BuilderPizzaView></BuilderPizzaView>
 
             <BuilderPriceCounter
-              :price="price"
               :isBtnActive="isBtnActive"
             ></BuilderPriceCounter>
           </div>
@@ -50,20 +45,14 @@
 
 <script>
 import misc from "@/static/misc.json";
-import pizza from "@/static/pizza.json";
 import user from "@/static/user.json";
-import {
-  doughMap,
-  sizeMap,
-  sauceMap,
-  ingredientMap,
-} from "@/common/helpers.js";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-import EventBus from "@/common/event-bus";
+// import EventBus from "@/common/event-bus";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Index",
@@ -75,116 +64,63 @@ export default {
     BuilderPriceCounter,
   },
   data() {
-    const doughs = pizza.dough.map((doughItem, index) => {
-      return {
-        name: doughItem.name,
-        image: doughItem.image,
-        description: doughItem.description,
-        price: doughItem.price,
-        value: doughMap.find((item) => item.name === doughItem.name).value,
-        isChecked: index === 0,
-      };
-    });
-    const sizes = pizza.sizes.map((sizeItem, index) => {
-      return {
-        name: sizeItem.name,
-        image: sizeItem.image,
-        multiplier: sizeItem.multiplier,
-        value: sizeMap.find((item) => item.multiplier === sizeItem.multiplier)
-          .value,
-        isChecked: index === 1,
-      };
-    });
-    const sauces = pizza.sauces.map((sauceItem, index) => {
-      return {
-        name: sauceItem.name,
-        price: sauceItem.price,
-        value: sauceMap.find((item) => item.name === sauceItem.name).value,
-        isChecked: index === 0,
-      };
-    });
-    const ingredients = pizza.ingredients.map((ingredientItem) => {
-      return {
-        name: ingredientItem.name,
-        price: ingredientItem.price,
-        value: ingredientMap.find((item) => item.name === ingredientItem.name)
-          .value,
-      };
-    });
     return {
       misc,
       user,
-      sauces,
-      doughs,
-      sizes,
-      ingredients,
-      dough: doughs.find((dough) => dough.isChecked).value,
-      sauce: sauces.find((sauce) => sauce.isChecked).value,
-      size: sizes.find((size) => size.isChecked).value,
-      filling: {},
-      pizzaName: ``,
     };
   },
-  watch: {
-    // price: {
-    //   immediate: true,
-    //   handler(newVal) {
-    //     this.$store.dispatch("Builder/setPrice", newVal);
-    //   },
-    // },
+  created() {
+    this.$store.dispatch("init");
   },
-  created() {},
   mounted() {
-    EventBus.$on("ingredientDropped", (ingredient) => {
-      let newValue;
-      if (this.filling[ingredient]) {
-        newValue = this.filling[ingredient] + 1;
-      } else {
-        newValue = 1;
-      }
-      this.changePizzaFilling({ name: ingredient, value: newValue });
-    });
+    //EventBus.$on("ingredientDropped", (ingredient) => {
+    // let newValue;
+    // if (this.filling[ingredient]) {
+    //   newValue = this.filling[ingredient] + 1;
+    // } else {
+    //   newValue = 1;
+    // }
+    // this.changePizzaFilling({ name: ingredient, value: newValue });
+    //});
   },
   methods: {
     changePizzaOption(option, newValue) {
-      this[option] = newValue;
+      const context = `Builder/set${option}`;
+      this.$store.dispatch(context, newValue);
     },
     changePizzaFilling(ingredient) {
-      this.$set(this.filling, ingredient.name, ingredient.value);
-    },
-    calculateFilling() {
-      let fillingTotal = 0;
-      if (this.filling === undefined) {
-        return 0;
-      }
-      Object.keys(this.filling).forEach((fillingItem) => {
-        const fillingItemPrice = this.ingredients.find(
-          (ingredient) => ingredient.value === fillingItem
-        ).price;
-        const fillingItemQuantity = this.filling[fillingItem];
-        fillingTotal += fillingItemPrice * fillingItemQuantity;
-      });
-      return fillingTotal;
+      // this.$set(this.filling, ingredient.name, ingredient.value);
+      console.log(ingredient);
+      this.$store.dispatch("Builder/setFilling", ingredient);
     },
   },
   computed: {
-    price() {
-      let doughPrice = this.doughs
-        ? this.doughs.find((dough) => dough.value === this.dough).price
-        : 0;
-      let saucePrice = this.sauces
-        ? this.sauces.find((sauce) => sauce.value === this.sauce).price
-        : 0;
-      let multiplier = this.sizes
-        ? this.sizes.find((size) => size.value === this.size).multiplier
-        : 1;
-      let fillingPrice = this.calculateFilling();
-      const newPrice = multiplier * (doughPrice + saucePrice + fillingPrice);
-      this.$store.dispatch("Builder/setPrice", newPrice);
-      return newPrice;
+    ...mapState(["pizza"]),
+    ...mapState("Builder", ["filling", "pizzaName"]),
+    ...mapGetters("Builder", ["doughs", "sauces", "sizes", "ingredients"]),
+    dough() {
+      if (!this.$store.state.Builder.dough) {
+        const currentDough = this.doughs.find((dough) => dough.isChecked).value;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
+      return this.$store.state.Builder.dough;
+    },
+    sauce() {
+      if (!this.$store.state.Builder.sauce) {
+        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
+        this.$store.dispatch("Builder/setSauce", currentSauce);
+      }
+      return this.$store.state.Builder.sauce;
+    },
+    size() {
+      if (!this.$store.state.Builder.size) {
+        const currentSize = this.sizes.find((size) => size.isChecked).value;
+        this.$store.dispatch("Builder/setSize", currentSize);
+      }
+      return this.$store.state.Builder.size;
     },
     isBtnActive() {
-      return !!this.pizzaName.length && !!this.calculateFilling();
+      return !!this.pizzaName.length && !!this.$store.state.Builder.filling;
     },
   },
 };

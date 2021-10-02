@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderPriceCounter",
@@ -19,7 +19,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Builder", {
+    ...mapGetters("Builder", {
       price: "price",
     }),
   },

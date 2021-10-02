@@ -9,7 +9,6 @@
             @changeSauce="$emit(`changeSauce`, $event)"
           ></BuildSaucesSelector>
           <BuildFillingSelector
-            :ingredients="ingredients"
             @changeFilling="$emit(`changeFilling`, $event)"
           ></BuildFillingSelector>
         </div>
@@ -29,10 +28,6 @@ export default {
   },
   props: {
     sauces: {
-      type: Array,
-      required: true,
-    },
-    ingredients: {
       type: Array,
       required: true,
     },
