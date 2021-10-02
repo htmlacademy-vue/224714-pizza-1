@@ -120,7 +120,9 @@ export default {
       return this.$store.state.Builder.size;
     },
     isBtnActive() {
-      return !!this.pizzaName.length && !!this.$store.state.Builder.filling;
+      const isFillingEmpty =
+        Object.keys(this.$store.state.Builder.filling).length === 0;
+      return !!this.pizzaName.length && !isFillingEmpty;
     },
   },
 };
