@@ -16,7 +16,6 @@
             :sauces="sauces"
             :ingredients="ingredients"
             @changeSauce="changePizzaOption('Sauce', $event)"
-            @changeFilling="changePizzaFilling($event)"
           ></BuilderIngredientsSelector>
 
           <div class="content__pizza">
@@ -51,7 +50,6 @@ import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-// import EventBus from "@/common/event-bus";
 import { mapState, mapGetters } from "vuex";
 
 export default {
@@ -72,26 +70,10 @@ export default {
   created() {
     this.$store.dispatch("init");
   },
-  mounted() {
-    //EventBus.$on("ingredientDropped", (ingredient) => {
-    // let newValue;
-    // if (this.filling[ingredient]) {
-    //   newValue = this.filling[ingredient] + 1;
-    // } else {
-    //   newValue = 1;
-    // }
-    // this.changePizzaFilling({ name: ingredient, value: newValue });
-    //});
-  },
   methods: {
     changePizzaOption(option, newValue) {
       const context = `Builder/set${option}`;
       this.$store.dispatch(context, newValue);
-    },
-    changePizzaFilling(ingredient) {
-      // this.$set(this.filling, ingredient.name, ingredient.value);
-      console.log(ingredient);
-      this.$store.dispatch("Builder/setFilling", ingredient);
     },
   },
   computed: {

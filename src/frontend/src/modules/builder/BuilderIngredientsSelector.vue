@@ -8,9 +8,7 @@
             :sauces="sauces"
             @changeSauce="$emit(`changeSauce`, $event)"
           ></BuildSaucesSelector>
-          <BuildFillingSelector
-            @changeFilling="$emit(`changeFilling`, $event)"
-          ></BuildFillingSelector>
+          <BuildFillingSelector></BuildFillingSelector>
         </div>
       </div>
     </div>

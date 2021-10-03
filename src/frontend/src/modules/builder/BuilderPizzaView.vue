@@ -19,28 +19,15 @@
 <script>
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
-import EventBus from "@/common/event-bus";
 import { doughClassMapping } from "@/common/helpers";
 import { mapState } from "vuex";
 
 export default {
   name: "BuilderPizzaView",
   components: { BuilderFillingItemVisualization, AppDrop },
-  props: {
-    // filling: {
-    //   type: Object,
-    //   required: true,
-    // },
-  },
-  data() {
-    return {
-      Ingredients: [],
-    };
-  },
   methods: {
     addIngredientToPizzaPicture(ingredient) {
-      this.Ingredients.push(ingredient.value);
-      EventBus.$emit("ingredientDropped", ingredient.value);
+      this.$store.dispatch("Builder/plusOneIngredient", ingredient.value);
     },
   },
   computed: {

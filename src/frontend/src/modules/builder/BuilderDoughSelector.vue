@@ -25,15 +25,13 @@
 
 <script>
 import RadioButton from "@/components/RadioButton";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
-  props: {
-    doughs: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["doughs"]),
   },
 };
 </script>

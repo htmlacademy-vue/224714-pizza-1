@@ -9,8 +9,6 @@
     <ItemCounter
       :name="`ingredients`"
       :ingredient="ingredient.value"
-      @valueChanged="$emit(`changeFilling`, $event)"
-      @disableDragging="isDraggable = !$event"
     ></ItemCounter>
   </li>
 </template>
@@ -19,6 +17,7 @@
 import ItemCounter from "@/components/ItemCounter";
 import SelectorItem from "@/components/SelectorItem";
 import AppDrag from "@/components/AppDrag";
+import { FILLING_COUNTER_MAX_VALUE } from "@/common/const";
 
 export default {
   name: "BuildFillingListItem",
@@ -29,10 +28,13 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      isDraggable: true,
-    };
+  computed: {
+    isDraggable() {
+      return (
+        this.$store.state.Builder.filling[this.ingredient.value] !==
+        FILLING_COUNTER_MAX_VALUE
+      );
+    },
   },
 };
 </script>

@@ -21,12 +21,6 @@
 </template>
 
 <script>
-import {
-  FILLING_COUNTER_MIN_VALUE,
-  FILLING_COUNTER_MAX_VALUE,
-} from "../common/const";
-import EventBus from "@/common/event-bus";
-
 export default {
   name: "ItemCounter",
   props: {
@@ -34,52 +28,22 @@ export default {
       type: String,
       required: true,
     },
-    value: {
-      type: Number,
-      default: 0,
-    },
     ingredient: {
       type: String,
     },
   },
-  data() {
-    return {
-      val: this.value,
-    };
-  },
   methods: {
     plusOne() {
-      if (this.val === FILLING_COUNTER_MAX_VALUE) {
-        return false;
-      }
-      this.val += 1;
-      this.$emit("valueChanged", { value: this.val, name: this.ingredient });
+      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient);
     },
     minusOne() {
-      if (this.val === FILLING_COUNTER_MIN_VALUE) {
-        return false;
-      }
-      this.val -= 1;
-      this.$emit("valueChanged", { value: this.val, name: this.ingredient });
+      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient);
     },
   },
-  watch: {
-    val: function (val) {
-      if (val === FILLING_COUNTER_MAX_VALUE) {
-        this.$emit("disableDragging", true);
-        console.log("false " + val);
-      } else {
-        this.$emit("disableDragging", false);
-      }
+  computed: {
+    val() {
+      return this.$store.state.Builder.filling[this.ingredient] || 0;
     },
-  },
-  mounted() {
-    EventBus.$on("ingredientDropped", (ingredient) => {
-      if (this.ingredient === ingredient) {
-        console.log(this.ingredient);
-        this.plusOne();
-      }
-    });
   },
 };
 </script>
