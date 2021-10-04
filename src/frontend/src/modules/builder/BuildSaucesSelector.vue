@@ -11,7 +11,6 @@
         :name="`sauce`"
         :value="sauce.value"
         :isChecked="sauce.isChecked"
-        @valueChanged="$emit('changeSauce', $event)"
       ></RadioButton>
       <span>{{ sauce.name }}</span>
     </label>

@@ -10,10 +10,9 @@
           :key="i"
         >
           <RadioButton
-            :name="`diameter`"
+            :name="`size`"
             :value="size.value"
             :isChecked="size.isChecked"
-            @valueChanged="$emit('changeSize', $event)"
           ></RadioButton>
           <span>{{ size.name }}</span>
         </label>

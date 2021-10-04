@@ -4,18 +4,11 @@
       <form action="#" method="post">
         <div class="content__wrapper">
           <h1 class="title title--big">Конструктор пиццы</h1>
-          <BuilderDoughSelector
-            :doughs="doughs"
-            @changeDough="changePizzaOption('Dough', $event)"
-          ></BuilderDoughSelector>
-          <BuilderSizeSelector
-            :sizes="sizes"
-            @changeSize="changePizzaOption('Size', $event)"
-          ></BuilderSizeSelector>
+          <BuilderDoughSelector :doughs="doughs"></BuilderDoughSelector>
+          <BuilderSizeSelector :sizes="sizes"></BuilderSizeSelector>
           <BuilderIngredientsSelector
             :sauces="sauces"
             :ingredients="ingredients"
-            @changeSauce="changePizzaOption('Sauce', $event)"
           ></BuilderIngredientsSelector>
 
           <div class="content__pizza">

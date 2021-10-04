@@ -79,3 +79,7 @@ export const calculateFilling = (filling, ingredients) => {
   });
   return fillingTotal;
 };
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
