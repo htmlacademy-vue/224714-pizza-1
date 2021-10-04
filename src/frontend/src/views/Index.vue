@@ -90,7 +90,7 @@ export default {
     size() {
       if (!this.$store.state.Builder.size) {
         const currentSize = this.sizes.find((size) => size.isChecked).value;
-        this.$store.dispatch("Builder/setSize", currentSize);
+        this.$store.dispatch("Builder/setDiameter", currentSize);
       }
       return this.$store.state.Builder.size;
     },

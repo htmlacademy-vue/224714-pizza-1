@@ -99,7 +99,7 @@ export default {
     setSauce(state, payload) {
       state.sauce = payload;
     },
-    setSize(state, payload) {
+    setDiameter(state, payload) {
       state.size = payload;
     },
     setFilling(state, payload) {
@@ -127,8 +127,8 @@ export default {
     setSauce(context, payload) {
       context.commit("setSauce", payload);
     },
-    setSize(context, payload) {
-      context.commit("setSize", payload);
+    setDiameter(context, payload) {
+      context.commit("setDiameter", payload);
     },
     setFilling(context, payload) {
       context.commit("setFilling", payload);

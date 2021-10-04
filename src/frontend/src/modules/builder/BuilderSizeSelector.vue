@@ -10,7 +10,7 @@
           :key="i"
         >
           <RadioButton
-            :name="`size`"
+            :name="`diameter`"
             :value="size.value"
             :isChecked="size.isChecked"
           ></RadioButton>
