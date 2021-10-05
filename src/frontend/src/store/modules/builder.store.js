@@ -88,6 +88,17 @@ export default {
       let totalPrice = multiplier * (doughPrice + saucePrice + fillingPrice);
       return totalPrice;
     },
+    pizza(state, getters) {
+      return {
+        dough: state.dough,
+        sauce: state.sauce,
+        size: state.size,
+        price: getters.price,
+        filling: state.filling,
+        name: state.pizzaName,
+        id: new Date().getTime(),
+      };
+    },
   },
   mutations: {
     setPrice(state, payload) {

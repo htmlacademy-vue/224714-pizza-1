@@ -1,7 +1,12 @@
 <template>
   <div class="content__result">
     <p>Итого: {{ price }} ₽</p>
-    <button type="button" class="button" :disabled="!isBtnActive">
+    <button
+      type="button"
+      class="button"
+      :disabled="!isBtnActive"
+      @click="addPizza"
+    >
       Готовьте!
     </button>
   </div>
@@ -16,6 +21,15 @@ export default {
     isBtnActive: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    addPizza() {
+      console.log(this.$store.getters["Builder/pizza"]);
+      this.$store.dispatch(
+        "Cart/addPizza",
+        this.$store.getters["Builder/pizza"]
+      );
     },
   },
   computed: {
