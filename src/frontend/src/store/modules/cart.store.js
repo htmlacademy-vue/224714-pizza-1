@@ -5,17 +5,19 @@ export default {
   },
   mutations: {
     //TODO сделать через Vue.set
-    addPizza(state, pizza) {
-      state.cart = state.cart.push(pizza);
-    },
+    // addPizza(state, pizza) {
+    //   state.cart = state.cart.push(pizza);
+    // },
     removePizza(state, pizza) {
-      state.cart = [].concat(state.cart.filter((pizzaItem) => pizzaItem.id !== pizza.id));
+      state.cart = [].concat(
+        state.cart.filter((pizzaItem) => pizzaItem.id !== pizza.id)
+      );
     },
   },
   actions: {
-    addPizza(context, pizza) {
-      context.commit("addPizza", pizza);
-    },
+    // addPizza(context, pizza) {
+    //   context.commit("addPizza", pizza);
+    // },
     removePizza(context, pizza) {
       context.commit("removePizza", pizza);
     },
