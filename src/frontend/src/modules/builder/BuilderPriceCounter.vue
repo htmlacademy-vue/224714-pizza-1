@@ -30,6 +30,7 @@ export default {
         "Cart/addPizza",
         this.$store.getters["Builder/pizza"]
       );
+      this.$router.push({ name: `Cart` });
     },
   },
   computed: {
