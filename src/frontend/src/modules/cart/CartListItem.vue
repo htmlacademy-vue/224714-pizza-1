@@ -9,11 +9,11 @@
         alt="Капричоза"
       />
       <div class="product__text">
-        <h2>Капричоза</h2>
+        <h2>{{ pizzaNameCapitalized }}</h2>
         <ul>
-          <li>30 см, на тонком тесте</li>
-          <li>Соус: томатный</li>
-          <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
+          <li>30 см, {{ doughText }}</li>
+          <li>Соус: {{ sauceRussian }}</li>
+          <li>Начинка: {{ fillingRussian }}</li>
         </ul>
       </div>
     </div>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="cart-list__price">
-      <b>782 ₽</b>
+      <b>{{ pizza.price }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -42,8 +42,43 @@
 </template>
 
 <script>
+import {
+  ingredientMap,
+  sauceMap,
+  doughCartTextMap,
+  capitalizeFirstLetter,
+} from "@/common/helpers";
+
 export default {
   name: "CartListItem",
+  props: {
+    pizza: {
+      required: true,
+      type: Object,
+    },
+  },
+  computed: {
+    pizzaNameCapitalized() {
+      return capitalizeFirstLetter(this.pizza.name);
+    },
+    sauceRussian() {
+      return sauceMap
+        .find((sauce) => sauce.value === this.pizza.sauce)
+        .name.toLowerCase();
+    },
+    fillingRussian() {
+      return Object.keys(this.pizza.filling)
+        .map((fillingItem) => {
+          return ingredientMap
+            .find((item) => item.value === fillingItem)
+            .name.toLowerCase();
+        })
+        .join(`, `);
+    },
+    doughText() {
+      return doughCartTextMap[this.pizza.dough];
+    },
+  },
 };
 </script>
 

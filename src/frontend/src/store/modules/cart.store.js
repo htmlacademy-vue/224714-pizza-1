@@ -6,7 +6,8 @@ export default {
   mutations: {
     //TODO сделать через Vue.set
     addPizza(state, pizza) {
-      state.cart = [].concat(state.cart.push(pizza));
+      state.cart.push(pizza);
+      console.log(state.cart);
     },
     removePizza(state, pizza) {
       state.cart = [].concat(

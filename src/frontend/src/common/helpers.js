@@ -9,6 +9,11 @@ export const doughMap = [
   },
 ];
 
+export const doughCartTextMap = {
+  light: "на тонком тесте",
+  large: "на толстом тесте",
+};
+
 export const sizeMap = [
   {
     multiplier: 1,
