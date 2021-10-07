@@ -6,12 +6,12 @@
         class="product__img"
         width="56"
         height="56"
-        alt="Капричоза"
+        :alt="pizzaNameCapitalized"
       />
       <div class="product__text">
         <h2>{{ pizzaNameCapitalized }}</h2>
         <ul>
-          <li>30 см, {{ doughText }}</li>
+          <li>{{ sizeRussian }}, {{ doughText }}</li>
           <li>Соус: {{ sauceRussian }}</li>
           <li>Начинка: {{ fillingRussian }}</li>
         </ul>
@@ -46,6 +46,7 @@ import {
   ingredientMap,
   sauceMap,
   doughCartTextMap,
+  sizeTextMap,
   capitalizeFirstLetter,
 } from "@/common/helpers";
 
@@ -65,6 +66,9 @@ export default {
       return sauceMap
         .find((sauce) => sauce.value === this.pizza.sauce)
         .name.toLowerCase();
+    },
+    sizeRussian() {
+      return sizeTextMap[this.pizza.size];
     },
     fillingRussian() {
       return Object.keys(this.pizza.filling)

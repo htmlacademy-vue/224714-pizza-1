@@ -29,6 +29,12 @@ export const sizeMap = [
   },
 ];
 
+export const sizeTextMap = {
+  small: "23 см",
+  normal: "32 см",
+  big: "45 см",
+};
+
 export const sauceMap = [
   {
     name: "Томатный",

@@ -8,7 +8,10 @@
     </AppDrag>
     <ItemCounter
       :name="`ingredients`"
+      :value="value"
       :ingredient="ingredient.value"
+      @plusOne="plusOne($event)"
+      @minusOne="minusOne($event)"
     ></ItemCounter>
   </li>
 </template>
@@ -28,12 +31,27 @@ export default {
       required: true,
     },
   },
+  methods: {
+    plusOne(ingredient) {
+      if (ingredient === this.ingredient.value) {
+        this.$store.dispatch("Builder/plusOneIngredient", ingredient);
+      }
+    },
+    minusOne(ingredient) {
+      if (ingredient === this.ingredient.value) {
+        this.$store.dispatch("Builder/minusOneIngredient", ingredient);
+      }
+    },
+  },
   computed: {
     isDraggable() {
       return (
         this.$store.state.Builder.filling[this.ingredient.value] !==
         FILLING_COUNTER_MAX_VALUE
       );
+    },
+    value() {
+      return this.$store.state.Builder.filling[this.ingredient.value] || 0;
     },
   },
 };

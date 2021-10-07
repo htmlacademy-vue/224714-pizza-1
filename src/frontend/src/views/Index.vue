@@ -63,12 +63,6 @@ export default {
   created() {
     this.$store.dispatch("init");
   },
-  methods: {
-    changePizzaOption(option, newValue) {
-      const context = `Builder/set${option}`;
-      this.$store.dispatch(context, newValue);
-    },
-  },
   computed: {
     ...mapState(["pizza"]),
     ...mapState("Builder", ["filling", "pizzaName"]),
