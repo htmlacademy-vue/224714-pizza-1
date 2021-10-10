@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   name: "AppLayoutHeader",
   data() {
@@ -56,13 +56,13 @@ export default {
   },
   created() {},
   computed: {
-    ...mapGetters("Builder", { price: "price" }),
+    // ...mapGetters("Builder", { price: "price" }),
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
     },
-    // price() {
-    //   return this.$store.state.builder.price;
-    // },
+    price() {
+      return this.$store.getters["Builder/price"];
+    },
     // price2() {
     //   return this.price;
     // },

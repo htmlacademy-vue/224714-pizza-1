@@ -6,16 +6,19 @@ import {
   FILLING_COUNTER_MAX_VALUE,
 } from "@/common/const";
 
-export default {
-  namespaced: true,
-  state: {
+const getDefaultState = () => {
+  return {
     dough: ``,
     sauce: ``,
     size: ``,
     filling: {},
-    ingredients: [],
     pizzaName: ``,
-  },
+  };
+};
+
+export default {
+  namespaced: true,
+  state: getDefaultState(),
   getters: {
     doughs(state, getters, rootState) {
       if (rootState.pizza.dough) {
@@ -76,6 +79,7 @@ export default {
         getters.doughs && state.dough
           ? getters.doughs.find((dough) => dough.value === state.dough).price
           : 0;
+      console.log(state.dough);
       let saucePrice =
         getters.sauces && state.sauce
           ? getters.sauces.find((sauce) => sauce.value === state.sauce).price
@@ -85,8 +89,7 @@ export default {
           ? getters.sizes.find((size) => size.value === state.size).multiplier
           : 1;
       let fillingPrice = calculateFilling(state.filling, getters.ingredients);
-      let totalPrice = multiplier * (doughPrice + saucePrice + fillingPrice);
-      return totalPrice;
+      return multiplier * (doughPrice + saucePrice + fillingPrice);
     },
     pizza(state, getters) {
       return {
@@ -116,6 +119,12 @@ export default {
     setFilling(state, payload) {
       Vue.set(state.filling, payload.name, payload.value);
     },
+    setPizzaName(state, payload) {
+      state.pizzaName = payload;
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
+    },
     plusOneIngredient(state, payload) {
       const value = state.filling[payload] ? state.filling[payload] : 0;
       if (value === FILLING_COUNTER_MAX_VALUE) {
@@ -144,11 +153,30 @@ export default {
     setFilling(context, payload) {
       context.commit("setFilling", payload);
     },
+    setPizzaName(context, payload) {
+      context.commit("setPizzaName", payload);
+    },
     plusOneIngredient(context, payload) {
       context.commit("plusOneIngredient", payload);
     },
     minusOneIngredient(context, payload) {
       context.commit("minusOneIngredient", payload);
+    },
+    resetState(context, payload) {
+      context.commit("resetState", payload);
+    },
+    loadPizza(context, pizza) {
+      context.commit("resetState");
+      context.commit("setDough", pizza.dough);
+      context.commit("setSauce", pizza.sauce);
+      context.commit("setDiameter", pizza.size);
+      context.commit("setPizzaName", pizza.name);
+      for (let fillingName in pizza.filling) {
+        context.commit("setFilling", {
+          name: fillingName,
+          value: pizza.filling[fillingName],
+        });
+      }
     },
   },
 };

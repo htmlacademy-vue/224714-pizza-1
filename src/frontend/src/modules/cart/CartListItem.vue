@@ -36,7 +36,9 @@
     </div>
 
     <div class="cart-list__button">
-      <button type="button" class="cart-list__edit">Изменить</button>
+      <button type="button" class="cart-list__edit" @click="changePizza">
+        Изменить
+      </button>
     </div>
   </li>
 </template>
@@ -56,6 +58,12 @@ export default {
     pizza: {
       required: true,
       type: Object,
+    },
+  },
+  methods: {
+    changePizza() {
+      this.$store.dispatch("Builder/loadPizza", this.pizza);
+      this.$router.push({ name: `Index` });
     },
   },
   computed: {

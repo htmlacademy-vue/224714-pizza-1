@@ -68,9 +68,11 @@ export default {
     ...mapState("Builder", ["filling", "pizzaName"]),
     ...mapGetters("Builder", ["doughs", "sauces", "sizes", "ingredients"]),
     dough() {
+      console.log(this.$store.state.Builder.dough);
       if (!this.$store.state.Builder.dough) {
         const currentDough = this.doughs.find((dough) => dough.isChecked).value;
         this.$store.dispatch("Builder/setDough", currentDough);
+        console.log(55);
       }
       return this.$store.state.Builder.dough;
     },

@@ -16,23 +16,7 @@
           <CartForm></CartForm>
         </div>
       </main>
-      <section class="footer">
-        <div class="footer__more">
-          <router-link class="button button--border button--arrow" to="/"
-            >Хочу еще одну
-          </router-link>
-        </div>
-        <p class="footer__text">
-          Перейти к конструктору<br />чтоб собрать ещё одну пиццу
-        </p>
-        <div class="footer__price">
-          <b>Итого: 2 228 ₽</b>
-        </div>
-
-        <div class="footer__submit">
-          <button type="submit" class="button">Оформить заказ</button>
-        </div>
-      </section>
+      <CartFooter></CartFooter>
     </form>
   </div>
 </template>
@@ -42,9 +26,11 @@ import CartList from "@/modules/cart/CartList";
 import CartAdditional from "@/modules/cart/CartAdditional";
 import CartForm from "@/modules/cart/CartForm";
 import CartEmpty from "@/modules/cart/CartEmpty";
+import CartFooter from "@/modules/cart/CartFooter";
 export default {
   name: "Cart",
   components: {
+    CartFooter,
     CartEmpty,
     CartList,
     CartAdditional,
