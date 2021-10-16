@@ -18,21 +18,18 @@
       </div>
     </div>
 
-    <div class="counter cart-list__counter">
-      <button type="button" class="counter__button counter__button--minus">
-        <span class="visually-hidden">Меньше</span>
-      </button>
-      <input type="text" name="counter" class="counter__input" value="1" />
-      <button
-        type="button"
-        class="counter__button counter__button--plus counter__button--orange"
-      >
-        <span class="visually-hidden">Больше</span>
-      </button>
-    </div>
+    <ItemCounter
+      :name="`cart-list`"
+      :value="pizza.quantity"
+      :item="pizza.id"
+      :min-value="0"
+      :max-value="Infinity"
+      @plusOne="plusOnePizza($event)"
+      @minusOne="minusOnePizza($event)"
+    ></ItemCounter>
 
     <div class="cart-list__price">
-      <b>{{ pizza.price }} ₽</b>
+      <b>{{ pizzaSubSum }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -51,9 +48,11 @@ import {
   sizeTextMap,
   capitalizeFirstLetter,
 } from "@/common/helpers";
+import ItemCounter from "@/components/ItemCounter";
 
 export default {
   name: "CartListItem",
+  components: { ItemCounter },
   props: {
     pizza: {
       required: true,
@@ -64,6 +63,16 @@ export default {
     changePizza() {
       this.$store.dispatch("Builder/loadPizza", this.pizza);
       this.$router.push({ name: `Index` });
+    },
+    plusOnePizza(pizzaId) {
+      if (this.pizza.id === pizzaId) {
+        this.$store.dispatch(`Cart/plusOnePizza`, pizzaId);
+      }
+    },
+    minusOnePizza(pizzaId) {
+      if (this.pizza.id === pizzaId) {
+        this.$store.dispatch(`Cart/minusOnePizza`, pizzaId);
+      }
     },
   },
   computed: {
@@ -89,6 +98,9 @@ export default {
     },
     doughText() {
       return doughCartTextMap[this.pizza.dough];
+    },
+    pizzaSubSum() {
+      return this.pizza.price * this.pizza.quantity;
     },
   },
 };

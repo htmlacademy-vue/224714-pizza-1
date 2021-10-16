@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderPriceCounter",
@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     addPizza() {
-      console.log(this.$store.getters["Builder/pizza"]);
       this.$store.dispatch(
         "Cart/addPizza",
         this.$store.getters["Builder/pizza"]
@@ -34,9 +33,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("Builder", {
-      price: "price",
-    }),
+    price() {
+      return this.$store.getters["Builder/price"];
+    },
   },
 };
 </script>

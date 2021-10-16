@@ -13,6 +13,7 @@ const getDefaultState = () => {
     size: ``,
     filling: {},
     pizzaName: ``,
+    id: null,
   };
 };
 
@@ -79,7 +80,6 @@ export default {
         getters.doughs && state.dough
           ? getters.doughs.find((dough) => dough.value === state.dough).price
           : 0;
-      console.log(state.dough);
       let saucePrice =
         getters.sauces && state.sauce
           ? getters.sauces.find((sauce) => sauce.value === state.sauce).price
@@ -99,7 +99,7 @@ export default {
         price: getters.price,
         filling: state.filling,
         name: state.pizzaName,
-        id: new Date().getTime(),
+        id: state.id ? state.id : new Date().getTime(),
       };
     },
   },
@@ -121,6 +121,9 @@ export default {
     },
     setPizzaName(state, payload) {
       state.pizzaName = payload;
+    },
+    setId(state, payload) {
+      state.id = payload;
     },
     resetState(state) {
       Object.assign(state, getDefaultState());
@@ -156,11 +159,20 @@ export default {
     setPizzaName(context, payload) {
       context.commit("setPizzaName", payload);
     },
+    setId(context, payload) {
+      context.commit("setId", payload);
+    },
     plusOneIngredient(context, payload) {
       context.commit("plusOneIngredient", payload);
     },
     minusOneIngredient(context, payload) {
       context.commit("minusOneIngredient", payload);
+    },
+    plusOnePizza(context) {
+      context.commit("plusOnePizza");
+    },
+    minusOnePizza(context) {
+      context.commit("minusOnePizza");
     },
     resetState(context, payload) {
       context.commit("resetState", payload);
@@ -171,6 +183,7 @@ export default {
       context.commit("setSauce", pizza.sauce);
       context.commit("setDiameter", pizza.size);
       context.commit("setPizzaName", pizza.name);
+      context.commit("setId", pizza.id);
       for (let fillingName in pizza.filling) {
         context.commit("setFilling", {
           name: fillingName,

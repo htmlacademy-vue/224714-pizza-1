@@ -9,7 +9,9 @@
     <ItemCounter
       :name="`ingredients`"
       :value="value"
-      :ingredient="ingredient.value"
+      :item="ingredient.value"
+      :minValue="minValue"
+      :maxValue="maxValue"
       @plusOne="plusOne($event)"
       @minusOne="minusOne($event)"
     ></ItemCounter>
@@ -20,11 +22,20 @@
 import ItemCounter from "@/components/ItemCounter";
 import SelectorItem from "@/components/SelectorItem";
 import AppDrag from "@/components/AppDrag";
-import { FILLING_COUNTER_MAX_VALUE } from "@/common/const";
+import {
+  FILLING_COUNTER_MAX_VALUE,
+  FILLING_COUNTER_MIN_VALUE,
+} from "@/common/const";
 
 export default {
   name: "BuildFillingListItem",
   components: { SelectorItem, ItemCounter, AppDrag },
+  data() {
+    return {
+      minValue: FILLING_COUNTER_MIN_VALUE,
+      maxValue: FILLING_COUNTER_MAX_VALUE,
+    };
+  },
   props: {
     ingredient: {
       type: Object,

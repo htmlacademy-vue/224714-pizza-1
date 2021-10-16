@@ -7,7 +7,7 @@
             <h1 class="title title--big">Корзина</h1>
           </div>
 
-          <CartEmpty v-if="$store.state.Cart.cart"></CartEmpty>
+          <CartEmpty v-if="$store.state.Cart.pizzas"></CartEmpty>
 
           <CartList></CartList>
 

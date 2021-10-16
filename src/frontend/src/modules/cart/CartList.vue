@@ -17,8 +17,7 @@ export default {
   components: { CartListItem },
   computed: {
     pizzas() {
-      console.log(this.$store.state.Cart.cart);
-      return this.$store.state.Cart.cart;
+      return this.$store.state.Cart.pizzas;
     },
   },
 };

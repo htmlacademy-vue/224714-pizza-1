@@ -4,7 +4,7 @@
       type="button"
       class="counter__button counter__button--disabled counter__button--minus"
       @click="minusOne"
-      :disabled="value === 0"
+      :disabled="value === minValue"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -12,7 +12,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="value === 3"
+      :disabled="value === maxValue"
       @click="plusOne"
     >
       <span class="visually-hidden">Больше</span>
@@ -32,17 +32,23 @@ export default {
       type: Number,
       required: true,
     },
-    ingredient: {
-      type: String,
+    item: {
+      // type: String,
       required: true,
+    },
+    minValue: {
+      type: Number,
+    },
+    maxValue: {
+      type: Number,
     },
   },
   methods: {
     plusOne() {
-      this.$emit("plusOne", this.ingredient);
+      this.$emit("plusOne", this.item);
     },
     minusOne() {
-      this.$emit("minusOne", this.ingredient);
+      this.$emit("minusOne", this.item);
     },
   },
 };
