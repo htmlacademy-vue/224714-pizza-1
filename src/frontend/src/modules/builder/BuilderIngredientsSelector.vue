@@ -4,7 +4,7 @@
       <h2 class="title title--small sheet__title">Выберите ингридиенты</h2>
       <div class="sheet__content ingredients">
         <div class="ingredients__filling">
-          <BuildSaucesSelector :sauces="sauces"></BuildSaucesSelector>
+          <BuildSaucesSelector></BuildSaucesSelector>
           <BuildFillingSelector></BuildFillingSelector>
         </div>
       </div>
@@ -20,12 +20,6 @@ export default {
   components: {
     BuildFillingSelector,
     BuildSaucesSelector,
-  },
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
   },
 };
 </script>

@@ -12,7 +12,7 @@
           <RadioButton
             :name="`dough`"
             :value="dough.value"
-            :isChecked="dough.isChecked"
+            :isChecked="dough.value === currentDough"
           ></RadioButton>
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -31,6 +31,13 @@ export default {
   components: { RadioButton },
   computed: {
     ...mapGetters("Builder", ["doughs"]),
+    currentDough() {
+      if (!this.$store.state.Builder.dough) {
+        const currentDough = this.doughs.find((dough) => dough.isChecked).value;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
+      return this.$store.state.Builder.dough;
+    },
   },
 };
 </script>

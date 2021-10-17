@@ -4,12 +4,9 @@
       <form action="#" method="post">
         <div class="content__wrapper">
           <h1 class="title title--big">Конструктор пиццы</h1>
-          <BuilderDoughSelector :doughs="doughs"></BuilderDoughSelector>
-          <BuilderSizeSelector :sizes="sizes"></BuilderSizeSelector>
-          <BuilderIngredientsSelector
-            :sauces="sauces"
-            :ingredients="ingredients"
-          ></BuilderIngredientsSelector>
+          <BuilderDoughSelector></BuilderDoughSelector>
+          <BuilderSizeSelector></BuilderSizeSelector>
+          <BuilderIngredientsSelector></BuilderIngredientsSelector>
 
           <div class="content__pizza">
             <label class="input">
@@ -43,7 +40,7 @@ import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Index",
@@ -64,30 +61,7 @@ export default {
     this.$store.dispatch("init");
   },
   computed: {
-    ...mapState(["pizza"]),
     ...mapState("Builder", ["filling", "pizzaName"]),
-    ...mapGetters("Builder", ["doughs", "sauces", "sizes", "ingredients"]),
-    dough() {
-      if (!this.$store.state.Builder.dough) {
-        const currentDough = this.doughs.find((dough) => dough.isChecked).value;
-        this.$store.dispatch("Builder/setDough", currentDough);
-      }
-      return this.$store.state.Builder.dough;
-    },
-    sauce() {
-      if (!this.$store.state.Builder.sauce) {
-        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
-        this.$store.dispatch("Builder/setSauce", currentSauce);
-      }
-      return this.$store.state.Builder.sauce;
-    },
-    size() {
-      if (!this.$store.state.Builder.size) {
-        const currentSize = this.sizes.find((size) => size.isChecked).value;
-        this.$store.dispatch("Builder/setDiameter", currentSize);
-      }
-      return this.$store.state.Builder.size;
-    },
     isBtnActive() {
       const isFillingEmpty =
         Object.keys(this.$store.state.Builder.filling).length === 0;

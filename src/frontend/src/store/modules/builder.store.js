@@ -1,10 +1,6 @@
 import { doughMap, ingredientMap, sauceMap, sizeMap } from "@/common/helpers";
 import { calculateFilling } from "@/common/helpers";
 import Vue from "vue";
-import {
-  FILLING_COUNTER_MIN_VALUE,
-  FILLING_COUNTER_MAX_VALUE,
-} from "@/common/const";
 
 const getDefaultState = () => {
   return {
@@ -130,16 +126,10 @@ export default {
     },
     plusOneIngredient(state, payload) {
       const value = state.filling[payload] ? state.filling[payload] : 0;
-      if (value === FILLING_COUNTER_MAX_VALUE) {
-        return false;
-      }
       Vue.set(state.filling, payload, value + 1);
     },
     minusOneIngredient(state, payload) {
       const value = state.filling[payload] ? state.filling[payload] : 0;
-      if (value <= FILLING_COUNTER_MIN_VALUE) {
-        return false;
-      }
       Vue.set(state.filling, payload, value - 1);
     },
   },
