@@ -4,7 +4,7 @@
       <router-link to="/">
         <img
           src="@/assets/img/logo.svg"
-          alt="V!U!E! Pizza logo"
+          alt="V!U!E! Pizza logo222"
           width="90"
           height="40"
         />
