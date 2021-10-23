@@ -4,5 +4,18 @@
   "email": "user@example.com",
   "password": "user@example.com",
   "avatar": "/public/img/users/user.jpg",
-  "phone": "+777 777 777"
+  "phone": "+777 777 777",
+  "addreses": [
+    {
+      "name": "Дом",
+      "street": "Виноградная",
+      "house": "1",
+      "apartment": "12"
+    },
+    {
+      "name": "Рабочий",
+      "street": "Наливкина",
+      "house": "3"
+    }
+  ]
 }

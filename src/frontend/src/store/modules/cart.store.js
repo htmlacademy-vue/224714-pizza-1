@@ -1,11 +1,20 @@
 import Vue from "vue";
 
-export default {
-  namespaced: true,
-  state: {
+const getDefaultState = () => {
+  return {
     pizzas: [],
     misc: {},
-  },
+    delivery: 1,
+    tel: ``,
+    street: ``,
+    house: ``,
+    apartment: ``,
+  };
+};
+
+export default {
+  namespaced: true,
+  state: getDefaultState(),
   getters: {
     totalPizzaPrice(state) {
       return state.pizzas.reduce(
@@ -16,21 +25,30 @@ export default {
     },
     totalMiscPrice(state, getters, rootState) {
       let sum = 0;
-      console.log(Array.from(rootState.misc));
       if (Object.keys(state.misc).length) {
         for (let miscId in state.misc) {
-          console.log(miscId);
-          const price = Array.from(rootState.misc).find(
-            (miscItem) => miscItem.id === miscId
-          ).price;
           const quantity = state.misc[miscId];
-          sum += price * quantity;
+          const price1 = [...rootState.misc].find(
+            (miscItem) => miscItem.id === +miscId
+          ).price;
+          sum += price1 * quantity;
         }
       }
       return sum;
     },
     totalPrice(state, getters) {
       return getters.totalPizzaPrice + getters.totalMiscPrice;
+    },
+    order(state) {
+      return {
+        delivery: state.delivery,
+        tel: state.tel,
+        street: state.street,
+        house: state.house,
+        apartment: state.apartment,
+        pizzas: state.pizzas,
+        misc: state.misc,
+      };
     },
   },
   mutations: {
@@ -58,8 +76,6 @@ export default {
       const samePizzaIndex = state.pizzas
         ? state.pizzas.findIndex((pizza) => pizza.id === pizzaId)
         : null;
-      console.log(pizzaId);
-      console.log(state.pizzas[samePizzaIndex]);
       state.pizzas[samePizzaIndex][`quantity`] += 1;
     },
     minusOnePizza(state, pizzaId) {
@@ -90,6 +106,18 @@ export default {
         Vue.set(state.misc, miscId, quantity);
       }
     },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
+    },
+    setStreet(state, street) {
+      state.street = street;
+    },
+    setHouse(state, house) {
+      state.house = house;
+    },
+    setApartment(state, apartment) {
+      state.apartment = apartment;
+    },
   },
   actions: {
     addPizza(context, pizza) {
@@ -109,6 +137,15 @@ export default {
     },
     minusOneMiscItem(context, miscId) {
       context.commit("minusOneMiscItem", miscId);
+    },
+    resetState(context) {
+      context.commit("resetState");
+    },
+    setFullAddress(context, fullAddress) {
+      const { street, house, apartment } = fullAddress;
+      context.commit("setStreet", street);
+      context.commit("setHouse", house);
+      context.commit("setApartment", apartment);
     },
   },
 };

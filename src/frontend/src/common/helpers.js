@@ -94,3 +94,8 @@ export const calculateFilling = (filling, ingredients) => {
 export const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const deliveries = {
+  1: "Заберу сам",
+  2: "Новый адрес",
+};

@@ -164,8 +164,8 @@ export default {
     minusOnePizza(context) {
       context.commit("minusOnePizza");
     },
-    resetState(context, payload) {
-      context.commit("resetState", payload);
+    resetState(context) {
+      context.commit("resetState");
     },
     loadPizza(context, pizza) {
       context.commit("resetState");

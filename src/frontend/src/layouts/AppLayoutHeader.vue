@@ -4,7 +4,7 @@
       <router-link to="/">
         <img
           src="@/assets/img/logo.svg"
-          alt="V!U!E! Pizza logo222"
+          alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
@@ -48,19 +48,16 @@
 <script>
 export default {
   name: "AppLayoutHeader",
-  data() {
-    return {
-      isLogged: false,
-    };
-  },
   created() {},
   computed: {
-    // ...mapGetters("Builder", { price: "price" }),
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
     },
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
+    },
+    isLogged() {
+      return this.$store.state.Auth.isLogged;
     },
   },
 };

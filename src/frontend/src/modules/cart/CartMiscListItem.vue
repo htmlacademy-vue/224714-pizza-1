@@ -16,7 +16,7 @@
         @minusOne="minusOneMiscItem($event)"
       ></ItemCounter>
       <div class="additional-list__price">
-        <b>{{ miscItem.price }} ₽</b>
+        <b>{{ subTotal }} ₽</b>
       </div>
     </div>
   </li>
@@ -48,6 +48,9 @@ export default {
   computed: {
     value() {
       return this.$store.state.Cart.misc[this.miscItem.id] || 0;
+    },
+    subTotal() {
+      return this.miscItem.price * this.value;
     },
   },
 };
