@@ -8,9 +8,11 @@
     </AppDrag>
     <ItemCounter
       :name="`ingredients`"
-      :ingredient="ingredient.value"
-      @valueChanged="$emit(`changeFilling`, $event)"
-      @disableDragging="isDraggable = !$event"
+      :value="value"
+      :minValue="minValue"
+      :maxValue="maxValue"
+      @plusOne="plusOne()"
+      @minusOne="minusOne()"
     ></ItemCounter>
   </li>
 </template>
@@ -19,20 +21,44 @@
 import ItemCounter from "@/components/ItemCounter";
 import SelectorItem from "@/components/SelectorItem";
 import AppDrag from "@/components/AppDrag";
+import {
+  FILLING_COUNTER_MAX_VALUE,
+  FILLING_COUNTER_MIN_VALUE,
+} from "@/common/const";
 
 export default {
   name: "BuildFillingListItem",
   components: { SelectorItem, ItemCounter, AppDrag },
+  data() {
+    return {
+      minValue: FILLING_COUNTER_MIN_VALUE,
+      maxValue: FILLING_COUNTER_MAX_VALUE,
+    };
+  },
   props: {
     ingredient: {
       type: Object,
       required: true,
     },
   },
-  data() {
-    return {
-      isDraggable: true,
-    };
+  methods: {
+    plusOne() {
+      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.value);
+    },
+    minusOne() {
+      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.value);
+    },
+  },
+  computed: {
+    isDraggable() {
+      return (
+        this.$store.state.Builder.filling[this.ingredient.value] !==
+        FILLING_COUNTER_MAX_VALUE
+      );
+    },
+    value() {
+      return this.$store.state.Builder.filling[this.ingredient.value] || 0;
+    },
   },
 };
 </script>

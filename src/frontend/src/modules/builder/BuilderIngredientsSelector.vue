@@ -4,14 +4,8 @@
       <h2 class="title title--small sheet__title">Выберите ингридиенты</h2>
       <div class="sheet__content ingredients">
         <div class="ingredients__filling">
-          <BuildSaucesSelector
-            :sauces="sauces"
-            @changeSauce="$emit(`changeSauce`, $event)"
-          ></BuildSaucesSelector>
-          <BuildFillingSelector
-            :ingredients="ingredients"
-            @changeFilling="$emit(`changeFilling`, $event)"
-          ></BuildFillingSelector>
+          <BuildSaucesSelector></BuildSaucesSelector>
+          <BuildFillingSelector></BuildFillingSelector>
         </div>
       </div>
     </div>
@@ -26,16 +20,6 @@ export default {
   components: {
     BuildFillingSelector,
     BuildSaucesSelector,
-  },
-  props: {
-    sauces: {
-      type: Array,
-      required: true,
-    },
-    ingredients: {
-      type: Array,
-      required: true,
-    },
   },
 };
 </script>

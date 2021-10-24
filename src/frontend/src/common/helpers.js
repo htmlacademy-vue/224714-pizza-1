@@ -9,6 +9,11 @@ export const doughMap = [
   },
 ];
 
+export const doughCartTextMap = {
+  light: "на тонком тесте",
+  large: "на толстом тесте",
+};
+
 export const sizeMap = [
   {
     multiplier: 1,
@@ -23,6 +28,12 @@ export const sizeMap = [
     value: "big",
   },
 ];
+
+export const sizeTextMap = {
+  small: "23 см",
+  normal: "32 см",
+  big: "45 см",
+};
 
 export const sauceMap = [
   {
@@ -63,4 +74,28 @@ export const defaultPizzaCssClass = "pizza--foundation--small-tomato";
 export const pizzaFillingMultipleClassMapping = {
   2: "pizza__filling--second",
   3: "pizza__filling--third",
+};
+
+export const calculateFilling = (filling, ingredients) => {
+  let fillingTotal = 0;
+  if (filling === undefined) {
+    return 0;
+  }
+  Object.keys(filling).forEach((fillingItem) => {
+    const fillingItemPrice = ingredients.find(
+      (ingredient) => ingredient.value === fillingItem
+    ).price;
+    const fillingItemQuantity = filling[fillingItem];
+    fillingTotal += fillingItemPrice * fillingItemQuantity;
+  });
+  return fillingTotal;
+};
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const deliveries = {
+  1: "Заберу сам",
+  2: "Новый адрес",
 };

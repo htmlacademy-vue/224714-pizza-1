@@ -12,8 +12,8 @@
           <RadioButton
             :name="`dough`"
             :value="dough.value"
-            :isChecked="dough.isChecked"
-            @valueChanged="$emit('changeDough', $event)"
+            :isChecked="dough.value === currentDough"
+            @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
           ></RadioButton>
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -25,14 +25,21 @@
 
 <script>
 import RadioButton from "@/components/RadioButton";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
-  props: {
-    doughs: {
-      type: Array,
-      required: true,
+  created() {
+    if (!this.currentDough) {
+      const currentDough = this.doughs.find((dough) => dough.isChecked).value;
+      this.$store.dispatch("Builder/setDough", currentDough);
+    }
+  },
+  computed: {
+    ...mapGetters("Builder", ["doughs"]),
+    currentDough() {
+      return this.$store.state.Builder.dough;
     },
   },
 };

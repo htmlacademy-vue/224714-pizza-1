@@ -6,22 +6,20 @@
         v-for="(ingredient, i) in ingredients"
         :key="i"
         :ingredient="ingredient"
-        @changeFilling="$emit(`changeFilling`, $event)"
-      ></BuildFillingListItem>
+      >
+      </BuildFillingListItem>
     </ul>
   </div>
 </template>
 
 <script>
 import BuildFillingListItem from "./BuildFillingListItem";
+import { mapGetters } from "vuex";
 export default {
   name: "BuildFillingSelector",
   components: { BuildFillingListItem },
-  props: {
-    ingredients: {
-      type: Array,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["ingredients"]),
   },
 };
 </script>

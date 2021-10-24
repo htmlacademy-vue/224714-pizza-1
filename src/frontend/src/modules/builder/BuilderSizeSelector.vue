@@ -12,8 +12,8 @@
           <RadioButton
             :name="`diameter`"
             :value="size.value"
-            :isChecked="size.isChecked"
-            @valueChanged="$emit('changeSize', $event)"
+            :isChecked="size.value === currentSize"
+            @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
           ></RadioButton>
           <span>{{ size.name }}</span>
         </label>
@@ -24,13 +24,20 @@
 
 <script>
 import RadioButton from "@/components/RadioButton";
+import { mapGetters } from "vuex";
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
-  props: {
-    sizes: {
-      type: Array,
-      required: true,
+  created() {
+    if (!this.currentSize) {
+      const currentSize = this.sizes.find((size) => size.isChecked).value;
+      this.$store.dispatch("Builder/setDiameter", currentSize);
+    }
+  },
+  computed: {
+    ...mapGetters("Builder", ["sizes"]),
+    currentSize() {
+      return this.$store.state.Builder.size;
     },
   },
 };

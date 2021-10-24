@@ -14,7 +14,7 @@
       <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isLogged">
-      <router-link class="header__login" to="`${loginLink}`"
+      <router-link class="header__login" :to="loginLink"
         ><span>Войти</span></router-link
       >
     </div>
@@ -38,29 +38,26 @@
         </picture>
         <span>Василий Ложкин</span>
       </router-link>
-      <a href="#" class="header__logout"><span>Выйти</span></a>
+      <router-link to="/" class="header__logout"
+        ><span>Выйти</span></router-link
+      >
     </div>
   </header>
 </template>
 
 <script>
-import EventBus from "@/common/event-bus";
 export default {
   name: "AppLayoutHeader",
-  data() {
-    return {
-      isLogged: false,
-      price: 0,
-    };
-  },
-  created() {
-    EventBus.$on("priceChanged", (newPrice) => {
-      this.price = newPrice;
-    });
-  },
+  created() {},
   computed: {
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
+    },
+    price() {
+      return this.$store.getters["Cart/totalPrice"] || 0;
+    },
+    isLogged() {
+      return this.$store.state.Auth.isLogged;
     },
   },
 };
