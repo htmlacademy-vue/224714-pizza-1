@@ -21,11 +21,10 @@
     <ItemCounter
       :name="`cart-list`"
       :value="pizza.quantity"
-      :item="pizza.id"
       :min-value="0"
       :max-value="Infinity"
-      @plusOne="plusOnePizza($event)"
-      @minusOne="minusOnePizza($event)"
+      @plusOne="plusOnePizza()"
+      @minusOne="minusOnePizza()"
     ></ItemCounter>
 
     <div class="cart-list__price">
@@ -64,15 +63,11 @@ export default {
       this.$store.dispatch("Builder/loadPizza", this.pizza);
       this.$router.push({ name: `Index` });
     },
-    plusOnePizza(pizzaId) {
-      if (this.pizza.id === pizzaId) {
-        this.$store.dispatch(`Cart/plusOnePizza`, pizzaId);
-      }
+    plusOnePizza() {
+      this.$store.dispatch(`Cart/plusOnePizza`, this.pizza.id);
     },
-    minusOnePizza(pizzaId) {
-      if (this.pizza.id === pizzaId) {
-        this.$store.dispatch(`Cart/minusOnePizza`, pizzaId);
-      }
+    minusOnePizza() {
+      this.$store.dispatch(`Cart/minusOnePizza`, this.pizza.id);
     },
   },
   computed: {

@@ -130,7 +130,11 @@ export default {
     },
     minusOneIngredient(state, payload) {
       const value = state.filling[payload] ? state.filling[payload] : 0;
-      Vue.set(state.filling, payload, value - 1);
+      if (value - 1 <= 0) {
+        Vue.delete(state.filling, payload);
+      } else {
+        Vue.set(state.filling, payload, value - 1);
+      }
     },
   },
   actions: {

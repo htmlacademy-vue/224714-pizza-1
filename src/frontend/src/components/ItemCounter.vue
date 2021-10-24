@@ -32,23 +32,21 @@ export default {
       type: Number,
       required: true,
     },
-    item: {
-      // type: String,
-      required: true,
-    },
     minValue: {
       type: Number,
+      required: true,
     },
     maxValue: {
       type: Number,
+      required: true,
     },
   },
   methods: {
     plusOne() {
-      this.$emit("plusOne", this.item);
+      this.$emit("plusOne");
     },
     minusOne() {
-      this.$emit("minusOne", this.item);
+      this.$emit("minusOne");
     },
   },
 };

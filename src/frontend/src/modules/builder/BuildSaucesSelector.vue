@@ -11,6 +11,7 @@
         :name="`sauce`"
         :value="sauce.value"
         :isChecked="sauce.value === currentSauce"
+        @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
       ></RadioButton>
       <span>{{ sauce.name }}</span>
     </label>
@@ -23,13 +24,15 @@ import { mapGetters } from "vuex";
 export default {
   name: "BuildSaucesSelector",
   components: { RadioButton },
+  created() {
+    if (!this.currentSauce) {
+      const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
+      this.$store.dispatch("Builder/setSauce", currentSauce);
+    }
+  },
   computed: {
     ...mapGetters("Builder", ["sauces"]),
     currentSauce() {
-      if (!this.$store.state.Builder.sauce) {
-        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
-        this.$store.dispatch("Builder/setSauce", currentSauce);
-      }
       return this.$store.state.Builder.sauce;
     },
   },

@@ -9,11 +9,10 @@
     <ItemCounter
       :name="`ingredients`"
       :value="value"
-      :item="ingredient.value"
       :minValue="minValue"
       :maxValue="maxValue"
-      @plusOne="plusOne($event)"
-      @minusOne="minusOne($event)"
+      @plusOne="plusOne()"
+      @minusOne="minusOne()"
     ></ItemCounter>
   </li>
 </template>
@@ -43,15 +42,11 @@ export default {
     },
   },
   methods: {
-    plusOne(ingredient) {
-      if (ingredient === this.ingredient.value) {
-        this.$store.dispatch("Builder/plusOneIngredient", ingredient);
-      }
+    plusOne() {
+      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.value);
     },
-    minusOne(ingredient) {
-      if (ingredient === this.ingredient.value) {
-        this.$store.dispatch("Builder/minusOneIngredient", ingredient);
-      }
+    minusOne() {
+      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.value);
     },
   },
   computed: {

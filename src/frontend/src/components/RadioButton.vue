@@ -5,12 +5,11 @@
     :value="value"
     class="visually-hidden"
     :checked="isChecked"
-    @change="$store.dispatch(`Builder/set${capitalizedName}`, value)"
+    @change="$emit('valueChanged', value)"
   />
 </template>
 
 <script>
-import { capitalizeFirstLetter } from "@/common/helpers";
 export default {
   name: "RadioButton",
   props: {
@@ -26,11 +25,6 @@ export default {
       type: Boolean,
       required: true,
       default: false,
-    },
-  },
-  computed: {
-    capitalizedName() {
-      return capitalizeFirstLetter(this.name);
     },
   },
 };

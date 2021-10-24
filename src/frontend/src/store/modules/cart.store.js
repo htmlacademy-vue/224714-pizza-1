@@ -57,11 +57,9 @@ export default {
         ? state.pizzas.findIndex((pizza) => pizza.id === newPizza.id)
         : null;
       if (samePizzaIndex !== -1) {
-        const oldQuantity = state.pizzas[samePizzaIndex][`quantity`];
-        let newPizzaWithQuantity = Object.assign(newPizza, {
-          quantity: oldQuantity,
-        });
-        state.pizzas[samePizzaIndex] = newPizzaWithQuantity;
+        for (let prop in newPizza) {
+          Vue.set(state.pizzas[samePizzaIndex], prop, newPizza[prop]);
+        }
       } else {
         Object.assign(newPizza, { quantity: 1 });
         state.pizzas.push(newPizza);
@@ -76,7 +74,10 @@ export default {
       const samePizzaIndex = state.pizzas
         ? state.pizzas.findIndex((pizza) => pizza.id === pizzaId)
         : null;
-      state.pizzas[samePizzaIndex][`quantity`] += 1;
+      if (samePizzaIndex !== null) {
+        let quantity = state.pizzas[samePizzaIndex][`quantity`];
+        Vue.set(state.pizzas[samePizzaIndex], `quantity`, quantity + 1);
+      }
     },
     minusOnePizza(state, pizzaId) {
       const samePizzaIndex = state.pizzas
@@ -88,7 +89,8 @@ export default {
           state.pizzas.filter((pizzaItem) => pizzaItem.id !== deletedPizza.id)
         );
       } else {
-        state.pizzas[samePizzaIndex][`quantity`] -= 1;
+        let quantity = state.pizzas[samePizzaIndex][`quantity`];
+        Vue.set(state.pizzas[samePizzaIndex], `quantity`, quantity - 1);
       }
     },
     plusOneMiscItem(state, miscId) {

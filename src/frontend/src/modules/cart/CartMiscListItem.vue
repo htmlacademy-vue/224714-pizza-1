@@ -9,11 +9,10 @@
       <ItemCounter
         :name="`additional-list`"
         :value="value"
-        :item="miscItem.id"
         :min-value="0"
         :max-value="Infinity"
-        @plusOne="plusOneMiscItem($event)"
-        @minusOne="minusOneMiscItem($event)"
+        @plusOne="plusOneMiscItem()"
+        @minusOne="minusOneMiscItem()"
       ></ItemCounter>
       <div class="additional-list__price">
         <b>{{ subTotal }} ₽</b>
@@ -34,15 +33,11 @@ export default {
     },
   },
   methods: {
-    plusOneMiscItem(miscId) {
-      if (this.miscItem.id === miscId) {
-        this.$store.dispatch("Cart/plusOneMiscItem", miscId);
-      }
+    plusOneMiscItem() {
+      this.$store.dispatch("Cart/plusOneMiscItem", this.miscItem.id);
     },
-    minusOneMiscItem(miscId) {
-      if (this.miscItem.id === miscId) {
-        this.$store.dispatch("Cart/minusOneMiscItem", miscId);
-      }
+    minusOneMiscItem() {
+      this.$store.dispatch("Cart/minusOneMiscItem", this.miscItem.id);
     },
   },
   computed: {
