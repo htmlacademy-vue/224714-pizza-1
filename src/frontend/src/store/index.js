@@ -24,6 +24,11 @@ const actions = {
     this.commit("SET_MISC", miscellaneous);
   },
   fetchPizza() {
+    console.log(this.$api);
+    // Promise.all([this.api.getOffers(), api.getDestinations(), api.getPoints()]).then((data) => {
+    //   const [offers, destinations, points] = data;
+    //
+    // });
     const pizza = pizzaData; // TODO: Add api call
     this.commit("SET_PIZZA", pizza);
   },

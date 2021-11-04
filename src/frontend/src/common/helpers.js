@@ -1,3 +1,12 @@
+import {
+  AuthApiService,
+  CrudApiService,
+  ReadOnlyApiService,
+  // TaskApiService,
+} from "@/services/api.service";
+
+import resources from "@/common/enums/resources";
+
 export const doughMap = [
   {
     name: "Тонкое",
@@ -98,4 +107,25 @@ export const capitalizeFirstLetter = (string) => {
 export const deliveries = {
   1: "Заберу сам",
   2: "Новый адрес",
+};
+
+export const createResources = (notifier) => {
+  return {
+    [resources.AUTH]: new AuthApiService(notifier),
+    [resources.DOUGH]: new ReadOnlyApiService(resources.DOUGH, notifier),
+    [resources.INGREDIENTS]: new ReadOnlyApiService(
+      resources.INGREDIENTS,
+      notifier
+    ),
+    [resources.SAUCES]: new ReadOnlyApiService(resources.SAUCES, notifier),
+    [resources.SIZES]: new ReadOnlyApiService(resources.SIZES, notifier),
+    [resources.MISC]: new ReadOnlyApiService(resources.MISC, notifier),
+    [resources.ADDRESSES]: new CrudApiService(resources.ADDRESSES, notifier),
+    // [resources.TASKS]: new TaskApiService(notifier),
+    // [resources.COLUMNS]:
+    //   new CrudApiService(resources.COLUMNS, notifier),
+    // [resources.TICKS]: new CrudApiService(resources.TICKS, notifier),
+    // [resources.COMMENTS]:
+    //   new CrudApiService(resources.COMMENTS, notifier)
+  };
 };
