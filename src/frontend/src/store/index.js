@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import modules from "@/store/modules";
 
 import miscData from "@/static/misc.json";
-import pizzaData from "@/static/pizza.json";
+import VuexPlugins from "@/plugins/vuexPlugins";
 
 Vue.use(Vuex);
 
@@ -23,13 +23,16 @@ const actions = {
     const miscellaneous = miscData; // TODO: Add api call
     this.commit("SET_MISC", miscellaneous);
   },
-  fetchPizza() {
-    console.log(this.$api);
-    // Promise.all([this.api.getOffers(), api.getDestinations(), api.getPoints()]).then((data) => {
-    //   const [offers, destinations, points] = data;
+  async fetchPizza() {
+    let pizza = {};
+    pizza.dough = await this.$api.dough.query();
+    pizza.ingredients = await this.$api.ingredients.query();
+    pizza.sauces = await this.$api.sauces.query();
+    pizza.sizes = await this.$api.sizes.query();
+    // Promise.all([this.$api.dough.query(), this.$api.ingredients.query()]).then((data) => {
     //
     // });
-    const pizza = pizzaData; // TODO: Add api call
+    // const pizza = pizzaData; // TODO: Add api call
     this.commit("SET_PIZZA", pizza);
   },
 };
@@ -48,5 +51,6 @@ export default new Vuex.Store({
   getters,
   actions,
   mutations,
+  plugins: [VuexPlugins],
   modules,
 });
