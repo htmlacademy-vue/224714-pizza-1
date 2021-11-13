@@ -28,16 +28,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
-  created() {
-    if (!this.currentSize) {
-      const currentSize = this.sizes.find((size) => size.isChecked).value;
-      this.$store.dispatch("Builder/setDiameter", currentSize);
-    }
-  },
   computed: {
     ...mapGetters("Builder", ["sizes"]),
     currentSize() {
       return this.$store.state.Builder.size;
+    },
+  },
+  watch: {
+    sizes: function (val) {
+      if (!this.currentSize) {
+        const currentSize = val.find((size) => size.isChecked).value;
+        this.$store.dispatch("Builder/setDiameter", currentSize);
+      }
     },
   },
 };

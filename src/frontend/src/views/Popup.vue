@@ -18,7 +18,7 @@ export default {
   name: "Popup",
   methods: {
     redirect() {
-      if (this.$store.state.Auth.isLogged) {
+      if (this.$store.state.Auth.isAuthenticated) {
         this.$router.push({ path: `/orders` });
       } else {
         this.$router.push({ path: `/` });

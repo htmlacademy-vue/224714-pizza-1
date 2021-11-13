@@ -121,6 +121,7 @@ export const createResources = (notifier) => {
     [resources.SIZES]: new ReadOnlyApiService(resources.SIZES, notifier),
     [resources.MISC]: new ReadOnlyApiService(resources.MISC, notifier),
     [resources.ADDRESSES]: new CrudApiService(resources.ADDRESSES, notifier),
+    [resources.ORDERS]: new CrudApiService(resources.ORDERS, notifier),
     // [resources.TASKS]: new TaskApiService(notifier),
     // [resources.COLUMNS]:
     //   new CrudApiService(resources.COLUMNS, notifier),

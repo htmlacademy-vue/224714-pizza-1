@@ -30,16 +30,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
-  created() {
-    if (!this.currentDough) {
-      const currentDough = this.doughs.find((dough) => dough.isChecked).value;
-      this.$store.dispatch("Builder/setDough", currentDough);
-    }
-  },
   computed: {
     ...mapGetters("Builder", ["doughs"]),
     currentDough() {
       return this.$store.state.Builder.dough;
+    },
+  },
+  watch: {
+    doughs: function (val) {
+      if (!this.currentDough) {
+        const currentDough = val.find((dough) => dough.isChecked).value;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
     },
   },
 };

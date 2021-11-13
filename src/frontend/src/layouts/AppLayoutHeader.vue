@@ -13,7 +13,7 @@
     <div class="header__cart">
       <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
-    <div class="header__user" v-if="!isLogged">
+    <div class="header__user" v-if="!isAuthenticated">
       <router-link class="header__login" :to="loginLink"
         ><span>Войти</span></router-link
       >
@@ -56,8 +56,8 @@ export default {
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
     },
-    isLogged() {
-      return this.$store.state.Auth.isLogged;
+    isAuthenticated() {
+      return this.$store.state.Auth.isAuthenticated;
     },
   },
 };
