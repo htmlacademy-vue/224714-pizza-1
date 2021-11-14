@@ -18,9 +18,13 @@ export default {
       const data = await this.$api.orders.query();
       context.commit("setOrders", data);
     },
-    async addOrder(context, order) {
+    async post(context, order) {
       // const newOrder = await this.$api.orders.put(order);
       // [UPDATE_ENTITY] ???
+      // const index = state.orders.findIndex(({ id }) => id === value.id);
+      // if (~index) {
+      //   state[module][entity].splice(index, 1, value);
+      // }
       context.commit("addOrder", order);
     },
   },

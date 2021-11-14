@@ -2,7 +2,6 @@ import {
   AuthApiService,
   CrudApiService,
   ReadOnlyApiService,
-  // TaskApiService,
 } from "@/services/api.service";
 
 import resources from "@/common/enums/resources";
@@ -129,4 +128,10 @@ export const createResources = (notifier) => {
     // [resources.COMMENTS]:
     //   new CrudApiService(resources.COMMENTS, notifier)
   };
+};
+
+export const setAuth = (store) => {
+  store.$api.auth.setAuthHeader();
+  store.dispatch("Auth/getMe");
+  // store.dispatch("Auth/setAuthentication", true);
 };

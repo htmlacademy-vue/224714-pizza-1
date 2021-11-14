@@ -38,9 +38,9 @@
         </picture>
         <span>Василий Ложкин</span>
       </router-link>
-      <router-link to="/" class="header__logout"
-        ><span>Выйти</span></router-link
-      >
+      <a class="header__logout" @click="logout">
+        <span>Выйти</span>
+      </a>
     </div>
   </header>
 </template>
@@ -58,6 +58,11 @@ export default {
     },
     isAuthenticated() {
       return this.$store.state.Auth.isAuthenticated;
+    },
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("Auth/logout");
     },
   },
 };

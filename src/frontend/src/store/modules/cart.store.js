@@ -40,12 +40,24 @@ export default {
       return getters.totalPizzaPrice + getters.totalMiscPrice;
     },
     order(state) {
+      // return {
+      //   delivery: state.delivery,
+      //   tel: state.tel,
+      //   street: state.street,
+      //   house: state.house,
+      //   apartment: state.apartment,
+      //   pizzas: state.pizzas,
+      //   misc: state.misc,
+      // };
       return {
-        delivery: state.delivery,
-        tel: state.tel,
-        street: state.street,
-        house: state.house,
-        apartment: state.apartment,
+        userId: "string",
+        phone: state.tel,
+        address: {
+          street: state.street,
+          building: state.house,
+          flat: state.apartment,
+          comment: "string",
+        },
         pizzas: state.pizzas,
         misc: state.misc,
       };

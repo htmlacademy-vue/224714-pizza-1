@@ -16,30 +16,36 @@ export default {
     },
   },
   actions: {
-    async login(context, dispatch) {
-      const data = await this.$api.auth.login();
+    async login({ dispatch }, credentials) {
+      const data = await this.$api.auth.login(credentials);
       this.$jwt.saveToken(data.token);
       this.$api.auth.setAuthHeader();
       dispatch("getMe");
     },
-    async logout(context, sendRequest = true) {
+    async logout({ commit }, sendRequest = true) {
       if (sendRequest) {
         await this.$api.auth.logout();
       }
       this.$jwt.destroyToken();
       this.$api.auth.setAuthHeader();
-      context("setAuthentication", false);
-      context("setUser", null);
+      commit("setAuthentication", false);
+      commit("setUser", null);
     },
-    async getMe(context, dispatch) {
+    async getMe({ commit, dispatch }) {
       try {
         const data = await this.$api.auth.getMe();
-        context("setAuthentication", true);
-        context("setUser", data);
+        commit("setAuthentication", true);
+        commit("setUser", data);
       } catch {
         // Note: in case of not proper login, i.e. token is expired
         dispatch("logout", false);
       }
+    },
+    setAuthentication(context, payload) {
+      context.commit("setAuthentication", payload);
+    },
+    setUser(context, payload) {
+      context.commit("setUser", payload);
     },
   },
 };

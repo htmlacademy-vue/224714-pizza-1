@@ -1,5 +1,10 @@
-import { doughMap, ingredientMap, sauceMap, sizeMap } from "@/common/helpers";
-import { calculateFilling } from "@/common/helpers";
+import {
+  doughMap,
+  ingredientMap,
+  sauceMap,
+  sizeMap,
+  calculateFilling,
+} from "@/common/helpers";
 import Vue from "vue";
 
 const getDefaultState = () => {
