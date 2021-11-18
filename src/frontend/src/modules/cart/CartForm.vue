@@ -81,7 +81,7 @@ export default {
       return +this.$store.state.Cart.delivery >= 3;
     },
     addresses() {
-      return this.$store.state.Auth.user["addreses"] || []; //Todo сделать когда
+      return this.$store.state.Auth?.user?.addreses || []; //Todo сделать когда
     },
   },
 };

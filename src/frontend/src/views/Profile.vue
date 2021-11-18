@@ -3,13 +3,13 @@
     <div class="layout__sidebar sidebar">
       <a href="index.html" class="logo layout__logo">
         <img
-          src="img/logo.svg"
+          src="@/assets/img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
         />
       </a>
-
+      {{ user }}
       <a class="layout__link" href="#">История заказов</a>
       <a class="layout__link layout__link--active" href="#">Мои данные</a>
     </div>
@@ -21,23 +21,20 @@
 
       <div class="user">
         <picture>
-          <source
-            type="image/webp"
-            srcset="img/users/user5@2x.webp 1x, img/users/user5@4x.webp 2x"
-          />
+          <source type="image/webp" :srcset="user.avatar" />
           <img
-            src="img/users/user5@2x.jpg"
-            srcset="img/users/user5@4x.jpg"
-            alt="Василий Ложкин"
+            :src="user.avatar"
+            :srcset="user.avatar"
+            :alt="user.name"
             width="72"
             height="72"
           />
         </picture>
         <div class="user__name">
-          <span>Василий Ложкин</span>
+          <span>{{ user.name }}</span>
         </div>
         <p class="user__phone">
-          Контактный телефон: <span>+7 999-999-99-99</span>
+          Контактный телефон: <span>{{ user.phone }}</span>
         </p>
       </div>
 
@@ -141,7 +138,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Profile",
+  computed: {
+    ...mapState("Auth", ["user"]),
+  },
 };
 </script>
