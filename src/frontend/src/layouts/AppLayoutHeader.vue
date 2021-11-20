@@ -21,22 +21,16 @@
     <div class="header__user" v-else>
       <router-link to="/profile">
         <picture>
-          <source
-            type="image/webp"
-            srcset="
-              @/assets/img/users/user5.webp 1x,
-              img/users/user5@2x.webp       2x
-            "
-          />
+          <source type="image/webp" :srcset="user.avatar" />
           <img
-            src="@/assets/img/users/user5.jpg"
-            srcset="@/assets/img/users/user5@2x.jpg"
+            :src="user.avatar"
+            :srcset="user.avatar"
             alt="Василий Ложкин"
             width="32"
             height="32"
           />
         </picture>
-        <span>Василий Ложкин</span>
+        <span>{{ user.name }}</span>
       </router-link>
       <a class="header__logout" @click="logout">
         <span>Выйти</span>
@@ -46,10 +40,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "AppLayoutHeader",
   created() {},
   computed: {
+    ...mapState("Auth", ["user"]),
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
     },
@@ -62,10 +58,10 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("Auth/logout");
       if (this.$route.path !== "/") {
         await this.$router.push("/");
       }
+      await this.$store.dispatch("Auth/logout");
       await this.$store.dispatch("Cart/resetState");
     },
   },

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import modules from "@/store/modules";
+import { MESSAGE_LIVE_TIME } from "@/common/const";
 
 import VuexPlugins from "@/plugins/vuexPlugins";
 
@@ -9,6 +10,7 @@ Vue.use(Vuex);
 const state = () => ({
   pizza: {},
   misc: [],
+  notifications: [],
 });
 
 const getters = {};
@@ -30,6 +32,17 @@ const actions = {
     pizza.sizes = await this.$api.sizes.query();
     this.commit("SET_PIZZA", pizza);
   },
+  async createNotification({ ...notification }) {
+    const uniqueNotification = {
+      ...notification,
+      id: new Date(),
+    };
+    this.commit("ADD_NOTIFICATION", uniqueNotification);
+    setTimeout(
+      () => this.commit("DELETE_NOTIFICATION", uniqueNotification.id),
+      MESSAGE_LIVE_TIME
+    );
+  },
 };
 
 const mutations = {
@@ -38,6 +51,14 @@ const mutations = {
   },
   SET_PIZZA(state, payload) {
     state.pizza = payload;
+  },
+  ADD_NOTIFICATION(state, notification) {
+    state.notifications = [...state.notifications, notification];
+  },
+  DELETE_NOTIFICATION(state, id) {
+    state.notifications = state.notifications.filter(
+      (notification) => notification.id !== id
+    );
   },
 };
 

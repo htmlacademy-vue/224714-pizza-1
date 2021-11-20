@@ -17,6 +17,9 @@
             placeholder="example@mail.ru"
             v-model="email"
           />
+          <span>
+            {{ validations.email.error }}
+          </span>
         </label>
       </div>
 
@@ -29,6 +32,9 @@
             placeholder="***********"
             v-model="password"
           />
+          <span>
+            {{ validations.password.error }}
+          </span>
         </label>
       </div>
       <button type="submit" class="button">Авторизоваться</button>
@@ -37,27 +43,47 @@
 </template>
 
 <script>
+import { validator } from "@/common/mixins";
 export default {
   name: "Login",
+  mixins: [validator],
   data: function () {
     return {
       email: "",
       password: "",
+      validations: {
+        email: {
+          error: "",
+          rules: ["required", "email"],
+        },
+        password: {
+          error: "",
+          rules: ["required"],
+        },
+      },
     };
+  },
+  watch: {
+    email() {
+      this.$clearValidationErrors();
+    },
+    password() {
+      this.$clearValidationErrors();
+    },
   },
   mounted() {
     this.$refs.email.focus();
   },
   methods: {
     async login() {
-      // Если есть невалидное поле - не отправлять запрос на сервер.
-      // Также в миксине мы присваиваем текст ошибки
-      // if (!this.$validateFields(
-      //   { email: this.email, password: this.password },
-      //   this.validations
-      // )) {
-      //   return;
-      // }
+      if (
+        !this.$validateFields(
+          { email: this.email, password: this.password },
+          this.validations
+        )
+      ) {
+        return;
+      }
       // Если поля валидны - отправляем запрос на сервер.
       await this.$store.dispatch("Auth/login", {
         email: this.email,
