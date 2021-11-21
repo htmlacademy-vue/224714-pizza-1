@@ -27,6 +27,7 @@ export default {
         return rootState.pizza.dough.map((doughItem, index) => {
           return {
             name: doughItem.name,
+            id: doughItem.id,
             image: doughItem.image,
             description: doughItem.description,
             price: doughItem.price,
@@ -41,6 +42,7 @@ export default {
         return rootState.pizza.sizes.map((sizeItem, index) => {
           return {
             name: sizeItem.name,
+            id: sizeItem.id,
             image: sizeItem.image,
             multiplier: sizeItem.multiplier,
             value: sizeMap.find(
@@ -56,6 +58,7 @@ export default {
         return rootState.pizza.sauces.map((sauceItem, index) => {
           return {
             name: sauceItem.name,
+            id: sauceItem.id,
             price: sauceItem.price,
             value: sauceMap.find((item) => item.name === sauceItem.name).value,
             isChecked: index === 0,
@@ -68,6 +71,7 @@ export default {
         return rootState.pizza.ingredients.map((ingredientItem) => {
           return {
             name: ingredientItem.name,
+            id: ingredientItem.id,
             price: ingredientItem.price,
             value: ingredientMap.find(
               (item) => item.name === ingredientItem.name
@@ -94,12 +98,12 @@ export default {
     },
     pizza(state, getters) {
       return {
-        dough: state.dough,
+        name: state.pizzaName,
         sauce: state.sauce,
+        dough: state.dough,
         size: state.size,
         price: getters.price,
         filling: state.filling,
-        name: state.pizzaName,
         id: state.id ? state.id : new Date().getTime(),
       };
     },

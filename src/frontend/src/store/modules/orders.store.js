@@ -9,7 +9,6 @@ export default {
     },
     addOrder(state, order) {
       //Todo запрос к api
-      console.log();
       state.orders.push(order);
     },
   },
@@ -19,13 +18,13 @@ export default {
       context.commit("setOrders", data);
     },
     async post(context, order) {
-      // const newOrder = await this.$api.orders.put(order);
+      const newOrder = await this.$api.orders.put(order);
       // [UPDATE_ENTITY] ???
       // const index = state.orders.findIndex(({ id }) => id === value.id);
       // if (~index) {
       //   state[module][entity].splice(index, 1, value);
       // }
-      context.commit("addOrder", order);
+      context.commit("addOrder", newOrder);
     },
   },
 };

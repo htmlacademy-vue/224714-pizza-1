@@ -84,6 +84,19 @@ export const pizzaFillingMultipleClassMapping = {
   3: "pizza__filling--third",
 };
 
+export const getPropertyId = (array, property) => {
+  return array.find((item) => item.value.toString() === property.toString()).id;
+};
+
+export const getFillingArrayFromObject = (ingredients, fillingObject) => {
+  return Object.entries(fillingObject).map((ingredient) => {
+    return {
+      ingredientId: getPropertyId(ingredients, ingredient[0]),
+      quantity: ingredient[1],
+    };
+  });
+};
+
 export const calculateFilling = (filling, ingredients) => {
   let fillingTotal = 0;
   if (filling === undefined) {

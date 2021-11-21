@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { getFillingArrayFromObject, getPropertyId } from "@/common/helpers";
 
 const getDefaultState = () => {
   return {
@@ -39,18 +40,23 @@ export default {
     totalPrice(state, getters) {
       return getters.totalPizzaPrice + getters.totalMiscPrice;
     },
-    order(state) {
-      // return {
-      //   delivery: state.delivery,
-      //   tel: state.tel,
-      //   street: state.street,
-      //   house: state.house,
-      //   apartment: state.apartment,
-      //   pizzas: state.pizzas,
-      //   misc: state.misc,
-      // };
+    normalizedPizzas(state, getters, rootState, rootGetters) {
+      return state.pizzas.map((pizza) => {
+        return {
+          name: pizza.name,
+          sauceId: getPropertyId(rootGetters["Builder/sauces"], pizza.sauce),
+          doughId: getPropertyId(rootGetters["Builder/doughs"], pizza.dough),
+          sizeId: getPropertyId(rootGetters["Builder/sizes"], pizza.size),
+          ingredients: getFillingArrayFromObject(
+            rootGetters["Builder/ingredients"],
+            pizza.filling
+          ),
+        };
+      });
+    },
+    order(state, getters, rootState) {
       return {
-        userId: "string",
+        userId: rootState.Auth.user.id,
         phone: state.tel,
         address: {
           street: state.street,
@@ -58,8 +64,14 @@ export default {
           flat: state.apartment,
           comment: "string",
         },
-        pizzas: state.pizzas,
-        misc: state.misc,
+        pizzas: getters.normalizedPizzas,
+        // misc: state.misc, Todo misc привезти в нужный формат
+        misc: [
+          {
+            miscId: 0,
+            quantity: 0,
+          },
+        ],
       };
     },
   },
