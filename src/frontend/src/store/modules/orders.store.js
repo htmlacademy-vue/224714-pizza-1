@@ -18,7 +18,7 @@ export default {
       context.commit("setOrders", data);
     },
     async post(context, order) {
-      const newOrder = await this.$api.orders.put(order);
+      const newOrder = await this.$api.orders.post(order);
       // [UPDATE_ENTITY] ???
       // const index = state.orders.findIndex(({ id }) => id === value.id);
       // if (~index) {

@@ -64,7 +64,6 @@ export default {
     },
     sendOrder() {
       const order = this.$store.getters["Cart/order"];
-      //todo succes запроса:
       this.$store.dispatch("Orders/post", order);
       this.$router.push({ path: `/thanks-popup` });
     },

@@ -47,6 +47,7 @@ export default {
           sauceId: getPropertyId(rootGetters["Builder/sauces"], pizza.sauce),
           doughId: getPropertyId(rootGetters["Builder/doughs"], pizza.dough),
           sizeId: getPropertyId(rootGetters["Builder/sizes"], pizza.size),
+          quantity: pizza.quantity,
           ingredients: getFillingArrayFromObject(
             rootGetters["Builder/ingredients"],
             pizza.filling
@@ -54,24 +55,23 @@ export default {
         };
       });
     },
+    normalizedMisc(state) {
+      return Object.entries(state.misc).map((miscItem) => {
+        return {
+          miscId: miscItem[0],
+          quantity: miscItem[1],
+        };
+      });
+    },
     order(state, getters, rootState) {
+      console.log(getters.normalizedPizzas);
+      console.log(getters.normalizedMisc);
       return {
         userId: rootState.Auth.user.id,
         phone: state.tel,
-        address: {
-          street: state.street,
-          building: state.house,
-          flat: state.apartment,
-          comment: "string",
-        },
+        address: null,
         pizzas: getters.normalizedPizzas,
-        // misc: state.misc, Todo misc привезти в нужный формат
-        misc: [
-          {
-            miscId: 0,
-            quantity: 0,
-          },
-        ],
+        misc: getters.normalizedMisc,
       };
     },
   },
