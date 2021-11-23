@@ -88,6 +88,10 @@ export const getPropertyId = (array, property) => {
   return array.find((item) => item.value.toString() === property.toString()).id;
 };
 
+export const getNameById = (array, id) => {
+  return array.find((item) => +item.id === +id).name;
+};
+
 export const getFillingArrayFromObject = (ingredients, fillingObject) => {
   return Object.entries(fillingObject).map((ingredient) => {
     return {

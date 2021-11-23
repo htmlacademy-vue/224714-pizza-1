@@ -3,15 +3,15 @@
     <div class="layout__title">
       <h1 class="title title--big">История заказов</h1>
     </div>
-
-    <section class="sheet order">
+    {{ orders }}
+    <section class="sheet order" v-for="(order, i) in orders" :key="i">
       <div class="order__wrapper">
         <div class="order__number">
-          <b>Заказ #11199929</b>
+          <b>Заказ #{{ order.id }}</b>
         </div>
 
         <div class="order__sum">
-          <span>Сумма заказа: 1 564 ₽</span>
+          <span>Сумма заказа: TODO 1 564 ₽</span>
         </div>
 
         <div class="order__button">
@@ -23,20 +23,24 @@
       </div>
 
       <ul class="order__list">
-        <li class="order__item">
+        <li
+          class="order__item"
+          v-for="(pizza, i) in order.orderPizzas"
+          :key="i"
+        >
           <div class="product">
             <img
               src="@/assets/img/product.svg"
               class="product__img"
               width="56"
               height="56"
-              alt="Капричоза"
+              :alt="pizza.name"
             />
             <div class="product__text">
-              <h2>Капричоза</h2>
+              <h2>{{ pizza.name }}</h2>
               <ul>
                 <li>30 см, на тонком тесте</li>
-                <li>Соус: томатный</li>
+                <li>Соус: {{ pizza.sauce }}</li>
                 <li>
                   Начинка: грибы, лук, ветчина, пармезан, ананас, бекон, блю чиз
                 </li>
@@ -220,7 +224,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+// import { getNameById } from "@/common/helpers";
+
 export default {
   name: "Orders",
+  beforeCreate() {
+    this.$store.dispatch("Orders/query");
+  },
+  methods: {},
+  computed: {
+    ...mapState("Orders", ["orders"]),
+  },
 };
 </script>
