@@ -132,7 +132,7 @@
             v-else
             type="button"
             class="button button--transparent"
-            @click="isEditForm = false"
+            @click="isNewForm = false"
           >
             Отменить
           </button>
@@ -146,6 +146,7 @@
         type="button"
         class="button button--border"
         @click="isNewForm = true"
+        :disabled="isEditForm"
       >
         Добавить новый адрес
       </button>
@@ -196,7 +197,7 @@ export default {
   },
   methods: {
     onEditClick(id, index) {
-      if (this.isEditForm) {
+      if (this.isEditForm && this.newAddress.id === id) {
         this.isEditForm = false;
         return;
       }
@@ -266,3 +267,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.layout__content {
+  padding-bottom: 40px;
+}
+</style>
