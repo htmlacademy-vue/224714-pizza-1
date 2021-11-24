@@ -36,16 +36,11 @@ export default {
         const data = await this.$api.auth.getMe();
         commit("setAuthentication", true);
         commit("setUser", data);
+        dispatch("Addresses/getAddresses", null, { root: true });
       } catch {
         // Note: in case of not proper login, i.e. token is expired
         dispatch("logout", false);
       }
-    },
-    setAuthentication(context, payload) {
-      context.commit("setAuthentication", payload);
-    },
-    setUser(context, payload) {
-      context.commit("setUser", payload);
     },
   },
 };

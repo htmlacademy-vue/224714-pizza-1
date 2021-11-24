@@ -1,11 +1,13 @@
-import { getNameById } from '@/common/helpers';
+import { getNameById } from "@/common/helpers";
 
 const formatPizzaFromId = (pizza, rootGetters) => {
   return pizza.map({
     sauce: getNameById(rootGetters.sauces, pizza.sauceId),
     dough: getNameById(rootGetters.doughs, pizza.doughId),
     size: getNameById(rootGetters.sizes, pizza.sizeId),
-    ingredients: pizza.ingredients.map((ingredient) => getNameById(rootGetters.ingredients, ingredient.id));
+    ingredients: pizza.ingredients.map((ingredient) =>
+      getNameById(rootGetters.ingredients, ingredient.id)
+    ),
   });
 };
 
@@ -19,10 +21,10 @@ export default {
       return state.orders.map((order) => {
         return {
           total: 1111,
-
-        }
-      })
-    }
+          orderPizzas: formatPizzaFromId(order.orderPizzas, rootGetters),
+        };
+      });
+    },
   },
   mutations: {
     setOrders(state, orders) {

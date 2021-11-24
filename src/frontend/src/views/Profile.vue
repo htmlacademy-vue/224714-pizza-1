@@ -23,29 +23,33 @@
       </p>
     </div>
 
-    <div class="layout__address">
+    <div class="layout__address" v-for="(address, i) in addresses" :key="i">
       <div class="sheet address-form">
         <div class="address-form__header">
-          <b>Адрес №1. Тест</b>
+          <b>Адрес №{{ i + 1 }}.</b>
           <div class="address-form__edit">
             <button type="button" class="icon">
               <span class="visually-hidden">Изменить адрес</span>
             </button>
           </div>
         </div>
-        <p>Невский пр., д. 22, оф. 46</p>
-        <small>Позвоните, пожалуйста, от проходной</small>
+        <p>
+          {{ address.street }}, д. {{ address.building }}, кв.
+          {{ address.flat }}
+        </p>
+        <small>{{ address.comment }}</small>
       </div>
     </div>
 
     <div class="layout__address">
       <form
-        action="test.html"
+        action=""
         method="post"
         class="address-form address-form--opened sheet"
+        @submit.prevent="addAddress"
       >
         <div class="address-form__header">
-          <b>Адрес №1</b>
+          <b>Адрес №{{ addresses.length + 1 }}</b>
         </div>
 
         <div class="address-form__wrapper">
@@ -56,6 +60,8 @@
                 type="text"
                 name="addr-name"
                 placeholder="Введите название адреса"
+                v-model="newAddress.name"
+                ref="address"
                 required
               />
             </label>
@@ -67,6 +73,7 @@
                 type="text"
                 name="addr-street"
                 placeholder="Введите название улицы"
+                v-model="newAddress.street"
                 required
               />
             </label>
@@ -78,6 +85,7 @@
                 type="text"
                 name="addr-house"
                 placeholder="Введите номер дома"
+                v-model="newAddress.building"
                 required
               />
             </label>
@@ -88,6 +96,7 @@
               <input
                 type="text"
                 name="addr-apartment"
+                v-model="newAddress.flat"
                 placeholder="Введите № квартиры"
               />
             </label>
@@ -98,6 +107,7 @@
               <input
                 type="text"
                 name="addr-comment"
+                v-model="newAddress.comment"
                 placeholder="Введите комментарий"
               />
             </label>
@@ -123,11 +133,65 @@
 
 <script>
 import { mapState } from "vuex";
-
+import { validator } from "@/common/mixins";
 export default {
   name: "Profile",
+  mixins: [validator],
+  data() {
+    return {
+      defaultAddress: {
+        name: "",
+        userId: "",
+        street: "",
+        building: "",
+        flat: "",
+        comment: "",
+      },
+      newAddress: {},
+      validations: {
+        name: {
+          error: "",
+          rules: ["required"],
+        },
+        street: {
+          error: "",
+          rules: ["required"],
+        },
+        building: {
+          error: "",
+          rules: ["required"],
+        },
+      },
+    };
+  },
+  created() {
+    this.newAddress = [...this.defaultAddress];
+  },
+  mounted() {
+    this.$refs.address.focus();
+  },
+  methods: {
+    async addAddress() {
+      if (
+        !this.$validateFields(
+          {
+            name: this.newAddress.name,
+            street: this.newAddress.street,
+            building: this.newAddress.building,
+          },
+          this.validations
+        )
+      ) {
+        return;
+      }
+      this.$set(this.newAddress, "userId", this.user.id);
+      await this.$store.dispatch("Addresses/addAddress", this.newAddress);
+      this.newAddress = Object.assign(this.defaultAddress);
+    },
+  },
   computed: {
     ...mapState("Auth", ["user"]),
+    ...mapState("Addresses", ["addresses"]),
   },
 };
 </script>

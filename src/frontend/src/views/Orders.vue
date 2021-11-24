@@ -4,6 +4,8 @@
       <h1 class="title title--big">История заказов</h1>
     </div>
     {{ orders }}
+    <br />
+    {{ ordersFormatted }}
     <section class="sheet order" v-for="(order, i) in orders" :key="i">
       <div class="order__wrapper">
         <div class="order__number">
@@ -224,7 +226,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 // import { getNameById } from "@/common/helpers";
 
 export default {
@@ -235,6 +237,7 @@ export default {
   methods: {},
   computed: {
     ...mapState("Orders", ["orders"]),
+    ...mapGetters("Orders/ordersFormatted"),
   },
 };
 </script>

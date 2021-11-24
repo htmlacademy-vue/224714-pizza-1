@@ -70,3 +70,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.cart {
+  min-height: calc(100vh - 188px);
+}
+</style>

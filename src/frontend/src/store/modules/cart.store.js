@@ -63,13 +63,23 @@ export default {
         };
       });
     },
+    checkedAddress(state, getters, rootState) {
+      return rootState.Auth.isAuthenticated
+        ? {
+            street: state.street,
+            building: state.house,
+            flat: state.apartment,
+            comment: "Todo",
+          }
+        : null;
+    },
     order(state, getters, rootState) {
       console.log(getters.normalizedPizzas);
       console.log(getters.normalizedMisc);
       return {
-        userId: rootState.Auth.user.id,
+        userId: rootState.Auth?.user?.id || null,
         phone: state.tel,
-        address: null,
+        address: getters.checkedAddress,
         pizzas: getters.normalizedPizzas,
         misc: getters.normalizedMisc,
       };

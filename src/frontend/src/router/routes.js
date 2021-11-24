@@ -6,7 +6,7 @@ export default [
     meta: { layout: "AppLayoutMain" },
     children: [
       {
-        path: "/login-modal",
+        path: "/login-modal", //отошел от ТЗ(/login) ради дочернего роута и отдельного шаблона
         components: {
           modal: () => import("@/views/LoginModal.vue"),
         },
