@@ -26,9 +26,13 @@
     <div class="layout__address" v-for="(address, i) in addresses" :key="i">
       <div class="sheet address-form">
         <div class="address-form__header">
-          <b>Адрес №{{ i + 1 }}.</b>
+          <b>Адрес №{{ i + 1 }}. {{ address.name }}</b>
           <div class="address-form__edit">
-            <button type="button" class="icon">
+            <button
+              type="button"
+              class="icon"
+              @click="onEditClick(address.id, i + 1)"
+            >
               <span class="visually-hidden">Изменить адрес</span>
             </button>
           </div>
@@ -46,10 +50,11 @@
         action=""
         method="post"
         class="address-form address-form--opened sheet"
-        @submit.prevent="addAddress"
+        @submit.prevent="submit"
+        v-show="isFormShown"
       >
         <div class="address-form__header">
-          <b>Адрес №{{ addresses.length + 1 }}</b>
+          <b>Адрес №{{ newAddress.index }}</b>
         </div>
 
         <div class="address-form__wrapper">
@@ -115,8 +120,21 @@
         </div>
 
         <div class="address-form__buttons">
-          <button type="button" class="button button--transparent">
+          <button
+            v-if="isEditForm"
+            type="button"
+            class="button button--transparent"
+            @click="removeAddress(newAddress.id)"
+          >
             Удалить
+          </button>
+          <button
+            v-else
+            type="button"
+            class="button button--transparent"
+            @click="isEditForm = false"
+          >
+            Отменить
           </button>
           <button type="submit" class="button">Сохранить</button>
         </div>
@@ -124,7 +142,11 @@
     </div>
 
     <div class="layout__button">
-      <button type="button" class="button button--border">
+      <button
+        type="button"
+        class="button button--border"
+        @click="isNewForm = true"
+      >
         Добавить новый адрес
       </button>
     </div>
@@ -162,15 +184,31 @@ export default {
           rules: ["required"],
         },
       },
+      isEditForm: false,
+      isNewForm: false,
     };
   },
   created() {
-    this.newAddress = [...this.defaultAddress];
+    this.newAddress = Object.assign(this.defaultAddress);
   },
   mounted() {
     this.$refs.address.focus();
   },
   methods: {
+    onEditClick(id, index) {
+      if (this.isEditForm) {
+        this.isEditForm = false;
+        return;
+      }
+      this.isEditForm = true;
+      this.newAddress = this.addresses.find((address) => address.id === id);
+      this.newAddress.index = index;
+    },
+    async removeAddress(id) {
+      await this.$store.dispatch("Addresses/removeAddress", id);
+      this.isEditForm = false;
+      this.newAddress = Object.assign(this.defaultAddress);
+    },
     async addAddress() {
       if (
         !this.$validateFields(
@@ -184,14 +222,47 @@ export default {
       ) {
         return;
       }
-      this.$set(this.newAddress, "userId", this.user.id);
+      this.newAddress.userId = this.user.id;
+      this.newAddress.index = this.addAddress.length + 1;
       await this.$store.dispatch("Addresses/addAddress", this.newAddress);
+
       this.newAddress = Object.assign(this.defaultAddress);
+    },
+    async editAddress() {
+      if (
+        !this.$validateFields(
+          {
+            name: this.newAddress.name,
+            street: this.newAddress.street,
+            building: this.newAddress.building,
+          },
+          this.validations
+        )
+      ) {
+        return;
+      }
+      this.newAddress.userId = this.user.id;
+      this.$delete(this.newAddress, "index");
+      await this.$store.dispatch("Addresses/editAddress", this.newAddress);
+
+      this.newAddress = Object.assign(this.defaultAddress);
+      this.isEditForm = false;
+    },
+    submit() {
+      if (this.isNewForm) {
+        this.addAddress();
+      } else {
+        //edit form
+        this.editAddress();
+      }
     },
   },
   computed: {
     ...mapState("Auth", ["user"]),
     ...mapState("Addresses", ["addresses"]),
+    isFormShown() {
+      return this.isEditForm || this.isNewForm;
+    },
   },
 };
 </script>
