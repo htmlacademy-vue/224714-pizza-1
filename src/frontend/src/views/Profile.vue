@@ -54,7 +54,7 @@
         v-show="isFormShown"
       >
         <div class="address-form__header">
-          <b>Адрес №{{ newAddress.index }}</b>
+          <b>Адрес №{{ this.addressIndex }}</b>
         </div>
 
         <div class="address-form__wrapper">
@@ -132,7 +132,7 @@
             v-else
             type="button"
             class="button button--transparent"
-            @click="isNewForm = false"
+            @click="closeForm"
           >
             Отменить
           </button>
@@ -145,7 +145,7 @@
       <button
         type="button"
         class="button button--border"
-        @click="isNewForm = true"
+        @click="onAddNewClick"
         :disabled="isEditForm"
       >
         Добавить новый адрес
@@ -187,6 +187,7 @@ export default {
       },
       isEditForm: false,
       isNewForm: false,
+      addressIndex: "",
     };
   },
   created() {
@@ -198,64 +199,46 @@ export default {
   methods: {
     onEditClick(id, index) {
       if (this.isEditForm && this.newAddress.id === id) {
+        //схлопнуть открытую форму редактирования при клике по её карандашу
         this.isEditForm = false;
+        this.closeForm();
         return;
       }
       this.isEditForm = true;
       this.newAddress = this.addresses.find((address) => address.id === id);
-      this.newAddress.index = index;
+      this.addressIndex = index;
+    },
+    onAddNewClick() {
+      this.isNewForm = true;
+      this.addressIndex = this.addresses.length + 1;
     },
     async removeAddress(id) {
       await this.$store.dispatch("Addresses/removeAddress", id);
       this.isEditForm = false;
       this.newAddress = Object.assign(this.defaultAddress);
     },
-    async addAddress() {
-      if (
-        !this.$validateFields(
-          {
-            name: this.newAddress.name,
-            street: this.newAddress.street,
-            building: this.newAddress.building,
-          },
-          this.validations
-        )
-      ) {
-        return;
-      }
-      this.newAddress.userId = this.user.id;
-      this.newAddress.index = this.addAddress.length + 1;
-      await this.$store.dispatch("Addresses/addAddress", this.newAddress);
-
-      this.newAddress = Object.assign(this.defaultAddress);
-    },
-    async editAddress() {
-      if (
-        !this.$validateFields(
-          {
-            name: this.newAddress.name,
-            street: this.newAddress.street,
-            building: this.newAddress.building,
-          },
-          this.validations
-        )
-      ) {
-        return;
-      }
-      this.newAddress.userId = this.user.id;
-      this.$delete(this.newAddress, "index");
-      await this.$store.dispatch("Addresses/editAddress", this.newAddress);
-
+    closeForm() {
       this.newAddress = Object.assign(this.defaultAddress);
       this.isEditForm = false;
+      this.isNewForm = false;
     },
-    submit() {
-      if (this.isNewForm) {
-        this.addAddress();
-      } else {
-        //edit form
-        this.editAddress();
+    async submit() {
+      if (
+        !this.$validateFields(
+          {
+            name: this.newAddress.name,
+            street: this.newAddress.street,
+            building: this.newAddress.building,
+          },
+          this.validations
+        )
+      ) {
+        return;
       }
+      this.newAddress.userId = this.user.id;
+      await this.$store.dispatch("Addresses/editAddress", this.newAddress);
+
+      this.closeForm();
     },
   },
   computed: {
