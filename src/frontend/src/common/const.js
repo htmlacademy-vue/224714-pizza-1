@@ -7,3 +7,9 @@ export const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)
 /* eslint-enable */
 
 export const MESSAGE_LIVE_TIME = 3000; //ms
+
+export const addressFormStatus = {
+  CLOSED: "closed",
+  EDIT: "edit",
+  NEW: "new",
+};

@@ -152,3 +152,12 @@ export const setAuth = (store) => {
   store.dispatch("Auth/getMe");
   // store.dispatch("Auth/setAuthentication", true);
 };
+
+export const defaultAddress = {
+  name: "",
+  userId: "",
+  street: "",
+  building: "",
+  flat: "",
+  comment: "",
+};

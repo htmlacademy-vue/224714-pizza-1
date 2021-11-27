@@ -66,6 +66,7 @@
           </label>
         </div>
       </div>
+      {{ addressOptions }}
     </div>
   </div>
 </template>
@@ -75,13 +76,25 @@ export default {
   name: "CartForm",
   computed: {
     isDeliveryPickup() {
-      return this.$store.state.Cart.delivery === 1;
+      return +this.$store.state.Cart.delivery === 1;
     },
     isDisabledInputs() {
       return +this.$store.state.Cart.delivery >= 3;
     },
     addresses() {
-      return this.$store.state.Auth?.user?.addreses || []; //Todo сделать когда
+      return this.$store.state.Auth.isAuthenticated
+        ? this.$store.state.Addresses.addresses
+        : [];
+    },
+    addressOptions() {
+      const defaultAddressOptions = [{ 1: "Заберу сам" }, { 2: "Новый адрес" }];
+      const formattedAddresses = this.addresses.map((address, i) => {
+        return {
+          [i + 3]: address.name,
+        };
+      });
+      console.log(formattedAddresses);
+      return defaultAddressOptions.concat(formattedAddresses);
     },
   },
 };

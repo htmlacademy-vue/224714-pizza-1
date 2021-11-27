@@ -46,99 +46,13 @@
     </div>
 
     <div class="layout__address">
-      <form
-        action=""
-        method="post"
-        class="address-form address-form--opened sheet"
-        @submit.prevent="submit"
-        v-show="isFormShown"
-      >
-        <div class="address-form__header">
-          <b>Адрес №{{ this.addressIndex }}</b>
-        </div>
-
-        <div class="address-form__wrapper">
-          <div class="address-form__input">
-            <label class="input">
-              <span>Название адреса*</span>
-              <input
-                type="text"
-                name="addr-name"
-                placeholder="Введите название адреса"
-                v-model="newAddress.name"
-                ref="address"
-                required
-              />
-            </label>
-          </div>
-          <div class="address-form__input address-form__input--size--normal">
-            <label class="input">
-              <span>Улица*</span>
-              <input
-                type="text"
-                name="addr-street"
-                placeholder="Введите название улицы"
-                v-model="newAddress.street"
-                required
-              />
-            </label>
-          </div>
-          <div class="address-form__input address-form__input--size--small">
-            <label class="input">
-              <span>Дом*</span>
-              <input
-                type="text"
-                name="addr-house"
-                placeholder="Введите номер дома"
-                v-model="newAddress.building"
-                required
-              />
-            </label>
-          </div>
-          <div class="address-form__input address-form__input--size--small">
-            <label class="input">
-              <span>Квартира</span>
-              <input
-                type="text"
-                name="addr-apartment"
-                v-model="newAddress.flat"
-                placeholder="Введите № квартиры"
-              />
-            </label>
-          </div>
-          <div class="address-form__input">
-            <label class="input">
-              <span>Комментарий</span>
-              <input
-                type="text"
-                name="addr-comment"
-                v-model="newAddress.comment"
-                placeholder="Введите комментарий"
-              />
-            </label>
-          </div>
-        </div>
-
-        <div class="address-form__buttons">
-          <button
-            v-if="isEditForm"
-            type="button"
-            class="button button--transparent"
-            @click="removeAddress(newAddress.id)"
-          >
-            Удалить
-          </button>
-          <button
-            v-else
-            type="button"
-            class="button button--transparent"
-            @click="closeForm"
-          >
-            Отменить
-          </button>
-          <button type="submit" class="button">Сохранить</button>
-        </div>
-      </form>
+      <ProfileForm
+        :editableAddressId="editableAddressId"
+        :addressIndex="addressIndex"
+        :userId="user.id"
+        :newAddress="newAddress"
+        @closeForm="closeForm"
+      ></ProfileForm>
     </div>
 
     <div class="layout__button">
@@ -146,7 +60,7 @@
         type="button"
         class="button button--border"
         @click="onAddNewClick"
-        :disabled="isEditForm"
+        :disabled="isBtnActive"
       >
         Добавить новый адрес
       </button>
@@ -156,96 +70,56 @@
 
 <script>
 import { mapState } from "vuex";
-import { validator } from "@/common/mixins";
+import ProfileForm from "@/modules/ProfileForm";
+import { addressFormStatus } from "@/common/const";
+import { defaultAddress } from "@/common/helpers";
 export default {
   name: "Profile",
-  mixins: [validator],
+  components: { ProfileForm },
   data() {
     return {
-      defaultAddress: {
-        name: "",
-        userId: "",
-        street: "",
-        building: "",
-        flat: "",
-        comment: "",
-      },
+      addressIndex: 0, //порядковый номер в списке заказов, не используется в базе
+      editableAddressId: 0,
       newAddress: {},
-      validations: {
-        name: {
-          error: "",
-          rules: ["required"],
-        },
-        street: {
-          error: "",
-          rules: ["required"],
-        },
-        building: {
-          error: "",
-          rules: ["required"],
-        },
-      },
-      isEditForm: false,
-      isNewForm: false,
-      addressIndex: "",
     };
   },
   created() {
-    this.newAddress = Object.assign(this.defaultAddress);
-  },
-  mounted() {
-    this.$refs.address.focus();
+    this.newAddress = Object.assign(defaultAddress);
   },
   methods: {
     onEditClick(id, index) {
-      if (this.isEditForm && this.newAddress.id === id) {
+      this.editableAddressId = id;
+      this.addressIndex = index;
+      if (
+        this.formStatus === addressFormStatus.EDIT &&
+        this.newAddress.id === this.editableAddressId
+      ) {
         //схлопнуть открытую форму редактирования при клике по её карандашу
-        this.isEditForm = false;
+        this.$store.dispatch(
+          "Addresses/setFormStatus",
+          addressFormStatus.CLOSED
+        );
         this.closeForm();
         return;
       }
-      this.isEditForm = true;
       this.newAddress = this.addresses.find((address) => address.id === id);
-      this.addressIndex = index;
+      this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.EDIT);
     },
     onAddNewClick() {
-      this.isNewForm = true;
       this.addressIndex = this.addresses.length + 1;
-    },
-    async removeAddress(id) {
-      await this.$store.dispatch("Addresses/removeAddress", id);
-      this.isEditForm = false;
-      this.newAddress = Object.assign(this.defaultAddress);
+      this.newAddress = Object.assign(defaultAddress);
+      this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.NEW);
     },
     closeForm() {
-      this.newAddress = Object.assign(this.defaultAddress);
-      this.isEditForm = false;
-      this.isNewForm = false;
-    },
-    async submit() {
-      if (
-        !this.$validateFields(
-          {
-            name: this.newAddress.name,
-            street: this.newAddress.street,
-            building: this.newAddress.building,
-          },
-          this.validations
-        )
-      ) {
-        return;
-      }
-      this.newAddress.userId = this.user.id;
-      await this.$store.dispatch("Addresses/editAddress", this.newAddress);
-
-      this.closeForm();
+      this.newAddress = Object.assign(defaultAddress);
+      this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.CLOSED);
     },
   },
   computed: {
     ...mapState("Auth", ["user"]),
-    ...mapState("Addresses", ["addresses"]),
-    isFormShown() {
-      return this.isEditForm || this.isNewForm;
+    ...mapState("Addresses", ["addresses", "formStatus"]),
+    isBtnActive() {
+      return this.formStatus !== addressFormStatus.CLOSED;
     },
   },
 };
