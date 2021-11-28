@@ -1,15 +1,14 @@
 import Vue from "vue";
 import { getFillingArrayFromObject, getPropertyId } from "@/common/helpers";
+import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
 
 const getDefaultState = () => {
   return {
     pizzas: [],
     misc: {},
-    delivery: 1,
-    tel: ``,
-    street: ``,
-    house: ``,
-    apartment: ``,
+    phone: ``,
+    address: null,
+    addressOption: DEFAULT_ADDRESS_OPTION,
   };
 };
 
@@ -63,23 +62,13 @@ export default {
         };
       });
     },
-    checkedAddress(state, getters, rootState) {
-      return rootState.Auth.isAuthenticated
-        ? {
-            street: state.street,
-            building: state.house,
-            flat: state.apartment,
-            comment: "Todo",
-          }
-        : null;
-    },
     order(state, getters, rootState) {
       console.log(getters.normalizedPizzas);
       console.log(getters.normalizedMisc);
       return {
         userId: rootState.Auth?.user?.id || null,
-        phone: state.tel,
-        address: getters.checkedAddress,
+        phone: state.phone,
+        address: state.address,
         pizzas: getters.normalizedPizzas,
         misc: getters.normalizedMisc,
       };
@@ -145,14 +134,8 @@ export default {
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
-    setStreet(state, street) {
-      state.street = street;
-    },
-    setHouse(state, house) {
-      state.house = house;
-    },
-    setApartment(state, apartment) {
-      state.apartment = apartment;
+    setAddress(state, address) {
+      state.address = address;
     },
   },
   actions: {
@@ -177,11 +160,8 @@ export default {
     resetState(context) {
       context.commit("resetState");
     },
-    setFullAddress(context, fullAddress) {
-      const { street, house, apartment } = fullAddress;
-      context.commit("setStreet", street);
-      context.commit("setHouse", house);
-      context.commit("setApartment", apartment);
+    setAddress(context, address) {
+      context.commit("setAddress", address);
     },
   },
 };

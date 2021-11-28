@@ -1,3 +1,5 @@
+import { defaultAddress } from "@/common/helpers";
+
 export const FILLING_COUNTER_MIN_VALUE = 0;
 
 export const FILLING_COUNTER_MAX_VALUE = 3;
@@ -13,3 +15,18 @@ export const addressFormStatus = {
   EDIT: "edit",
   NEW: "new",
 };
+
+export const defaultAddressOptions = [
+  {
+    index: 1,
+    text: "Заберу сам",
+    address: {},
+  },
+  {
+    index: 2,
+    text: "Новый адрес",
+    address: defaultAddress,
+  },
+];
+
+export const DEFAULT_ADDRESS_OPTION = 1;

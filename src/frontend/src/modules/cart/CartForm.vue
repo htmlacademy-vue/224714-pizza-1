@@ -7,12 +7,16 @@
         <select
           name="delivery"
           class="select"
-          v-model="$store.state.Cart.delivery"
+          v-model="$store.state.Cart.addressOption"
+          @change="addressChanged"
         >
-          <option value="1">Заберу сам</option>
-          <option value="2">Новый адрес</option>
-          <option v-for="(address, i) in addresses" :key="i" :value="i + 3">
-            {{ address.name }}
+          <option
+            v-for="(address, i) in addressOptions"
+            :key="i"
+            :selected="address.index === defaultAddressOption"
+            :value="address.index"
+          >
+            {{ address.text }}
           </option>
         </select>
       </label>
@@ -21,10 +25,13 @@
         <span>Контактный телефон:</span>
         <input
           type="text"
-          name="tel"
+          name="phone"
           placeholder="+7 999-999-99-99"
-          v-model="$store.state.Cart.tel"
+          v-model="$store.state.Cart.phone"
         />
+        <div>
+          {{ validations.phone.error }}
+        </div>
       </label>
 
       <div class="cart-form__address" v-if="!isDeliveryPickup">
@@ -36,9 +43,12 @@
             <input
               type="text"
               name="street"
-              v-model="$store.state.Cart.street"
+              v-model="address.street"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.street.error }}
+            </div>
           </label>
         </div>
 
@@ -47,10 +57,13 @@
             <span>Дом*</span>
             <input
               type="text"
-              name="house"
-              v-model="$store.state.Cart.house"
+              name="building"
+              v-model="address.building"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.building.error }}
+            </div>
           </label>
         </div>
 
@@ -59,27 +72,52 @@
             <span>Квартира</span>
             <input
               type="text"
-              name="apartment"
-              v-model="$store.state.Cart.apartment"
+              name="flat"
+              v-model="address.flat"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.flat.error }}
+            </div>
           </label>
         </div>
       </div>
       {{ addressOptions }}
+      <br />
+      {{ address }}
     </div>
   </div>
 </template>
 
 <script>
+import { DEFAULT_ADDRESS_OPTION, defaultAddressOptions } from "@/common/const";
+import { defaultAddress } from "@/common/helpers";
+import { mapState } from "vuex";
 export default {
   name: "CartForm",
+  props: {
+    validations: {
+      type: Object,
+      required: false,
+    },
+  },
+  data() {
+    return {
+      defaultAddressOption: DEFAULT_ADDRESS_OPTION,
+    };
+  },
+  methods: {
+    addressChanged() {
+      this.$store.dispatch("Cart/setAddress", this.address);
+    },
+  },
   computed: {
+    ...mapState("Cart", ["addressOption"]),
     isDeliveryPickup() {
-      return +this.$store.state.Cart.delivery === 1;
+      return this.addressOption === DEFAULT_ADDRESS_OPTION;
     },
     isDisabledInputs() {
-      return +this.$store.state.Cart.delivery >= 3;
+      return this.addressOption >= defaultAddressOptions.length + 1;
     },
     addresses() {
       return this.$store.state.Auth.isAuthenticated
@@ -87,14 +125,21 @@ export default {
         : [];
     },
     addressOptions() {
-      const defaultAddressOptions = [{ 1: "Заберу сам" }, { 2: "Новый адрес" }];
-      const formattedAddresses = this.addresses.map((address, i) => {
+      let formattedAddresses = this.addresses.map((address, i) => {
         return {
-          [i + 3]: address.name,
+          index: i + defaultAddressOptions.length + 1,
+          text: address.name,
+          address: address,
         };
       });
-      console.log(formattedAddresses);
       return defaultAddressOptions.concat(formattedAddresses);
+    },
+    address() {
+      return (
+        this.addressOptions.find(
+          (option) => option.index === this.addressOption
+        ).address || defaultAddress
+      );
     },
   },
 };

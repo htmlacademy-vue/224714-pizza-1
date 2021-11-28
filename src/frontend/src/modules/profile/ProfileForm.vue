@@ -5,6 +5,7 @@
     class="address-form address-form--opened sheet"
     @submit.prevent="submit"
     v-show="isFormShown"
+    ref="addressForm"
   >
     <div class="address-form__header">
       <b>Адрес №{{ this.addressIndex }}</b>
@@ -157,6 +158,7 @@ export default {
   methods: {
     async removeAddress() {
       await this.$store.dispatch("Addresses/removeAddress", this.newAddress.id);
+      this.$refs.addressForm.reset();
       this.$emit("closeForm");
     },
     async submit() {
@@ -180,6 +182,7 @@ export default {
       if (this.formStatus === addressFormStatus.NEW) {
         await this.$store.dispatch("Addresses/addAddress", this.newAddress);
       }
+      this.$refs.addressForm.reset();
       this.$emit("closeForm");
     },
   },

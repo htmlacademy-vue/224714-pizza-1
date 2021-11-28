@@ -70,7 +70,7 @@
 
 <script>
 import { mapState } from "vuex";
-import ProfileForm from "@/modules/ProfileForm";
+import ProfileForm from "@/modules/profile/ProfileForm";
 import { addressFormStatus } from "@/common/const";
 import { defaultAddress } from "@/common/helpers";
 export default {
