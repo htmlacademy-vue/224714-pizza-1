@@ -24,6 +24,14 @@ import { mapGetters } from "vuex";
 export default {
   name: "BuildSaucesSelector",
   components: { RadioButton },
+  created() {
+    if (this.sauces && this.sauces.length) {
+      if (!this.currentSauce) {
+        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
+        this.$store.dispatch("Builder/setSauce", currentSauce);
+      }
+    }
+  },
   computed: {
     ...mapGetters("Builder", ["sauces"]),
     currentSauce() {

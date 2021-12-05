@@ -82,9 +82,6 @@
           </label>
         </div>
       </div>
-      {{ addressOptions }}
-      <br />
-      {{ address }}
     </div>
   </div>
 </template>
@@ -109,6 +106,9 @@ export default {
   methods: {
     addressChanged() {
       this.$store.dispatch("Cart/setAddress", this.address);
+    },
+    updatePhone(e) {
+      this.$store.commit("Cart/setPhone", e.target.value);
     },
   },
   computed: {

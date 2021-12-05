@@ -89,6 +89,8 @@ export const getPropertyId = (array, property) => {
 };
 
 export const getNameById = (array, id) => {
+  console.log(array);
+  console.log(id);
   return array.find((item) => +item.id === +id).name;
 };
 

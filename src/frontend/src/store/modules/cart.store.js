@@ -6,7 +6,7 @@ const getDefaultState = () => {
   return {
     pizzas: [],
     misc: {},
-    phone: ``,
+    phone: null,
     address: null,
     addressOption: DEFAULT_ADDRESS_OPTION,
   };
@@ -137,6 +137,9 @@ export default {
     setAddress(state, address) {
       state.address = address;
     },
+    setPhone(state, phone) {
+      state.phone = phone;
+    },
   },
   actions: {
     addPizza(context, pizza) {
@@ -162,6 +165,9 @@ export default {
     },
     setAddress(context, address) {
       context.commit("setAddress", address);
+    },
+    setPhone(context, phone) {
+      context.commit("setPhone", phone);
     },
   },
 };

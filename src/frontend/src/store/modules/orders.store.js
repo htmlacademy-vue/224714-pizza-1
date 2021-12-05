@@ -1,14 +1,14 @@
 import { getNameById } from "@/common/helpers";
 
-const formatPizzaFromId = (pizza, rootGetters) => {
-  return pizza.map({
-    sauce: getNameById(rootGetters.sauces, pizza.sauceId),
-    dough: getNameById(rootGetters.doughs, pizza.doughId),
-    size: getNameById(rootGetters.sizes, pizza.sizeId),
-    ingredients: pizza.ingredients.map((ingredient) =>
-      getNameById(rootGetters.ingredients, ingredient.id)
+const formatPizzaFromId = (pizza, rootState) => {
+  return pizza.map((pizzaItem) => ({
+    sauce: getNameById(rootState.pizza.sauces, pizzaItem.sauceId),
+    dough: getNameById(rootState.pizza.dough, pizzaItem.doughId),
+    size: getNameById(rootState.pizza.sizes, pizzaItem.sizeId),
+    ingredients: pizzaItem.ingredients.map((ingredient) =>
+      getNameById(rootState.pizza.ingredients, ingredient.id)
     ),
-  });
+  }));
 };
 
 export default {
@@ -17,13 +17,15 @@ export default {
     orders: [],
   },
   getters: {
-    ordersFormatted(state, getters, rootState, rootGetters) {
-      return state.orders.map((order) => {
-        return {
-          total: 1111,
-          orderPizzas: formatPizzaFromId(order.orderPizzas, rootGetters),
-        };
-      });
+    ordersFormatted(state, getters, rootState) {
+      if (state.orders) {
+        return state.orders.map((order) => {
+          return {
+            total: 1111,
+            orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
+          };
+        });
+      }
     },
   },
   mutations: {
