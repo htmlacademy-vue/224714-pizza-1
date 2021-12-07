@@ -30,12 +30,12 @@
           <div class="product__text">
             <h2>{{ pizza.name }}</h2>
             <ul>
-              <li>Todo 30 см, на тонком тесте</li>
-              <li>Соус: {{ pizza.sauce }}</li>
               <li>
-                Todo Начинка: грибы, лук, ветчина, пармезан, ананас, бекон, блю
-                чиз
+                {{ getSizeText(pizza.sizeId) }},
+                {{ getDoughText(pizza.doughId) }}
               </li>
+              <li>Соус: {{ getSauceById(pizza.sauceId) }}</li>
+              <li>Начинка: {{ getFillingRussian(pizza.ingredients) }}</li>
             </ul>
           </div>
         </div>
@@ -80,19 +80,53 @@
       </li>
     </ul>
 
-    <p class="order__address">
-      Todo Адрес доставки: Тест (или если адрес новый - писать целиком)
-    </p>
+    <p class="order__address">Адрес доставки: {{ address }}</p>
   </section>
 </template>
 
 <script>
+import {
+  doughCartTextMap,
+  doughMap,
+  getNameById,
+  getValueById,
+  ingredientMap,
+  sizeTextMap,
+  sizeMap,
+  sauceMap,
+} from "@/common/helpers";
+
 export default {
   name: "OrderListItem",
   props: {
     order: {
       required: true,
       type: Object,
+    },
+  },
+  created() {},
+  methods: {
+    getFillingRussian(ingredients) {
+      console.log(ingredients);
+      return ingredients
+        .map((ingredient) => {
+          return getNameById(ingredientMap, ingredient.ingredientId);
+        })
+        .join(`, `);
+    },
+    getDoughText(doughId) {
+      return doughCartTextMap[getValueById(doughMap, doughId)];
+    },
+    getSizeText(sizeId) {
+      return sizeTextMap[getValueById(sizeMap, sizeId)];
+    },
+    getSauceById(sauceId) {
+      return getNameById(sauceMap, sauceId);
+    },
+  },
+  computed: {
+    address() {
+      return this.order.orderAddress?.name ?? "самовывоз";
     },
   },
 };

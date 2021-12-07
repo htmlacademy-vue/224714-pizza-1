@@ -10,10 +10,12 @@ export const doughMap = [
   {
     name: "Тонкое",
     value: "light",
+    id: 1,
   },
   {
     name: "Толстое",
     value: "large",
+    id: 2,
   },
 ];
 
@@ -26,14 +28,17 @@ export const sizeMap = [
   {
     multiplier: 1,
     value: "small",
+    id: 1,
   },
   {
     multiplier: 2,
     value: "normal",
+    id: 2,
   },
   {
     multiplier: 3,
     value: "big",
+    id: 3,
   },
 ];
 
@@ -47,29 +52,31 @@ export const sauceMap = [
   {
     name: "Томатный",
     value: "tomato",
+    id: 1,
   },
   {
     name: "Сливочный",
     value: "creamy",
+    id: 2,
   },
 ];
 
 export const ingredientMap = [
-  { name: "Грибы", value: "mushrooms" },
-  { name: "Чеддер", value: "cheddar" },
-  { name: "Салями", value: "salami" },
-  { name: "Ветчина", value: "ham" },
-  { name: "Ананас", value: "ananas" },
-  { name: "Бекон", value: "bacon" },
-  { name: "Лук", value: "onion" },
-  { name: "Чили", value: "chile" },
-  { name: "Халапеньо", value: "jalapeno" },
-  { name: "Маслины", value: "olives" },
-  { name: "Томаты", value: "tomatoes" },
-  { name: "Лосось", value: "salmon" },
-  { name: "Моцарелла", value: "mozzarella" },
-  { name: "Пармезан", value: "parmesan" },
-  { name: "Блю чиз", value: "blue_cheese" },
+  { name: "Грибы", value: "mushrooms", id: 1 },
+  { name: "Чеддер", value: "cheddar", id: 2 },
+  { name: "Томаты", value: "tomatoes", id: 3 },
+  { name: "Лосось", value: "salmon", id: 4 },
+  { name: "Моцарелла", value: "mozzarella", id: 5 },
+  { name: "Пармезан", value: "parmesan", id: 6 },
+  { name: "Блю чиз", value: "blue_cheese", id: 7 },
+  { name: "Ветчина", value: "ham", id: 8 },
+  { name: "Ананас", value: "ananas", id: 9 },
+  { name: "Бекон", value: "bacon", id: 10 },
+  { name: "Салями", value: "salami", id: 11 },
+  { name: "Маслины", value: "olives", id: 12 },
+  { name: "Халапеньо", value: "jalapeno", id: 13 },
+  { name: "Чили", value: "chile", id: 14 },
+  { name: "Лук", value: "onion", id: 15 },
 ];
 
 export const doughClassMapping = {
@@ -89,9 +96,11 @@ export const getPropertyId = (array, property) => {
 };
 
 export const getNameById = (array, id) => {
-  console.log(array);
-  console.log(id);
   return array.find((item) => +item.id === +id).name;
+};
+
+export const getValueById = (array, id) => {
+  return array.find((item) => +item.id === +id).value;
 };
 
 export const getFillingArrayFromObject = (ingredients, fillingObject) => {
@@ -103,14 +112,15 @@ export const getFillingArrayFromObject = (ingredients, fillingObject) => {
   });
 };
 
-export const calculateFilling = (filling, ingredients) => {
+export const calculateFilling = (filling, ingredients, searchById = false) => {
   let fillingTotal = 0;
   if (filling === undefined) {
     return 0;
   }
+  const searchProperty = searchById ? "id" : "value";
   Object.keys(filling).forEach((fillingItem) => {
     const fillingItemPrice = ingredients.find(
-      (ingredient) => ingredient.value === fillingItem
+      (ingredient) => +ingredient[searchProperty] === +fillingItem
     ).price;
     const fillingItemQuantity = filling[fillingItem];
     fillingTotal += fillingItemPrice * fillingItemQuantity;
