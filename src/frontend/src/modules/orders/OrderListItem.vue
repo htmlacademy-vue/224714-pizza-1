@@ -106,6 +106,7 @@ export default {
   },
   created() {},
   methods: {
+    //Todo вместо всех этих функций использовать ordersFormatted
     getFillingRussian(ingredients) {
       console.log(ingredients);
       return ingredients

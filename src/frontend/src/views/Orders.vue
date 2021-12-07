@@ -5,6 +5,7 @@
     </div>
     <!--    {{ orders }}-->
     <br />
+    Todo использовать ordersFormatted
     {{ ordersFormatted }}
     <OrderListItem
       v-for="(order, i) in orders"

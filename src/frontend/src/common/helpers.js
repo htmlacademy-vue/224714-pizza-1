@@ -119,9 +119,12 @@ export const calculateFilling = (filling, ingredients, searchById = false) => {
   }
   const searchProperty = searchById ? "id" : "value";
   Object.keys(filling).forEach((fillingItem) => {
-    const fillingItemPrice = ingredients.find(
-      (ingredient) => +ingredient[searchProperty] === +fillingItem
-    ).price;
+    const fillingItemPrice = ingredients.find((ingredient) => {
+      if (searchById) {
+        return +ingredient[searchProperty] === +fillingItem;
+      }
+      return ingredient[searchProperty] === fillingItem;
+    }).price;
     const fillingItemQuantity = filling[fillingItem];
     fillingTotal += fillingItemPrice * fillingItemQuantity;
   });

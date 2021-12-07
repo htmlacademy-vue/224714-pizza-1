@@ -28,8 +28,8 @@ const calculatePrice = (pizza, rootState) => {
   return multiplier * (doughPrice + saucePrice + fillingPrice);
 };
 
-const formatPizzaFromId = (pizza, rootState) => {
-  return pizza.map((pizzaItem) => ({
+const formatPizzaFromId = (pizzas, rootState) => {
+  return pizzas.map((pizzaItem) => ({
     sauce: getNameById(rootState.pizza.sauces, pizzaItem.sauceId),
     dough: doughCartTextMap[getValueById(doughMap, pizzaItem.doughId)],
     size: getNameById(rootState.pizza.sizes, pizzaItem.sizeId),
@@ -37,8 +37,17 @@ const formatPizzaFromId = (pizza, rootState) => {
       getNameById(rootState.pizza.ingredients, ingredient.id)
     ),
     price: calculatePrice(pizzaItem, rootState),
+    quantity: pizzaItem.quantity,
   }));
 };
+
+const orderPizzaTotal = (pizzas, rootState) => {
+  return pizzas.reduce((total, pizzaItem) => {
+    return total + calculatePrice(pizzaItem, rootState) * pizzaItem.quantity;
+  }, 0);
+};
+
+const orderMiscTotal = 0;
 
 export default {
   namespaced: true,
@@ -50,7 +59,8 @@ export default {
       if (state.orders) {
         return state.orders.map((order) => {
           return {
-            total: 1111,
+            total:
+              orderPizzaTotal(order.orderPizzas, rootState) + orderMiscTotal,
             orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
           };
         });
