@@ -28,10 +28,10 @@ export default {
       if (Object.keys(state.misc).length) {
         for (let miscId in state.misc) {
           const quantity = state.misc[miscId];
-          const price1 = [...rootState.misc].find(
+          const price = [...rootState.misc].find(
             (miscItem) => miscItem.id === +miscId
           ).price;
-          sum += price1 * quantity;
+          sum += price * quantity;
         }
       }
       return sum;

@@ -29,6 +29,9 @@ const calculatePrice = (pizza, rootState) => {
 };
 
 const formatPizzaFromId = (pizzas, rootState) => {
+  if (!pizzas || !rootState) {
+    return false;
+  }
   return pizzas.map((pizzaItem) => ({
     sauce: getNameById(rootState.pizza.sauces, pizzaItem.sauceId),
     dough: doughCartTextMap[getValueById(doughMap, pizzaItem.doughId)],
@@ -41,13 +44,38 @@ const formatPizzaFromId = (pizzas, rootState) => {
   }));
 };
 
+const formatMiscFromId = (miscs, rootState) => {
+  if (!miscs || !rootState.misc) return;
+  return miscs.map((misc) => {
+    let item = rootState.misc.find((miscItem) => miscItem.id === misc.miscId);
+    let itemClone = Object.assign({}, item);
+    itemClone.price = +item.price * +misc.quantity; //общая сумма по позиции
+    return itemClone;
+  });
+};
+
 const orderPizzaTotal = (pizzas, rootState) => {
+  if (!pizzas || !rootState.pizza) {
+    return false;
+  }
   return pizzas.reduce((total, pizzaItem) => {
     return total + calculatePrice(pizzaItem, rootState) * pizzaItem.quantity;
   }, 0);
 };
 
-const orderMiscTotal = 0;
+const orderMiscTotal = (miscs, rootState) => {
+  if (!miscs) {
+    return 0;
+  }
+  let sum = 0;
+  miscs.map((misc) => {
+    const price = [...rootState.misc].find(
+      (miscItem) => +miscItem.id === +misc.miscId
+    ).price;
+    sum += price * misc.quantity;
+  });
+  return sum;
+};
 
 export default {
   namespaced: true,
@@ -58,11 +86,16 @@ export default {
     ordersFormatted(state, getters, rootState) {
       if (state.orders) {
         return state.orders.map((order) => {
-          return {
-            total:
-              orderPizzaTotal(order.orderPizzas, rootState) + orderMiscTotal,
-            orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
-          };
+          if (order.orderPizzas) {
+            return {
+              orderId: order.id,
+              total:
+                orderPizzaTotal(order.orderPizzas, rootState) +
+                orderMiscTotal(order.orderMisc, rootState),
+              orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
+              orderMisc: formatMiscFromId(order.orderMisc, rootState),
+            };
+          }
         });
       }
     },
