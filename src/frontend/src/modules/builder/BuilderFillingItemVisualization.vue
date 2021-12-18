@@ -1,11 +1,15 @@
 <template>
   <div
-    :class="`pizza__filling pizza__filling--${fillingItem} ${fillingCssClass}`"
+    :class="`pizza__filling pizza__filling--${fillingName} ${fillingCssQuantity}`"
   ></div>
 </template>
 
 <script>
-import { pizzaFillingMultipleClassMapping } from "@/common/helpers";
+import {
+  pizzaFillingMultipleClassMapping,
+  getValueById,
+  ingredientMap,
+} from "@/common/helpers";
 
 export default {
   name: "BuilderFillingItemVisualization",
@@ -20,7 +24,10 @@ export default {
     },
   },
   computed: {
-    fillingCssClass() {
+    fillingName() {
+      return getValueById(ingredientMap, this.fillingItem);
+    },
+    fillingCssQuantity() {
       let fillingCount;
       Object.keys(this.filling).find((fillingItem) => {
         if (fillingItem === this.fillingItem) {

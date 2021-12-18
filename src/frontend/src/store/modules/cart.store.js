@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { getFillingArrayFromObject, getPropertyId } from "@/common/helpers";
+import { getFillingArrayFromObject } from "@/common/helpers";
 import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
 
 const getDefaultState = () => {
@@ -39,18 +39,15 @@ export default {
     totalPrice(state, getters) {
       return getters.totalPizzaPrice + getters.totalMiscPrice;
     },
-    normalizedPizzas(state, getters, rootState, rootGetters) {
+    normalizedPizzas(state) {
       return state.pizzas.map((pizza) => {
         return {
           name: pizza.name,
-          sauceId: getPropertyId(rootGetters["Builder/sauces"], pizza.sauce),
-          doughId: getPropertyId(rootGetters["Builder/doughs"], pizza.dough),
-          sizeId: getPropertyId(rootGetters["Builder/sizes"], pizza.size),
+          sauceId: pizza.sauce,
+          doughId: pizza.dough,
+          sizeId: pizza.size,
           quantity: pizza.quantity,
-          ingredients: getFillingArrayFromObject(
-            rootGetters["Builder/ingredients"],
-            pizza.filling
-          ),
+          ingredients: getFillingArrayFromObject(pizza.filling),
         };
       });
     },
@@ -63,8 +60,6 @@ export default {
       });
     },
     order(state, getters, rootState) {
-      console.log(getters.normalizedPizzas);
-      console.log(getters.normalizedMisc);
       return {
         userId: rootState.Auth?.user?.id || null,
         phone: state.phone,
@@ -87,6 +82,7 @@ export default {
         Object.assign(newPizza, { quantity: 1 });
         state.pizzas.push(newPizza);
       }
+      console.log(state.pizzas);
     },
     removePizza(state, pizza) {
       state.pizzas = [].concat(

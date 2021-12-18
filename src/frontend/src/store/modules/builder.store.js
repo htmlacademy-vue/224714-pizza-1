@@ -83,17 +83,21 @@ export default {
     price(state, getters) {
       let doughPrice =
         getters.doughs && state.dough
-          ? getters.doughs.find((dough) => dough.value === state.dough).price
+          ? getters.doughs.find((dough) => dough.id === state.dough).price
           : 0;
       let saucePrice =
         getters.sauces && state.sauce
-          ? getters.sauces.find((sauce) => sauce.value === state.sauce).price
+          ? getters.sauces.find((sauce) => sauce.id === state.sauce).price
           : 0;
       let multiplier =
         getters.sizes && state.size
-          ? getters.sizes.find((size) => size.value === state.size).multiplier
+          ? getters.sizes.find((size) => size.id === state.size).multiplier
           : 1;
-      let fillingPrice = calculateFilling(state.filling, getters.ingredients);
+      let fillingPrice = calculateFilling(
+        state.filling,
+        getters.ingredients,
+        true
+      );
       return multiplier * (doughPrice + saucePrice + fillingPrice);
     },
     pizza(state, getters) {

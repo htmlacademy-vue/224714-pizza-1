@@ -11,8 +11,8 @@
         >
           <RadioButton
             :name="`diameter`"
-            :value="size.value"
-            :isChecked="size.value === currentSize"
+            :value="size.id"
+            :isChecked="size.id === currentSize"
             @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
           ></RadioButton>
           <span>{{ size.name }}</span>
@@ -31,7 +31,7 @@ export default {
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {
-        const currentSize = this.sizes.find((size) => size.isChecked).value;
+        const currentSize = this.sizes.find((size) => size.isChecked).id;
         this.$store.dispatch("Builder/setDiameter", currentSize);
       }
     }
@@ -45,7 +45,7 @@ export default {
   watch: {
     sizes: function (val) {
       if (!this.currentSize) {
-        const currentSize = val.find((size) => size.isChecked).value;
+        const currentSize = val.find((size) => size.isChecked).id;
         this.$store.dispatch("Builder/setDiameter", currentSize);
       }
     },

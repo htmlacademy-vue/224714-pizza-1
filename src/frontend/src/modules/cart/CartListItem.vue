@@ -46,6 +46,9 @@ import {
   doughCartTextMap,
   sizeTextMap,
   capitalizeFirstLetter,
+  getValueById,
+  sizeMap,
+  doughMap,
 } from "@/common/helpers";
 import ItemCounter from "@/components/ItemCounter";
 
@@ -76,23 +79,23 @@ export default {
     },
     sauceRussian() {
       return sauceMap
-        .find((sauce) => sauce.value === this.pizza.sauce)
+        .find((sauce) => sauce.id === this.pizza.sauce)
         .name.toLowerCase();
     },
     sizeRussian() {
-      return sizeTextMap[this.pizza.size];
+      return sizeTextMap[getValueById(sizeMap, this.pizza.size)];
     },
     fillingRussian() {
       return Object.keys(this.pizza.filling)
         .map((fillingItem) => {
           return ingredientMap
-            .find((item) => item.value === fillingItem)
+            .find((item) => +item.id === +fillingItem)
             .name.toLowerCase();
         })
         .join(`, `);
     },
     doughText() {
-      return doughCartTextMap[this.pizza.dough];
+      return doughCartTextMap[getValueById(doughMap, this.pizza.dough)];
     },
     pizzaSubSum() {
       return this.pizza.price * this.pizza.quantity;

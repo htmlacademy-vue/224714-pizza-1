@@ -9,8 +9,8 @@
     >
       <RadioButton
         :name="`sauce`"
-        :value="sauce.value"
-        :isChecked="sauce.value === currentSauce"
+        :value="sauce.id"
+        :isChecked="sauce.id === currentSauce"
         @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
       ></RadioButton>
       <span>{{ sauce.name }}</span>
@@ -27,7 +27,7 @@ export default {
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {
-        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).value;
+        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).id;
         this.$store.dispatch("Builder/setSauce", currentSauce);
       }
     }
@@ -41,7 +41,7 @@ export default {
   watch: {
     sauces: function (val) {
       if (!this.currentSauce) {
-        const currentSauce = val.find((sauce) => sauce.isChecked).value;
+        const currentSauce = val.find((sauce) => sauce.isChecked).id;
         this.$store.dispatch("Builder/setSauce", currentSauce);
       }
     },

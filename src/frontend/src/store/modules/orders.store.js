@@ -4,6 +4,10 @@ import {
   doughMap,
   getNameById,
   getValueById,
+  sauceMap,
+  sizeTextMap,
+  sizeMap,
+  ingredientMap,
 } from "@/common/helpers";
 
 const calculatePrice = (pizza, rootState) => {
@@ -29,18 +33,19 @@ const calculatePrice = (pizza, rootState) => {
 };
 
 const formatPizzaFromId = (pizzas, rootState) => {
-  if (!pizzas || !rootState) {
-    return false;
+  if (!pizzas?.length || Object.keys(rootState.pizza).length === 0) {
+    return [];
   }
-  return pizzas.map((pizzaItem) => ({
-    sauce: getNameById(rootState.pizza.sauces, pizzaItem.sauceId),
-    dough: doughCartTextMap[getValueById(doughMap, pizzaItem.doughId)],
-    size: getNameById(rootState.pizza.sizes, pizzaItem.sizeId),
-    ingredients: pizzaItem.ingredients.map((ingredient) =>
-      getNameById(rootState.pizza.ingredients, ingredient.id)
-    ),
-    price: calculatePrice(pizzaItem, rootState),
-    quantity: pizzaItem.quantity,
+  return pizzas.map((pizza) => ({
+    name: pizza.name,
+    sauce: getNameById(sauceMap, pizza.sauceId),
+    dough: doughCartTextMap[getValueById(doughMap, pizza.doughId)],
+    size: sizeTextMap[getValueById(sizeMap, pizza.sizeId)],
+    ingredients: pizza.ingredients
+      .map((ingredient) => getNameById(ingredientMap, ingredient.ingredientId))
+      .join(`, `),
+    price: calculatePrice(pizza, rootState),
+    quantity: pizza.quantity,
   }));
 };
 
@@ -55,7 +60,7 @@ const formatMiscFromId = (miscs, rootState) => {
 };
 
 const orderPizzaTotal = (pizzas, rootState) => {
-  if (!pizzas || !rootState.pizza) {
+  if (!pizzas?.length || Object.keys(rootState.pizza).length === 0) {
     return false;
   }
   return pizzas.reduce((total, pizzaItem) => {
@@ -88,7 +93,7 @@ export default {
         return state.orders.map((order) => {
           if (order.orderPizzas) {
             return {
-              orderId: order.id,
+              id: order.id,
               total:
                 orderPizzaTotal(order.orderPizzas, rootState) +
                 orderMiscTotal(order.orderMisc, rootState),
@@ -116,12 +121,11 @@ export default {
     },
     async post(context, order) {
       const newOrder = await this.$api.orders.post(order);
-      // [UPDATE_ENTITY] ???
-      // const index = state.orders.findIndex(({ id }) => id === value.id);
-      // if (~index) {
-      //   state[module][entity].splice(index, 1, value);
-      // }
       context.commit("addOrder", newOrder);
+    },
+    async delete({ dispatch }, orderId) {
+      await this.$api.orders.delete(orderId);
+      dispatch("query");
     },
   },
 };

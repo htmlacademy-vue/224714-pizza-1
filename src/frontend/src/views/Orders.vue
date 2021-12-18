@@ -3,12 +3,9 @@
     <div class="layout__title">
       <h1 class="title title--big">История заказов</h1>
     </div>
-    <!--    {{ orders }}-->
-    <br />
-    Todo использовать ordersFormatted
     {{ ordersFormatted }}
     <OrderListItem
-      v-for="(order, i) in orders"
+      v-for="(order, i) in ordersFormatted"
       :key="i"
       :order="order"
     ></OrderListItem>
@@ -18,7 +15,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import OrderListItem from "@/modules/orders/OrderListItem";
-// import { getNameById } from "@/common/helpers";
 
 export default {
   name: "Orders",

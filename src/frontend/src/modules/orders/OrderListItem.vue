@@ -6,14 +6,22 @@
       </div>
 
       <div class="order__sum">
-        <span>Сумма заказа: TODO 1 564 ₽</span>
+        <span>Сумма заказа: {{ order.total }} ₽</span>
       </div>
 
       <div class="order__button">
-        <button type="button" class="button button--border">Удалить</button>
+        <button
+          type="button"
+          class="button button--border"
+          @click="removeOrder"
+        >
+          Удалить
+        </button>
       </div>
       <div class="order__button">
-        <button type="button" class="button">Повторить</button>
+        <button type="button" class="button" @click="repeatOrder">
+          Повторить
+        </button>
       </div>
     </div>
 
@@ -31,51 +39,25 @@
             <h2>{{ pizza.name }}</h2>
             <ul>
               <li>
-                {{ getSizeText(pizza.sizeId) }},
-                {{ getDoughText(pizza.doughId) }}
+                {{ pizza.size }},
+                {{ pizza.dough }}
               </li>
-              <li>Соус: {{ getSauceById(pizza.sauceId) }}</li>
-              <li>Начинка: {{ getFillingRussian(pizza.ingredients) }}</li>
+              <li>Соус: {{ pizza.sauce }}</li>
+              <li>Начинка: {{ pizza.ingredients }}</li>
             </ul>
           </div>
         </div>
 
-        <p class="order__price">Todo 2х782 ₽</p>
+        <p class="order__price">{{ pizza.quantity }}x{{ pizza.price }} ₽</p>
       </li>
     </ul>
 
     <ul class="order__additional">
-      <li>
-        <img
-          src="@/assets/img/cola.svg"
-          width="20"
-          height="30"
-          alt="Coca-Cola 0,5 литра"
-        />
+      <li v-for="(misc, i) in order.orderMisc" :key="i">
+        <img :src="misc.image" width="20" height="30" :alt="misc.name" />
         <p>
-          <span>Todo Coca-Cola 0,5 литра</span>
-          <b>56 ₽</b>
-        </p>
-      </li>
-      <li>
-        <img
-          src="@/assets/img/sauce.svg"
-          width="20"
-          height="30"
-          alt="Острый соус"
-        />
-        <span>Острый соус <br />30 ₽</span>
-      </li>
-      <li>
-        <img
-          src="@/assets/img/potato.svg"
-          width="20"
-          height="30"
-          alt="Картошка из печи"
-        />
-        <p>
-          <span>Картошка из печи</span>
-          <b>170 ₽</b>
+          <span>{{ misc.name }}</span>
+          <b>{{ misc.price }} ₽</b>
         </p>
       </li>
     </ul>
@@ -85,17 +67,6 @@
 </template>
 
 <script>
-import {
-  doughCartTextMap,
-  doughMap,
-  getNameById,
-  getValueById,
-  ingredientMap,
-  sizeTextMap,
-  sizeMap,
-  sauceMap,
-} from "@/common/helpers";
-
 export default {
   name: "OrderListItem",
   props: {
@@ -104,25 +75,29 @@ export default {
       type: Object,
     },
   },
-  created() {},
   methods: {
-    //Todo вместо всех этих функций использовать ordersFormatted
-    getFillingRussian(ingredients) {
-      console.log(ingredients);
-      return ingredients
-        .map((ingredient) => {
-          return getNameById(ingredientMap, ingredient.ingredientId);
-        })
-        .join(`, `);
+    async removeOrder() {
+      await this.$store.dispatch("Orders/delete", this.order.id);
     },
-    getDoughText(doughId) {
-      return doughCartTextMap[getValueById(doughMap, doughId)];
-    },
-    getSizeText(sizeId) {
-      return sizeTextMap[getValueById(sizeMap, sizeId)];
-    },
-    getSauceById(sauceId) {
-      return getNameById(sauceMap, sauceId);
+    repeatOrder() {
+      const orderOriginal = this.$store.state.Orders.orders.find(
+        (order) => order.id === this.order.id
+      );
+      console.log(orderOriginal);
+      const pizza = {
+        dough: this.order.dough,
+        sauce: this.order.sauce,
+        size: this.order.size,
+        name: this.order.name,
+        filling: this.order.filling,
+      };
+      console.log(pizza);
+      this.$store.dispatch("Builder/loadPizza", pizza);
+      this.$store.dispatch(
+        "Cart/addPizza",
+        this.$store.getters["Builder/pizza"]
+      );
+      this.$router.push({ name: `Cart` });
     },
   },
   computed: {
