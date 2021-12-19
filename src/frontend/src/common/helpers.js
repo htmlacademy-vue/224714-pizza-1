@@ -5,6 +5,7 @@ import {
 } from "@/services/api.service";
 
 import resources from "@/common/enums/resources";
+import { defaultAddressOptions } from "@/common/const";
 
 export const doughMap = [
   {
@@ -31,13 +32,13 @@ export const sizeMap = [
     id: 1,
   },
   {
-    multiplier: 2,
-    value: "normal",
+    multiplier: 3,
+    value: "big",
     id: 2,
   },
   {
-    multiplier: 3,
-    value: "big",
+    multiplier: 2,
+    value: "normal",
     id: 3,
   },
 ];
@@ -153,12 +154,6 @@ export const createResources = (notifier) => {
     [resources.MISC]: new ReadOnlyApiService(resources.MISC, notifier),
     [resources.ADDRESSES]: new CrudApiService(resources.ADDRESSES, notifier),
     [resources.ORDERS]: new CrudApiService(resources.ORDERS, notifier),
-    // [resources.TASKS]: new TaskApiService(notifier),
-    // [resources.COLUMNS]:
-    //   new CrudApiService(resources.COLUMNS, notifier),
-    // [resources.TICKS]: new CrudApiService(resources.TICKS, notifier),
-    // [resources.COMMENTS]:
-    //   new CrudApiService(resources.COMMENTS, notifier)
   };
 };
 
@@ -175,4 +170,8 @@ export const defaultAddress = {
   building: "",
   flat: "",
   comment: "",
+};
+
+export const getAddressIndex = (index) => {
+  return index + defaultAddressOptions.length + 1;
 };

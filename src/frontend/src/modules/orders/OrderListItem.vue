@@ -67,6 +67,9 @@
 </template>
 
 <script>
+import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
+import { getAddressIndex } from "@/common/helpers";
+
 export default {
   name: "OrderListItem",
   props: {
@@ -102,16 +105,32 @@ export default {
           id: new Date().getTime(),
         };
       });
-      const miscFormatted = {};
-      orderOriginal.orderMisc.map((misc) => {
-        miscFormatted[misc.miscId] = misc.quantity;
-      });
-      console.log(orderOriginal);
-      console.log(pizzasFormatted);
+      const getMiscFormatted = () => {
+        let miscFormatted = {};
+        if (orderOriginal.orderMisc) {
+          orderOriginal.orderMisc.map((misc) => {
+            miscFormatted[misc.miscId] = misc.quantity;
+          });
+        }
+        return miscFormatted;
+      };
+
+      const getAddressOption = (addressId) => {
+        let addressOptionIndex = DEFAULT_ADDRESS_OPTION;
+        this.$store.state.Addresses.addresses.find((address, index) => {
+          if (+addressId === +address.id) {
+            addressOptionIndex = getAddressIndex(index);
+          }
+        });
+        return addressOptionIndex;
+      };
 
       this.$store.dispatch("Cart/addPizzas", {
         pizzas: pizzasFormatted,
-        miscs: miscFormatted,
+        miscs: getMiscFormatted(),
+        address: this.order.orderAddress?.id
+          ? getAddressOption(this.order.orderAddress.id)
+          : DEFAULT_ADDRESS_OPTION,
       });
       this.$router.push({ name: `Cart` });
     },

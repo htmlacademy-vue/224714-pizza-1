@@ -3,7 +3,6 @@
     <div class="cart-form">
       <label class="cart-form__select">
         <span class="cart-form__label">Получение заказа:</span>
-
         <select
           name="delivery"
           class="select"
@@ -88,7 +87,7 @@
 
 <script>
 import { DEFAULT_ADDRESS_OPTION, defaultAddressOptions } from "@/common/const";
-import { defaultAddress } from "@/common/helpers";
+import { defaultAddress, getAddressIndex } from "@/common/helpers";
 import { mapState } from "vuex";
 export default {
   name: "CartForm",
@@ -127,7 +126,7 @@ export default {
     addressOptions() {
       let formattedAddresses = this.addresses.map((address, i) => {
         return {
-          index: i + defaultAddressOptions.length + 1,
+          index: getAddressIndex(i),
           text: address.name,
           address: address,
         };
@@ -137,7 +136,7 @@ export default {
     address() {
       return (
         this.addressOptions.find(
-          (option) => option.index === this.addressOption
+          (option) => +option.index === +this.addressOption
         ).address || defaultAddress
       );
     },

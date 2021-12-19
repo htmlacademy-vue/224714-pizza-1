@@ -90,16 +90,15 @@ export default {
   getters: {
     ordersFormatted(state, getters, rootState) {
       return state.orders.map((order) => {
-        if (order.orderPizzas) {
-          return {
-            id: order.id,
-            total:
-              orderPizzaTotal(order.orderPizzas, rootState) +
-              orderMiscTotal(order.orderMisc, rootState),
-            orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
-            orderMisc: formatMiscFromId(order.orderMisc, rootState),
-          };
-        }
+        return {
+          id: order.id,
+          total:
+            orderPizzaTotal(order.orderPizzas, rootState) +
+            orderMiscTotal(order.orderMisc, rootState),
+          orderPizzas: formatPizzaFromId(order.orderPizzas, rootState),
+          orderMisc: formatMiscFromId(order.orderMisc, rootState),
+          orderAddress: order.orderAddress,
+        };
       });
     },
   },

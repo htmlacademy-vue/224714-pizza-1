@@ -83,6 +83,9 @@ export default {
       newAddress: {},
     };
   },
+  beforeCreate() {
+    this.$store.dispatch("Addresses/getAddresses");
+  },
   created() {
     this.newAddress = Object.assign(defaultAddress);
   },

@@ -82,7 +82,6 @@ export default {
         Object.assign(newPizza, { quantity: 1 });
         state.pizzas.push(newPizza);
       }
-      console.log(state.pizzas);
     },
     addPizzas(state, pizzas) {
       state.pizzas = pizzas;
@@ -139,6 +138,9 @@ export default {
     setAddress(state, address) {
       state.address = address;
     },
+    setAddressOption(state, addressOption) {
+      state.addressOption = addressOption;
+    },
     setPhone(state, phone) {
       state.phone = phone;
     },
@@ -148,9 +150,10 @@ export default {
       context.commit("addPizza", pizza);
     },
     addPizzas(context, order) {
-      const { pizzas, miscs } = order;
+      const { pizzas, miscs, address } = order;
       context.commit("addPizzas", pizzas);
       context.commit("addMiscs", miscs);
+      context.commit("setAddressOption", address);
     },
     removePizza(context, pizza) {
       context.commit("removePizza", pizza);
