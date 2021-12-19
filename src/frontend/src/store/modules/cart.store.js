@@ -84,6 +84,12 @@ export default {
       }
       console.log(state.pizzas);
     },
+    addPizzas(state, pizzas) {
+      state.pizzas = pizzas;
+    },
+    addMiscs(state, miscs) {
+      state.misc = miscs;
+    },
     removePizza(state, pizza) {
       state.pizzas = [].concat(
         state.pizzas.filter((pizzaItem) => pizzaItem.id !== pizza.id)
@@ -140,6 +146,11 @@ export default {
   actions: {
     addPizza(context, pizza) {
       context.commit("addPizza", pizza);
+    },
+    addPizzas(context, order) {
+      const { pizzas, miscs } = order;
+      context.commit("addPizzas", pizzas);
+      context.commit("addMiscs", miscs);
     },
     removePizza(context, pizza) {
       context.commit("removePizza", pizza);

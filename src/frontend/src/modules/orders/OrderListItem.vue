@@ -83,20 +83,36 @@ export default {
       const orderOriginal = this.$store.state.Orders.orders.find(
         (order) => order.id === this.order.id
       );
-      console.log(orderOriginal);
-      const pizza = {
-        dough: this.order.dough,
-        sauce: this.order.sauce,
-        size: this.order.size,
-        name: this.order.name,
-        filling: this.order.filling,
+      const makeFillingObject = (filling) => {
+        let fillingObject = {};
+        filling.map((fillingItem) => {
+          fillingObject[fillingItem.ingredientId] = fillingItem.quantity;
+        });
+        return fillingObject;
       };
-      console.log(pizza);
-      this.$store.dispatch("Builder/loadPizza", pizza);
-      this.$store.dispatch(
-        "Cart/addPizza",
-        this.$store.getters["Builder/pizza"]
-      );
+      const pizzasFormatted = orderOriginal.orderPizzas.map((pizza, i) => {
+        return {
+          name: pizza.name,
+          sauce: pizza.sauceId,
+          dough: pizza.doughId,
+          size: pizza.sizeId,
+          price: this.order.orderPizzas[i].price,
+          quantity: this.order.orderPizzas[i].quantity,
+          filling: makeFillingObject(pizza.ingredients),
+          id: new Date().getTime(),
+        };
+      });
+      const miscFormatted = {};
+      orderOriginal.orderMisc.map((misc) => {
+        miscFormatted[misc.miscId] = misc.quantity;
+      });
+      console.log(orderOriginal);
+      console.log(pizzasFormatted);
+
+      this.$store.dispatch("Cart/addPizzas", {
+        pizzas: pizzasFormatted,
+        miscs: miscFormatted,
+      });
       this.$router.push({ name: `Cart` });
     },
   },
