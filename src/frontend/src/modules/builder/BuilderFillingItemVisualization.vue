@@ -7,8 +7,7 @@
 <script>
 import {
   pizzaFillingMultipleClassMapping,
-  getValueById,
-  ingredientMap,
+  getIngredientValueById,
 } from "@/common/helpers";
 
 export default {
@@ -25,7 +24,10 @@ export default {
   },
   computed: {
     fillingName() {
-      return getValueById(ingredientMap, this.fillingItem);
+      return getIngredientValueById(
+        this.$store.state.pizza.ingredients,
+        this.fillingItem
+      );
     },
     fillingCssQuantity() {
       let fillingCount;

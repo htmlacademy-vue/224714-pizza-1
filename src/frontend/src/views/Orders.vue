@@ -4,8 +4,8 @@
       <h1 class="title title--big">История заказов</h1>
     </div>
     <OrderListItem
-      v-for="(order, i) in ordersFormatted"
-      :key="i"
+      v-for="order in ordersFormatted"
+      :key="order.id"
       :order="order"
     ></OrderListItem>
   </div>

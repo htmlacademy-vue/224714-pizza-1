@@ -88,7 +88,7 @@ export default {
       );
       const makeFillingObject = (filling) => {
         let fillingObject = {};
-        filling.map((fillingItem) => {
+        filling.forEach((fillingItem) => {
           fillingObject[fillingItem.ingredientId] = fillingItem.quantity;
         });
         return fillingObject;
@@ -108,7 +108,7 @@ export default {
       const getMiscFormatted = () => {
         let miscFormatted = {};
         if (orderOriginal.orderMisc) {
-          orderOriginal.orderMisc.map((misc) => {
+          orderOriginal.orderMisc.forEach((misc) => {
             miscFormatted[misc.miscId] = misc.quantity;
           });
         }

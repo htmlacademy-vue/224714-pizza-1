@@ -7,7 +7,6 @@ import {
   sauceMap,
   sizeTextMap,
   sizeMap,
-  ingredientMap,
 } from "@/common/helpers";
 
 const calculatePrice = (pizza, rootState) => {
@@ -42,7 +41,9 @@ const formatPizzaFromId = (pizzas, rootState) => {
     dough: doughCartTextMap[getValueById(doughMap, pizza.doughId)],
     size: sizeTextMap[getValueById(sizeMap, pizza.sizeId)],
     ingredients: pizza.ingredients
-      .map((ingredient) => getNameById(ingredientMap, ingredient.ingredientId))
+      .map((ingredient) =>
+        getNameById(rootState.pizza.ingredients, ingredient.ingredientId)
+      )
       .join(`, `),
     price: calculatePrice(pizza, rootState),
     quantity: pizza.quantity,
@@ -73,7 +74,7 @@ const orderMiscTotal = (miscs, rootState) => {
     return 0;
   }
   let sum = 0;
-  miscs.map((misc) => {
+  miscs.forEach((misc) => {
     const price = [...rootState.misc].find(
       (miscItem) => +miscItem.id === +misc.miscId
     ).price;
@@ -107,7 +108,6 @@ export default {
       state.orders = orders;
     },
     addOrder(state, order) {
-      //Todo запрос к api
       state.orders.push(order);
     },
   },

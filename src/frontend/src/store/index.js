@@ -25,11 +25,18 @@ const actions = {
     this.commit("SET_MISC", miscellaneous);
   },
   async fetchPizza() {
-    let pizza = {};
-    pizza.dough = await this.$api.dough.query();
-    pizza.ingredients = await this.$api.ingredients.query();
-    pizza.sauces = await this.$api.sauces.query();
-    pizza.sizes = await this.$api.sizes.query();
+    const [dough, ingredients, sauces, sizes] = await Promise.all([
+      this.$api.dough.query(),
+      this.$api.ingredients.query(),
+      this.$api.sauces.query(),
+      this.$api.sizes.query(),
+    ]);
+    const pizza = {
+      dough,
+      ingredients,
+      sauces,
+      sizes,
+    };
     this.commit("SET_PIZZA", pizza);
   },
   async createNotification({ ...notification }) {

@@ -155,6 +155,9 @@ export default {
       context.commit("addMiscs", miscs);
       context.commit("setAddressOption", address);
     },
+    setAddressOption(context, addressOption) {
+      context.commit("setAddressOption", addressOption);
+    },
     removePizza(context, pizza) {
       context.commit("removePizza", pizza);
     },

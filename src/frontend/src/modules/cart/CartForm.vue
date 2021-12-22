@@ -6,8 +6,8 @@
         <select
           name="delivery"
           class="select"
-          v-model="$store.state.Cart.addressOption"
-          @change="addressChanged"
+          :value="addressOption"
+          @change="addressChanged($event)"
         >
           <option
             v-for="(address, i) in addressOptions"
@@ -26,7 +26,8 @@
           type="text"
           name="phone"
           placeholder="+7 999-999-99-99"
-          v-model="$store.state.Cart.phone"
+          :value="phone"
+          @change="phoneChanged"
         />
         <div>
           {{ validations.phone.error }}
@@ -42,7 +43,8 @@
             <input
               type="text"
               name="street"
-              v-model="address.street"
+              :value="address.street"
+              @change="addressPartlyChanged($event, `street`)"
               :disabled="isDisabledInputs"
             />
             <div>
@@ -57,7 +59,8 @@
             <input
               type="text"
               name="building"
-              v-model="address.building"
+              :value="address.building"
+              @change="addressPartlyChanged($event, `building`)"
               :disabled="isDisabledInputs"
             />
             <div>
@@ -72,7 +75,8 @@
             <input
               type="text"
               name="flat"
-              v-model="address.flat"
+              :value="address.flat"
+              @change="addressPartlyChanged($event, `flat`)"
               :disabled="isDisabledInputs"
             />
             <div>
@@ -103,15 +107,21 @@ export default {
     };
   },
   methods: {
-    addressChanged() {
+    addressChanged(event) {
+      this.$store.dispatch("Cart/setAddressOption", event.target.value);
       this.$store.dispatch("Cart/setAddress", this.address);
     },
-    updatePhone(e) {
-      this.$store.commit("Cart/setPhone", e.target.value);
+    phoneChanged(event) {
+      this.$store.commit("Cart/setPhone", event.target.value);
+    },
+    addressPartlyChanged(event, option) {
+      let address = Object.assign({}, this.$store.state.Cart.address);
+      address[option] = event.target.value;
+      this.$store.commit("Cart/setAddress", address);
     },
   },
   computed: {
-    ...mapState("Cart", ["addressOption"]),
+    ...mapState("Cart", ["addressOption", "phone"]),
     isDeliveryPickup() {
       return this.addressOption === DEFAULT_ADDRESS_OPTION;
     },

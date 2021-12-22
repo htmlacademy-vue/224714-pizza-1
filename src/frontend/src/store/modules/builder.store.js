@@ -73,9 +73,7 @@ export default {
             name: ingredientItem.name,
             id: ingredientItem.id,
             price: ingredientItem.price,
-            value: ingredientMap.find(
-              (item) => item.name === ingredientItem.name
-            ).value,
+            value: ingredientMap[ingredientItem.name],
           };
         });
       }

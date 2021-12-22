@@ -62,23 +62,23 @@ export const sauceMap = [
   },
 ];
 
-export const ingredientMap = [
-  { name: "Грибы", value: "mushrooms", id: 1 },
-  { name: "Томаты", value: "tomatoes", id: 2 },
-  { name: "Чеддер", value: "cheddar", id: 3 },
-  { name: "Ветчина", value: "ham", id: 4 },
-  { name: "Ананас", value: "ananas", id: 5 },
-  { name: "Лосось", value: "salmon", id: 6 },
-  { name: "Моцарелла", value: "mozzarella", id: 7 },
-  { name: "Пармезан", value: "parmesan", id: 8 },
-  { name: "Салями", value: "salami", id: 9 },
-  { name: "Маслины", value: "olives", id: 10 },
-  { name: "Бекон", value: "bacon", id: 11 },
-  { name: "Блю чиз", value: "blue_cheese", id: 12 },
-  { name: "Лук", value: "onion", id: 13 },
-  { name: "Халапеньо", value: "jalapeno", id: 14 },
-  { name: "Чили", value: "chile", id: 15 },
-];
+export const ingredientMap = {
+  ["Грибы"]: "mushrooms",
+  ["Томаты"]: "tomatoes",
+  ["Чеддер"]: "cheddar",
+  ["Ветчина"]: "ham",
+  ["Ананас"]: "ananas",
+  ["Лосось"]: "salmon",
+  ["Моцарелла"]: "mozzarella",
+  ["Пармезан"]: "parmesan",
+  ["Салями"]: "salami",
+  ["Маслины"]: "olives",
+  ["Бекон"]: "bacon",
+  ["Блю чиз"]: "blue_cheese",
+  ["Лук"]: "onion",
+  ["Халапеньо"]: "jalapeno",
+  ["Чили"]: "chile",
+};
 
 export const doughClassMapping = {
   light: "small",
@@ -98,6 +98,11 @@ export const getPropertyId = (array, id) => {
 
 export const getNameById = (array, id) => {
   return array.find((item) => +item.id === +id).name;
+};
+
+export const getIngredientValueById = (array, id) => {
+  const ingredientRussianName = array.find((item) => +item.id === +id).name;
+  return ingredientMap[ingredientRussianName];
 };
 
 export const getValueById = (array, id) => {

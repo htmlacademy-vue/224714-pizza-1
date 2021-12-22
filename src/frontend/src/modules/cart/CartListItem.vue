@@ -41,7 +41,6 @@
 
 <script>
 import {
-  ingredientMap,
   sauceMap,
   doughCartTextMap,
   sizeTextMap,
@@ -88,7 +87,7 @@ export default {
     fillingRussian() {
       return Object.keys(this.pizza.filling)
         .map((fillingItem) => {
-          return ingredientMap
+          return this.$store.state.pizza.ingredients
             .find((item) => +item.id === +fillingItem)
             .name.toLowerCase();
         })

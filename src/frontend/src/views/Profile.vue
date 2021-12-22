@@ -87,7 +87,7 @@ export default {
     this.$store.dispatch("Addresses/getAddresses");
   },
   created() {
-    this.newAddress = Object.assign(defaultAddress);
+    this.newAddress = defaultAddress;
   },
   methods: {
     onEditClick(id, index) {
@@ -110,11 +110,11 @@ export default {
     },
     onAddNewClick() {
       this.addressIndex = this.addresses.length + 1;
-      this.newAddress = Object.assign(defaultAddress);
+      this.newAddress = defaultAddress;
       this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.NEW);
     },
     closeForm() {
-      this.newAddress = Object.assign(defaultAddress);
+      this.newAddress = defaultAddress;
       this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.CLOSED);
     },
   },
