@@ -1,14 +1,14 @@
 import Vue from "vue";
+import { getFillingArrayFromObject } from "@/common/helpers";
+import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
 
 const getDefaultState = () => {
   return {
     pizzas: [],
     misc: {},
-    delivery: 1,
-    tel: ``,
-    street: ``,
-    house: ``,
-    apartment: ``,
+    phone: null,
+    address: null,
+    addressOption: DEFAULT_ADDRESS_OPTION,
   };
 };
 
@@ -28,10 +28,10 @@ export default {
       if (Object.keys(state.misc).length) {
         for (let miscId in state.misc) {
           const quantity = state.misc[miscId];
-          const price1 = [...rootState.misc].find(
+          const price = [...rootState.misc].find(
             (miscItem) => miscItem.id === +miscId
           ).price;
-          sum += price1 * quantity;
+          sum += price * quantity;
         }
       }
       return sum;
@@ -39,15 +39,33 @@ export default {
     totalPrice(state, getters) {
       return getters.totalPizzaPrice + getters.totalMiscPrice;
     },
-    order(state) {
+    normalizedPizzas(state) {
+      return state.pizzas.map((pizza) => {
+        return {
+          name: pizza.name,
+          sauceId: pizza.sauce,
+          doughId: pizza.dough,
+          sizeId: pizza.size,
+          quantity: pizza.quantity,
+          ingredients: getFillingArrayFromObject(pizza.filling),
+        };
+      });
+    },
+    normalizedMisc(state) {
+      return Object.entries(state.misc).map((miscItem) => {
+        return {
+          miscId: miscItem[0],
+          quantity: miscItem[1],
+        };
+      });
+    },
+    order(state, getters, rootState) {
       return {
-        delivery: state.delivery,
-        tel: state.tel,
-        street: state.street,
-        house: state.house,
-        apartment: state.apartment,
-        pizzas: state.pizzas,
-        misc: state.misc,
+        userId: rootState.Auth?.user?.id || null,
+        phone: state.phone,
+        address: state.address,
+        pizzas: getters.normalizedPizzas,
+        misc: getters.normalizedMisc,
       };
     },
   },
@@ -64,6 +82,12 @@ export default {
         Object.assign(newPizza, { quantity: 1 });
         state.pizzas.push(newPizza);
       }
+    },
+    addPizzas(state, pizzas) {
+      state.pizzas = pizzas;
+    },
+    addMiscs(state, miscs) {
+      state.misc = miscs;
     },
     removePizza(state, pizza) {
       state.pizzas = [].concat(
@@ -111,19 +135,29 @@ export default {
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
-    setStreet(state, street) {
-      state.street = street;
+    setAddress(state, address) {
+      state.address = address;
     },
-    setHouse(state, house) {
-      state.house = house;
+    setAddressOption(state, addressOption) {
+      state.addressOption = addressOption;
     },
-    setApartment(state, apartment) {
-      state.apartment = apartment;
+    setPhone(state, phone) {
+      state.phone = phone;
     },
   },
   actions: {
     addPizza(context, pizza) {
       context.commit("addPizza", pizza);
+    },
+    addPizzas(context, order) {
+      const { pizzas, miscs, addressOption, address } = order;
+      context.commit("addPizzas", pizzas);
+      context.commit("addMiscs", miscs);
+      context.commit("setAddressOption", addressOption);
+      context.commit("setAddress", address);
+    },
+    setAddressOption(context, addressOption) {
+      context.commit("setAddressOption", addressOption);
     },
     removePizza(context, pizza) {
       context.commit("removePizza", pizza);
@@ -143,11 +177,11 @@ export default {
     resetState(context) {
       context.commit("resetState");
     },
-    setFullAddress(context, fullAddress) {
-      const { street, house, apartment } = fullAddress;
-      context.commit("setStreet", street);
-      context.commit("setHouse", house);
-      context.commit("setApartment", apartment);
+    setAddress(context, address) {
+      context.commit("setAddress", address);
+    },
+    setPhone(context, phone) {
+      context.commit("setPhone", phone);
     },
   },
 };

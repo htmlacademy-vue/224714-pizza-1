@@ -1,5 +1,10 @@
-import { doughMap, ingredientMap, sauceMap, sizeMap } from "@/common/helpers";
-import { calculateFilling } from "@/common/helpers";
+import {
+  doughMap,
+  ingredientMap,
+  sauceMap,
+  sizeMap,
+  calculateFilling,
+} from "@/common/helpers";
 import Vue from "vue";
 
 const getDefaultState = () => {
@@ -22,6 +27,7 @@ export default {
         return rootState.pizza.dough.map((doughItem, index) => {
           return {
             name: doughItem.name,
+            id: doughItem.id,
             image: doughItem.image,
             description: doughItem.description,
             price: doughItem.price,
@@ -36,6 +42,7 @@ export default {
         return rootState.pizza.sizes.map((sizeItem, index) => {
           return {
             name: sizeItem.name,
+            id: sizeItem.id,
             image: sizeItem.image,
             multiplier: sizeItem.multiplier,
             value: sizeMap.find(
@@ -51,6 +58,7 @@ export default {
         return rootState.pizza.sauces.map((sauceItem, index) => {
           return {
             name: sauceItem.name,
+            id: sauceItem.id,
             price: sauceItem.price,
             value: sauceMap.find((item) => item.name === sauceItem.name).value,
             isChecked: index === 0,
@@ -63,10 +71,9 @@ export default {
         return rootState.pizza.ingredients.map((ingredientItem) => {
           return {
             name: ingredientItem.name,
+            id: ingredientItem.id,
             price: ingredientItem.price,
-            value: ingredientMap.find(
-              (item) => item.name === ingredientItem.name
-            ).value,
+            value: ingredientMap[ingredientItem.name],
           };
         });
       }
@@ -74,27 +81,31 @@ export default {
     price(state, getters) {
       let doughPrice =
         getters.doughs && state.dough
-          ? getters.doughs.find((dough) => dough.value === state.dough).price
+          ? getters.doughs.find((dough) => dough.id === state.dough).price
           : 0;
       let saucePrice =
         getters.sauces && state.sauce
-          ? getters.sauces.find((sauce) => sauce.value === state.sauce).price
+          ? getters.sauces.find((sauce) => sauce.id === state.sauce).price
           : 0;
       let multiplier =
         getters.sizes && state.size
-          ? getters.sizes.find((size) => size.value === state.size).multiplier
+          ? getters.sizes.find((size) => size.id === state.size).multiplier
           : 1;
-      let fillingPrice = calculateFilling(state.filling, getters.ingredients);
+      let fillingPrice = calculateFilling(
+        state.filling,
+        getters.ingredients,
+        true
+      );
       return multiplier * (doughPrice + saucePrice + fillingPrice);
     },
     pizza(state, getters) {
       return {
-        dough: state.dough,
+        name: state.pizzaName,
         sauce: state.sauce,
+        dough: state.dough,
         size: state.size,
         price: getters.price,
         filling: state.filling,
-        name: state.pizzaName,
         id: state.id ? state.id : new Date().getTime(),
       };
     },

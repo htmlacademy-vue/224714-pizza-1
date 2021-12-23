@@ -34,7 +34,6 @@
 
 <script>
 import misc from "@/static/misc.json";
-import user from "@/static/user.json";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
@@ -54,11 +53,7 @@ export default {
   data() {
     return {
       misc,
-      user,
     };
-  },
-  created() {
-    this.$store.dispatch("init");
   },
   computed: {
     ...mapState("Builder", ["filling", "pizzaName"]),

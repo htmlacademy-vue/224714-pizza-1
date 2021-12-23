@@ -3,16 +3,19 @@
     <div class="cart-form">
       <label class="cart-form__select">
         <span class="cart-form__label">Получение заказа:</span>
-
         <select
           name="delivery"
           class="select"
-          v-model="$store.state.Cart.delivery"
+          :value="addressOption"
+          @change="addressChanged($event)"
         >
-          <option value="1">Заберу сам</option>
-          <option value="2">Новый адрес</option>
-          <option v-for="(address, i) in addresses" :key="i" :value="i + 3">
-            {{ address.name }}
+          <option
+            v-for="(address, i) in addressOptions"
+            :key="i"
+            :selected="address.index === defaultAddressOption"
+            :value="address.index"
+          >
+            {{ address.text }}
           </option>
         </select>
       </label>
@@ -21,10 +24,14 @@
         <span>Контактный телефон:</span>
         <input
           type="text"
-          name="tel"
+          name="phone"
           placeholder="+7 999-999-99-99"
-          v-model="$store.state.Cart.tel"
+          :value="phone"
+          @change="phoneChanged"
         />
+        <div>
+          {{ validations.phone.error }}
+        </div>
       </label>
 
       <div class="cart-form__address" v-if="!isDeliveryPickup">
@@ -36,9 +43,13 @@
             <input
               type="text"
               name="street"
-              v-model="$store.state.Cart.street"
+              :value="address.street"
+              @change="addressPartlyChanged($event, `street`)"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.street.error }}
+            </div>
           </label>
         </div>
 
@@ -47,10 +58,14 @@
             <span>Дом*</span>
             <input
               type="text"
-              name="house"
-              v-model="$store.state.Cart.house"
+              name="building"
+              :value="address.building"
+              @change="addressPartlyChanged($event, `building`)"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.building.error }}
+            </div>
           </label>
         </div>
 
@@ -59,10 +74,14 @@
             <span>Квартира</span>
             <input
               type="text"
-              name="apartment"
-              v-model="$store.state.Cart.apartment"
+              name="flat"
+              :value="address.flat"
+              @change="addressPartlyChanged($event, `flat`)"
               :disabled="isDisabledInputs"
             />
+            <div>
+              {{ validations.flat.error }}
+            </div>
           </label>
         </div>
       </div>
@@ -71,17 +90,68 @@
 </template>
 
 <script>
+import { DEFAULT_ADDRESS_OPTION, defaultAddressOptions } from "@/common/const";
+import { defaultAddress, getAddressIndex } from "@/common/helpers";
+import { mapState } from "vuex";
 export default {
   name: "CartForm",
+  props: {
+    validations: {
+      type: Object,
+      required: false,
+    },
+  },
+  data() {
+    return {
+      defaultAddressOption: DEFAULT_ADDRESS_OPTION,
+    };
+  },
+  beforeCreate() {
+    this.$store.dispatch("Addresses/getAddresses");
+  },
+  methods: {
+    addressChanged(event) {
+      this.$store.dispatch("Cart/setAddressOption", event.target.value);
+      this.$store.dispatch("Cart/setAddress", this.address);
+    },
+    phoneChanged(event) {
+      this.$store.commit("Cart/setPhone", event.target.value);
+    },
+    addressPartlyChanged(event, option) {
+      let address = Object.assign({}, this.$store.state.Cart.address);
+      address[option] = event.target.value;
+      this.$store.commit("Cart/setAddress", address);
+    },
+  },
   computed: {
+    ...mapState("Cart", ["addressOption", "phone"]),
     isDeliveryPickup() {
-      return this.$store.state.Cart.delivery === 1;
+      return this.addressOption === DEFAULT_ADDRESS_OPTION;
     },
     isDisabledInputs() {
-      return +this.$store.state.Cart.delivery >= 3;
+      return this.addressOption >= defaultAddressOptions.length + 1;
     },
     addresses() {
-      return this.$store.state.Auth.user["addreses"] || []; //Todo сделать когда
+      return this.$store.state.Auth.isAuthenticated
+        ? this.$store.state.Addresses.addresses
+        : [];
+    },
+    addressOptions() {
+      let formattedAddresses = this.addresses.map((address, i) => {
+        return {
+          index: getAddressIndex(i),
+          text: address.name,
+          address: address,
+        };
+      });
+      return defaultAddressOptions.concat(formattedAddresses);
+    },
+    address() {
+      return (
+        this.addressOptions.find(
+          (option) => +option.index === +this.addressOption
+        ).address || defaultAddress
+      );
     },
   },
 };

@@ -43,21 +43,21 @@ export default {
   },
   methods: {
     plusOne() {
-      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.value);
+      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.id);
     },
     minusOne() {
-      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.value);
+      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.id);
     },
   },
   computed: {
     isDraggable() {
       return (
-        this.$store.state.Builder.filling[this.ingredient.value] !==
+        this.$store.state.Builder.filling[this.ingredient.id] !==
         FILLING_COUNTER_MAX_VALUE
       );
     },
     value() {
-      return this.$store.state.Builder.filling[this.ingredient.value] || 0;
+      return this.$store.state.Builder.filling[this.ingredient.id] || 0;
     },
   },
 };

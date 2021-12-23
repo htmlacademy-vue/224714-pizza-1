@@ -13,7 +13,7 @@
     <div class="header__cart">
       <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
-    <div class="header__user" v-if="!isLogged">
+    <div class="header__user" v-if="!isAuthenticated">
       <router-link class="header__login" :to="loginLink"
         ><span>Войти</span></router-link
       >
@@ -21,43 +21,48 @@
     <div class="header__user" v-else>
       <router-link to="/profile">
         <picture>
-          <source
-            type="image/webp"
-            srcset="
-              @/assets/img/users/user5.webp 1x,
-              img/users/user5@2x.webp       2x
-            "
-          />
+          <source type="image/webp" :srcset="user.avatar" />
           <img
-            src="@/assets/img/users/user5.jpg"
-            srcset="@/assets/img/users/user5@2x.jpg"
+            :src="user.avatar"
+            :srcset="user.avatar"
             alt="Василий Ложкин"
             width="32"
             height="32"
           />
         </picture>
-        <span>Василий Ложкин</span>
+        <span>{{ user.name }}</span>
       </router-link>
-      <router-link to="/" class="header__logout"
-        ><span>Выйти</span></router-link
-      >
+      <a class="header__logout" @click="logout">
+        <span>Выйти</span>
+      </a>
     </div>
   </header>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "AppLayoutHeader",
   created() {},
   computed: {
+    ...mapState("Auth", ["user"]),
     loginLink() {
       return this.$route.path === "/" ? "/login-modal" : "/login";
     },
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
     },
-    isLogged() {
-      return this.$store.state.Auth.isLogged;
+    isAuthenticated() {
+      return this.$store.state.Auth.isAuthenticated;
+    },
+  },
+  methods: {
+    async logout() {
+      if (this.$route.path !== "/") {
+        await this.$router.push("/");
+      }
+      await this.$store.dispatch("Auth/logout");
+      await this.$store.dispatch("Cart/resetState");
     },
   },
 };

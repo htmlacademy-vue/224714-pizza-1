@@ -19,3 +19,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/assets/scss/app";
+@import "@/assets/scss/fonts";
+@import "@/assets/scss/scaffolding";
+@import "@/assets/scss/visually-hidden";
+</style>

@@ -11,8 +11,8 @@
         >
           <RadioButton
             :name="`dough`"
-            :value="dough.value"
-            :isChecked="dough.value === currentDough"
+            :value="dough.id"
+            :isChecked="dough.id === currentDough"
             @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
           ></RadioButton>
           <b>{{ dough.name }}</b>
@@ -31,15 +31,25 @@ export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
   created() {
-    if (!this.currentDough) {
-      const currentDough = this.doughs.find((dough) => dough.isChecked).value;
-      this.$store.dispatch("Builder/setDough", currentDough);
+    if (this.doughs && this.doughs.length) {
+      if (!this.currentDough) {
+        const currentDough = this.doughs.find((dough) => dough.isChecked).id;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
     }
   },
   computed: {
     ...mapGetters("Builder", ["doughs"]),
     currentDough() {
       return this.$store.state.Builder.dough;
+    },
+  },
+  watch: {
+    doughs: function (val) {
+      if (!this.currentDough) {
+        const currentDough = val.find((dough) => dough.isChecked).id;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
     },
   },
 };

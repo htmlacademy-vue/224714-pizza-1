@@ -1,15 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import modules from "@/store/modules";
+import { MESSAGE_LIVE_TIME } from "@/common/const";
 
-import miscData from "@/static/misc.json";
-import pizzaData from "@/static/pizza.json";
+import VuexPlugins from "@/plugins/vuexPlugins";
 
 Vue.use(Vuex);
 
 const state = () => ({
   pizza: {},
   misc: [],
+  notifications: [],
 });
 
 const getters = {};
@@ -19,13 +20,35 @@ const actions = {
     dispatch("fetchMisc");
     dispatch("fetchPizza");
   },
-  fetchMisc() {
-    const miscellaneous = miscData; // TODO: Add api call
+  async fetchMisc() {
+    const miscellaneous = await this.$api.misc.query();
     this.commit("SET_MISC", miscellaneous);
   },
-  fetchPizza() {
-    const pizza = pizzaData; // TODO: Add api call
+  async fetchPizza() {
+    const [dough, ingredients, sauces, sizes] = await Promise.all([
+      this.$api.dough.query(),
+      this.$api.ingredients.query(),
+      this.$api.sauces.query(),
+      this.$api.sizes.query(),
+    ]);
+    const pizza = {
+      dough,
+      ingredients,
+      sauces,
+      sizes,
+    };
     this.commit("SET_PIZZA", pizza);
+  },
+  async createNotification({ ...notification }) {
+    const uniqueNotification = {
+      ...notification,
+      id: new Date(),
+    };
+    this.commit("ADD_NOTIFICATION", uniqueNotification);
+    setTimeout(
+      () => this.commit("DELETE_NOTIFICATION", uniqueNotification.id),
+      MESSAGE_LIVE_TIME
+    );
   },
 };
 
@@ -36,6 +59,14 @@ const mutations = {
   SET_PIZZA(state, payload) {
     state.pizza = payload;
   },
+  ADD_NOTIFICATION(state, notification) {
+    state.notifications = [...state.notifications, notification];
+  },
+  DELETE_NOTIFICATION(state, id) {
+    state.notifications = state.notifications.filter(
+      (notification) => notification.id !== id
+    );
+  },
 };
 
 export default new Vuex.Store({
@@ -43,5 +74,6 @@ export default new Vuex.Store({
   getters,
   actions,
   mutations,
+  plugins: [VuexPlugins],
   modules,
 });

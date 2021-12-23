@@ -1,3 +1,5 @@
+import { auth, isLoggedIn } from "@/middlewares";
+
 export default [
   {
     path: "/",
@@ -6,11 +8,11 @@ export default [
     meta: { layout: "AppLayoutMain" },
     children: [
       {
-        path: "/login-modal",
+        path: "/login-modal", //отошел от ТЗ(/login) ради дочернего роута и отдельного шаблона
         components: {
           modal: () => import("@/views/LoginModal.vue"),
         },
-        meta: { layout: "AppLayoutMain" },
+        meta: { layout: "AppLayoutMain", middlewares: [isLoggedIn] },
       },
     ],
   },
@@ -33,18 +35,24 @@ export default [
     path: "/login",
     name: "Login",
     component: () => import("@/views/Login.vue"),
-    meta: { layout: "AppLayoutDefault" },
+    meta: {
+      layout: "AppLayoutDefault",
+      middlewares: [isLoggedIn],
+    },
   },
   {
     path: "/orders",
     name: "Orders",
     component: () => import("@/views/Orders.vue"),
-    meta: { layout: "AppLayoutMain" },
+    meta: {
+      layout: "AppLayoutProfile",
+      middlewares: [auth],
+    },
   },
   {
     path: "/profile",
     name: "Profile",
     component: () => import("@/views/Profile.vue"),
-    meta: { layout: "AppLayoutMain" },
+    meta: { layout: "AppLayoutProfile", middlewares: [auth] },
   },
 ];

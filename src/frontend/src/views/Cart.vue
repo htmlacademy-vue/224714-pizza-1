@@ -19,7 +19,7 @@
 
             <CartAdditional></CartAdditional>
 
-            <CartForm></CartForm>
+            <CartForm :validations="validations"></CartForm>
           </div>
         </div>
       </main>
@@ -35,8 +35,13 @@ import CartAdditional from "@/modules/cart/CartAdditional";
 import CartForm from "@/modules/cart/CartForm";
 import CartEmpty from "@/modules/cart/CartEmpty";
 import CartFooter from "@/modules/cart/CartFooter";
+import { validator } from "@/common/mixins";
+import { mapState } from "vuex";
+import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
+
 export default {
   name: "Cart",
+  mixins: [validator],
   components: {
     CartFooter,
     CartEmpty,
@@ -44,30 +49,79 @@ export default {
     CartAdditional,
     CartForm,
   },
+  data() {
+    return {
+      validations: this.defineValidations(),
+    };
+  },
   methods: {
     checkForm() {
-      if (this.$store.state.Cart.delivery === 1) {
+      if (this.$store.state.Cart.addressOption === DEFAULT_ADDRESS_OPTION) {
         //самовывоз
-        if (this.$store.state.Cart.tel.length) {
-          this.sendOrder();
+        this.validations = Object.assign(this.defineValidations());
+        if (
+          !this.$validateFields(
+            {
+              phone: this.$store.state.Cart.phone,
+            },
+            this.validations
+          )
+        ) {
+          return;
         }
       } else {
         //доставка
+        this.validations = Object.assign(this.defineValidations("required"));
         if (
-          this.$store.state.Cart.tel.length &&
-          this.$store.state.Cart.street.length &&
-          this.$store.state.Cart.house.length
+          !this.$validateFields(
+            {
+              phone: this.$store.state.Cart.phone,
+              street: this.$store.state.Cart.address.street,
+              building: this.$store.state.Cart.address.building,
+              flat: this.$store.state.Cart.address.flat,
+            },
+            this.validations
+          )
         ) {
-          this.sendOrder();
+          return;
         }
       }
+      this.sendOrder();
     },
     sendOrder() {
       const order = this.$store.getters["Cart/order"];
-      //todo succes запроса:
-      this.$store.dispatch("Orders/addOrder", order);
+      this.$store.dispatch("Orders/post", order);
       this.$router.push({ path: `/thanks-popup` });
     },
+    defineValidations(isExtraFieldsRequired) {
+      return {
+        phone: {
+          error: "",
+          rules: ["required"],
+        },
+        street: {
+          error: "",
+          rules: [isExtraFieldsRequired],
+        },
+        building: {
+          error: "",
+          rules: [isExtraFieldsRequired],
+        },
+        flat: {
+          error: "",
+          rules: [isExtraFieldsRequired],
+        },
+      };
+    },
+  },
+  computed: {
+    ...mapState("Cart", ["address"]),
   },
 };
 </script>
+
+<style scoped>
+.cart {
+  min-height: calc(100vh - 188px);
+}
+</style>

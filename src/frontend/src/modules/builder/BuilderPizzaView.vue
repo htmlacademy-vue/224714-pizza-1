@@ -19,7 +19,12 @@
 <script>
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
-import { doughClassMapping } from "@/common/helpers";
+import {
+  doughClassMapping,
+  doughMap,
+  getValueById,
+  sauceMap,
+} from "@/common/helpers";
 import { mapState } from "vuex";
 
 export default {
@@ -27,7 +32,7 @@ export default {
   components: { BuilderFillingItemVisualization, AppDrop },
   methods: {
     addIngredientToPizzaPicture(ingredient) {
-      this.$store.dispatch("Builder/plusOneIngredient", ingredient.value);
+      this.$store.dispatch("Builder/plusOneIngredient", ingredient.id);
     },
   },
   computed: {
@@ -38,9 +43,11 @@ export default {
       );
     },
     pizzaCssClass() {
-      return `pizza--foundation--${doughClassMapping[this.dough]}-${
-        this.sauce
-      }`;
+      return this.dough && this.sauce
+        ? `pizza--foundation--${
+            doughClassMapping[getValueById(doughMap, this.dough)]
+          }-${getValueById(sauceMap, this.sauce)}`
+        : ``;
     },
   },
 };
