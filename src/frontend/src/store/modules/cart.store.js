@@ -150,10 +150,11 @@ export default {
       context.commit("addPizza", pizza);
     },
     addPizzas(context, order) {
-      const { pizzas, miscs, address } = order;
+      const { pizzas, miscs, addressOption, address } = order;
       context.commit("addPizzas", pizzas);
       context.commit("addMiscs", miscs);
-      context.commit("setAddressOption", address);
+      context.commit("setAddressOption", addressOption);
+      context.commit("setAddress", address);
     },
     setAddressOption(context, addressOption) {
       context.commit("setAddressOption", addressOption);

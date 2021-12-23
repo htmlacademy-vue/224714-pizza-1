@@ -67,7 +67,6 @@ export default {
             this.validations
           )
         ) {
-          console.log(this.validations);
           return;
         }
       } else {

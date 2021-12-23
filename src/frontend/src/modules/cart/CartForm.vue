@@ -106,6 +106,9 @@ export default {
       defaultAddressOption: DEFAULT_ADDRESS_OPTION,
     };
   },
+  beforeCreate() {
+    this.$store.dispatch("Addresses/getAddresses");
+  },
   methods: {
     addressChanged(event) {
       this.$store.dispatch("Cart/setAddressOption", event.target.value);

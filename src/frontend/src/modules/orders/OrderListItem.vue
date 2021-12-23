@@ -128,9 +128,10 @@ export default {
       this.$store.dispatch("Cart/addPizzas", {
         pizzas: pizzasFormatted,
         miscs: getMiscFormatted(),
-        address: this.order.orderAddress?.id
+        addressOption: this.order.orderAddress?.id
           ? getAddressOption(this.order.orderAddress.id)
           : DEFAULT_ADDRESS_OPTION,
+        address: this.order.orderAddress ?? null,
       });
       this.$router.push({ name: `Cart` });
     },
