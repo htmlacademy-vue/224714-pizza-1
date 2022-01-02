@@ -9,6 +9,7 @@ const getDefaultState = () => {
     phone: null,
     address: null,
     addressOption: DEFAULT_ADDRESS_OPTION,
+    isSuccessPopupShown: false,
   };
 };
 
@@ -144,6 +145,9 @@ export default {
     setPhone(state, phone) {
       state.phone = phone;
     },
+    toggleSuccessPopup(state, isShown) {
+      state.isSuccessPopupShown = isShown;
+    },
   },
   actions: {
     addPizza(context, pizza) {
@@ -182,6 +186,9 @@ export default {
     },
     setPhone(context, phone) {
       context.commit("setPhone", phone);
+    },
+    toggleSuccessPopup(context, isShown) {
+      context.commit("toggleSuccessPopup", isShown);
     },
   },
 };

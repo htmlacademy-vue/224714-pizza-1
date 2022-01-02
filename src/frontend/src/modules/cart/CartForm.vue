@@ -107,7 +107,9 @@ export default {
     };
   },
   beforeCreate() {
-    this.$store.dispatch("Addresses/getAddresses");
+    if (this.$store.state.Auth.isAuthenticated) {
+      this.$store.dispatch("Addresses/getAddresses");
+    }
   },
   methods: {
     addressChanged(event) {

@@ -18,6 +18,7 @@ export default {
   name: "Popup",
   methods: {
     redirect() {
+      this.$store.dispatch("Cart/toggleSuccessPopup", false);
       if (this.$store.state.Auth.isAuthenticated) {
         this.$router.push({ path: `/orders` });
       } else {
