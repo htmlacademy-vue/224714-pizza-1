@@ -8,7 +8,7 @@
         <transition-group name="ingredients">
           <BuilderFillingItemVisualization
             v-for="fillingItem in fillingItems"
-            :key="fillingItem"
+            :key="`${fillingItem}-${filling[fillingItem]}`"
             :fillingItem="fillingItem"
             :filling="filling"
           ></BuilderFillingItemVisualization>

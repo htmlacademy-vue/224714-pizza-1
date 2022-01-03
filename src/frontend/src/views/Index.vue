@@ -28,12 +28,13 @@
         </div>
       </form>
     </main>
-    <router-view name="modal"></router-view>
+    <transition name="fade" mode="in-out">
+      <router-view name="modal"></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import misc from "@/static/misc.json";
 import BuilderDoughSelector from "@/modules/builder/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/BuilderIngredientsSelector";
@@ -49,11 +50,6 @@ export default {
     BuilderSizeSelector,
     BuilderDoughSelector,
     BuilderPriceCounter,
-  },
-  data() {
-    return {
-      misc,
-    };
   },
   computed: {
     ...mapState("Builder", ["filling", "pizzaName"]),

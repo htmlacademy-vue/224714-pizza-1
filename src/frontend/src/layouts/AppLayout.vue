@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition name="slide" mode="out-in">
+    <transition :name="animation.name" :mode="animation.mode">
       <component :is="layout">
         <slot />
       </component>
@@ -18,6 +18,17 @@ export default {
       const layout = this.$route.meta.layout || defaultLayout;
       return () => import(`@/layouts/${layout}.vue`);
     },
+    animation() {
+      let animation = { name: "slide", mode: "out-in" };
+      if (this.$route.name === "LoginModal") {
+        animation.name = "fade";
+        animation.mode = "in-out";
+      }
+      if (this.$route.name === "Index" && this.$route.params["from-main"]) {
+        animation.mode = "in-out";
+      }
+      return animation;
+    },
   },
 };
 </script>
@@ -34,6 +45,14 @@ export default {
   transition: all 0.4s;
   opacity: 0;
   margin-left: -100px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 <style lang="scss">
