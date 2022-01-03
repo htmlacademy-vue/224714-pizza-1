@@ -11,6 +11,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   mode: "history",
   routes,
+  props: true,
 });
 
 router.beforeEach((to, from, next) => {

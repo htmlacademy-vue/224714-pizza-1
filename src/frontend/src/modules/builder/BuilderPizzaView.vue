@@ -5,12 +5,14 @@
   >
     <div :class="`pizza ${pizzaCssClass}`">
       <div class="pizza__wrapper">
-        <BuilderFillingItemVisualization
-          v-for="(fillingItem, i) in fillingItems"
-          :key="i"
-          :fillingItem="fillingItem"
-          :filling="filling"
-        ></BuilderFillingItemVisualization>
+        <transition-group name="ingredients">
+          <BuilderFillingItemVisualization
+            v-for="fillingItem in fillingItems"
+            :key="`${fillingItem}-${filling[fillingItem]}`"
+            :fillingItem="fillingItem"
+            :filling="filling"
+          ></BuilderFillingItemVisualization>
+        </transition-group>
       </div>
     </div>
   </AppDrop>
@@ -53,4 +55,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.ingredients-enter-active,
+.ingredients-leave-active {
+  transition: all 0.5s ease;
+}
+.ingredients-enter,
+.ingredients-leave-to {
+  transform: scale(1.1);
+  opacity: 0;
+}
+</style>

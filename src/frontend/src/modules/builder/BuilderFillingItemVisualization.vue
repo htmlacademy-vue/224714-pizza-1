@@ -30,12 +30,7 @@ export default {
       );
     },
     fillingCssQuantity() {
-      let fillingCount;
-      Object.keys(this.filling).find((fillingItem) => {
-        if (fillingItem === this.fillingItem) {
-          fillingCount = this.filling[fillingItem];
-        }
-      });
+      const fillingCount = this.filling[this.fillingItem];
       return pizzaFillingMultipleClassMapping[fillingCount] || ``;
     },
   },

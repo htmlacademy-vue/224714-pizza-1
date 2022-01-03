@@ -25,7 +25,9 @@
       </main>
       <CartFooter></CartFooter>
     </form>
-    <router-view name="modal"></router-view>
+    <transition name="fade" mode="in-out">
+      <Popup v-if="isSuccessPopupShown"></Popup>
+    </transition>
   </div>
 </template>
 
@@ -38,11 +40,13 @@ import CartFooter from "@/modules/cart/CartFooter";
 import { validator } from "@/common/mixins";
 import { mapState } from "vuex";
 import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
+import Popup from "@/views/Popup";
 
 export default {
   name: "Cart",
   mixins: [validator],
   components: {
+    Popup,
     CartFooter,
     CartEmpty,
     CartList,
@@ -91,7 +95,7 @@ export default {
     sendOrder() {
       const order = this.$store.getters["Cart/order"];
       this.$store.dispatch("Orders/post", order);
-      this.$router.push({ path: `/thanks-popup` });
+      this.$store.dispatch("Cart/toggleSuccessPopup", true);
     },
     defineValidations(isExtraFieldsRequired) {
       return {
@@ -115,7 +119,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("Cart", ["address"]),
+    ...mapState("Cart", ["address", "isSuccessPopupShown"]),
   },
 };
 </script>
@@ -123,5 +127,18 @@ export default {
 <style scoped>
 .cart {
   min-height: calc(100vh - 188px);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+.fade-enter-to {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 </style>
