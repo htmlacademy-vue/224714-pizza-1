@@ -14,9 +14,9 @@
       <router-link to="/cart">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isAuthenticated">
-      <a class="header__login" @click="showLogin">
-        <span>Войти</span>
-      </a>
+      <router-link class="header__login" :to="loginLink"
+        ><span>Войти</span></router-link
+      >
     </div>
     <div class="header__user" v-else>
       <router-link to="/profile">
@@ -46,6 +46,9 @@ export default {
   created() {},
   computed: {
     ...mapState("Auth", ["user"]),
+    loginLink() {
+      return this.$route.path === "/" ? "/login-modal" : "/login";
+    },
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
     },
@@ -54,16 +57,6 @@ export default {
     },
   },
   methods: {
-    showLogin() {
-      if (this.$route.path === "/") {
-        this.$router.push({
-          name: "LoginModal",
-          params: { "from-main": "true" },
-        });
-      } else {
-        this.$router.push("/login");
-      }
-    },
     async logout() {
       if (this.$route.path !== "/") {
         await this.$router.push("/");

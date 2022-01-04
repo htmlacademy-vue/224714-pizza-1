@@ -1,6 +1,6 @@
 <template>
   <div class="sign-form">
-    <a class="close close--white" @click="closePopup">
+    <a class="close close--white" @click="$router.go(-1)">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
@@ -73,16 +73,8 @@ export default {
   },
   mounted() {
     this.$refs.email.focus();
-    console.log();
   },
   methods: {
-    closePopup() {
-      if (this.$route.name === "LoginModal") {
-        this.$router.push({ name: "Index", params: { "from-main": "true" } });
-      } else {
-        this.$router.go(-1);
-      }
-    },
     async login() {
       if (
         !this.$validateFields(
