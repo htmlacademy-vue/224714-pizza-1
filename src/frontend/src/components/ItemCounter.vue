@@ -2,8 +2,9 @@
   <div :class="`counter counter--orange ${name}__counter`">
     <button
       type="button"
-      class="counter__button counter__button--disabled counter__button--minus"
+      class="counter__button counter__button--minus"
       @click="minusOne"
+      data-test="button--minus"
       :disabled="value === minValue"
     >
       <span class="visually-hidden">Меньше</span>
@@ -12,8 +13,9 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="value === maxValue"
       @click="plusOne"
+      data-test="button--plus"
+      :disabled="value === maxValue"
     >
       <span class="visually-hidden">Больше</span>
     </button>
