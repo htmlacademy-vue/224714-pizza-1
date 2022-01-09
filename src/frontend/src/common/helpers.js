@@ -165,7 +165,6 @@ export const createResources = (notifier) => {
 export const setAuth = (store) => {
   store.$api.auth.setAuthHeader();
   store.dispatch("Auth/getMe");
-  // store.dispatch("Auth/setAuthentication", true);
 };
 
 export const defaultAddress = {

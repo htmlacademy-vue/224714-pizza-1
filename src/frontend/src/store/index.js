@@ -15,7 +15,7 @@ const state = () => ({
 
 const getters = {};
 
-const actions = {
+export const actions = {
   async init({ dispatch }) {
     dispatch("fetchMisc");
     dispatch("fetchPizza");
@@ -52,7 +52,7 @@ const actions = {
   },
 };
 
-const mutations = {
+export const mutations = {
   SET_MISC(state, payload) {
     state.misc = payload;
   },

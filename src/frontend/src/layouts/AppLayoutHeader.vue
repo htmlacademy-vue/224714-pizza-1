@@ -11,14 +11,14 @@
       </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ price }} ₽</router-link>
+      <router-link to="/cart" data-test="price">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isAuthenticated">
-      <router-link class="header__login" :to="loginLink"
+      <router-link class="header__login" :to="loginLink" data-test="login-link"
         ><span>Войти</span></router-link
       >
     </div>
-    <div class="header__user" v-else>
+    <div class="header__user" v-else data-test="header__user">
       <router-link to="/profile">
         <picture>
           <source type="image/webp" :srcset="user.avatar" />
@@ -28,6 +28,7 @@
             alt="Василий Ложкин"
             width="32"
             height="32"
+            data-test="user-avatar"
           />
         </picture>
         <span>{{ user.name }}</span>
