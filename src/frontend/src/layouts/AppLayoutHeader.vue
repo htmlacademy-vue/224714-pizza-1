@@ -31,9 +31,9 @@
             data-test="user-avatar"
           />
         </picture>
-        <span>{{ user.name }}</span>
+        <span data-test="user-name">{{ user.name }}</span>
       </router-link>
-      <a class="header__logout" @click="logout">
+      <a class="header__logout" @click="logout" data-test="header__logout">
         <span>Выйти</span>
       </a>
     </div>

@@ -86,14 +86,35 @@ describe("AppLayoutHeader", () => {
     expect(wrapper.find(`[data-test="user-avatar"]`).attributes("src")).toBe(store.state.Auth.user.avatar);
     expect(wrapper.find(`[data-test="user-avatar"]`).attributes("srcset")).toBe(store.state.Auth.user.avatar);
   });
-});
 
-// $router
-// $store
-// {{ price }}
-// v-if="!isAuthenticated"
-//   v-else
-//   :to="loginLink"
-// :srcset="user.avatar"
-// {{ user.name }}
-// @click="logout"
+  it("shows user name if authenticated", () => {
+    authenticateUser(store);
+    createComponent({ localVue, store, mocks, stubs });
+    expect(wrapper.find(`[data-test="user-name"]`).text()).toBe(store.state.Auth.user.name);
+  });
+
+  it("logout button makes redirect to main", async () => {
+    authenticateUser(store);
+    mocks.$route = { path: "/abc" };
+    createComponent({ localVue, store, mocks, stubs });
+    const button = wrapper.find(`[data-test="header__logout"]`);
+    await button.trigger("click");
+    expect(mocks.$router.push).toHaveBeenCalledWith("/");
+  });
+
+  it("logout button makes logout", async () => {
+    authenticateUser(store);
+    createComponent({ localVue, store, mocks, stubs });
+    const button = wrapper.find(`[data-test="header__logout"]`);
+    await button.trigger("click");
+    expect(actions.Auth.logout).toHaveBeenCalled();
+  });
+
+  it("logout button resets cart state", async () => {
+    authenticateUser(store);
+    createComponent({ localVue, store, mocks, stubs });
+    const button = wrapper.find(`[data-test="header__logout"]`);
+    await button.trigger("click");
+    expect(actions.Cart.resetState).toHaveBeenCalled();
+  });
+});
