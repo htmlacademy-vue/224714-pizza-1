@@ -4,7 +4,8 @@ import {
   generateMockStore,
   authenticateUser,
   setAddressOption,
-  setPhone, setAddresses,
+  setPhone,
+  setAddresses,
 } from "@/store/mocks";
 import VueRouter from "vue-router";
 import { defaultAddressOptions, NEW_ADDRESS_OPTION } from "@/common/const";
@@ -28,7 +29,6 @@ describe("CartForm", () => {
 
   let isExtraFieldsRequired = true;
   const propsData = {
-    addressOption: 2,
     validations: {
       phone: {
         error: "",
@@ -132,7 +132,7 @@ describe("CartForm", () => {
   it("phone input calls setPhone action", async () => {
     createComponent({ propsData, localVue, store, mocks, actions });
     const phoneInput = wrapper.find(`[data-test="phone"]`);
-    phoneInput.element.value = "123456";
+    phoneInput.element.value = "79231271111";
     await phoneInput.trigger("input");
     expect(actions.Cart.setPhone).toHaveBeenCalled();
   });
