@@ -52,6 +52,7 @@
               :value="address.street"
               @change="addressPartlyChanged($event, `street`)"
               :disabled="isDisabledInputs"
+              data-test="street"
             />
             <div>
               {{ validations.street.error }}
@@ -123,6 +124,7 @@ export default {
       this.$store.dispatch("Cart/setAddress", this.address);
     },
     phoneChanged(event) {
+      console.log('232');
       this.$store.commit("Cart/setPhone", event.target.value);
     },
     addressPartlyChanged(event, option) {

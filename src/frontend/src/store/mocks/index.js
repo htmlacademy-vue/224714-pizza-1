@@ -6,7 +6,7 @@ import Vuex from "vuex";
 import user from "@/static/user.json";
 import Misc from "@/static/misc.json";
 import pizza from "@/static/pizza.json";
-import { NEW_ADDRESS_OPTION } from "@/common/const";
+import addresses from "@/store/mocks/addresses.json";
 
 import VuexPlugins from "@/plugins/vuexPlugins";
 
@@ -37,6 +37,14 @@ export const authenticateUser = (store) => {
   store.commit(`Auth/setUser`, user);
 };
 
-export const setNewAddressAddressOption = (store) => {
-  store.commit(`Cart/setAddressOption`, NEW_ADDRESS_OPTION);
+export const setAddressOption = (store, value) => {
+  store.commit(`Cart/setAddressOption`, value);
+};
+
+export const setPhone = (store, phone) => {
+  store.commit(`Cart/setPhone`, phone);
+};
+
+export const setAddresses = (store) => {
+  store.commit(`Addresses/setAddresses`, addresses);
 };

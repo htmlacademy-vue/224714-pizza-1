@@ -3,10 +3,11 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import {
   generateMockStore,
   authenticateUser,
-  setNewAddressAddressOption,
+  setAddressOption,
+  setPhone, setAddresses,
 } from "@/store/mocks";
 import VueRouter from "vue-router";
-import { NEW_ADDRESS_OPTION } from "@/common/const";
+import { defaultAddressOptions, NEW_ADDRESS_OPTION } from "@/common/const";
 
 const localVue = createLocalVue();
 const router = new VueRouter();
@@ -98,7 +99,7 @@ describe("CartForm", () => {
 
   it("render new address form when option new address checked", async () => {
     authenticateUser(store);
-    setNewAddressAddressOption(store);
+    setAddressOption(store, "2");
     createComponent({ propsData, localVue, store, mocks, actions });
     const newAddressForm = wrapper.find(`[data-test="new-address"]`);
     expect(newAddressForm.exists()).toBe(true);
@@ -106,19 +107,33 @@ describe("CartForm", () => {
 
   it("select value equals addressOption from Cart Store", async () => {
     authenticateUser(store);
-    setNewAddressAddressOption(store);
+    setAddressOption(store, "2");
     createComponent({ propsData, localVue, store, mocks, actions });
     expect(wrapper.find(`[data-test="delivery-select"]`).element.value).toBe(
-      NEW_ADDRESS_OPTION.toString()
+      "2"
     );
   });
 
-  it("select value equals addressOption from Cart Store", async () => {
+  it("phone value equals phone state from Cart Store", async () => {
+    setPhone(store, "123");
+    createComponent({ propsData, localVue, store, mocks, actions });
+    expect(wrapper.find(`[data-test="phone"]`).element.value).toBe("123");
+  });
+
+  it("disable input for loaded addresses", async () => {
+    authenticateUser(store);
+    await setAddresses(store);
+    setAddressOption(store, defaultAddressOptions.length + 1);
+    createComponent({ propsData, localVue, store, mocks, actions });
+    expect(wrapper.find(`[data-test="street"]`).attributes("disabled")).toBe(
+      "disabled"
+    );
+  });
+  it("phone input calls setPhone action", async () => {
     createComponent({ propsData, localVue, store, mocks, actions });
     const phoneInput = wrapper.find(`[data-test="phone"]`);
-    console.log(phoneInput);
-    await phoneInput.trigger("input");
     phoneInput.element.value = "123456";
+    await phoneInput.trigger("input");
     expect(actions.Cart.setPhone).toHaveBeenCalled();
   });
 });
