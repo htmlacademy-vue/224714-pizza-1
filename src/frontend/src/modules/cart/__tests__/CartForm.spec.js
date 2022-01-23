@@ -80,6 +80,5 @@ describe("CartForm", () => {
       expect.any(Object),
       selectedOption
     );
-    // console.log(wrapper.find(`[data-test="delivery-select"]`).element.value);
   });
 });
