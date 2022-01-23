@@ -43,6 +43,7 @@ describe("AppLayoutHeader", () => {
     store = generateMockStore(actions);
     mocks.$notifier.success = jest.fn();
     mocks.$router.push = jest.fn();
+    mocks.$route.path = "/";
   });
 
   afterEach(() => {

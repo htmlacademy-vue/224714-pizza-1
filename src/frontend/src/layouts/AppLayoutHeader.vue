@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <router-link to="/">
+      <router-link to="/" data-test="logo">
         <img
           src="@/assets/img/logo.svg"
           alt="V!U!E! Pizza logo"

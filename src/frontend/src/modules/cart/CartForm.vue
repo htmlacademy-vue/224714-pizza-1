@@ -8,6 +8,7 @@
           class="select"
           :value="addressOption"
           @change="addressChanged($event)"
+          data-test="delivery-select"
         >
           <option
             v-for="(address, i) in addressOptions"

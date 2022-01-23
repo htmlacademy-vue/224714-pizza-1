@@ -25,7 +25,7 @@ describe("ItemCounter", () => {
 
   it('It sets the initial input value', () => {
     createComponent({ propsData });
-    expect(wrapper.find('input').element.value).toBe(propsData.value);
+    expect(wrapper.find('input').element.value).toBe(propsData.value.toString());
   });
 
   it("Emits minusOne event when click button minus", async () => {

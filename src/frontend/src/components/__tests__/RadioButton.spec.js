@@ -5,7 +5,7 @@ describe("RadioButton", () => {
   const propsData = {
     name: "testName",
     value: 123,
-    checked: "checked",
+    isChecked: true,
   };
   const listeners = { change: null };
 
@@ -30,7 +30,7 @@ describe("RadioButton", () => {
 
   it('It sets the initial value', () => {
     createComponent({ propsData });
-    expect(wrapper.element.value).toBe(propsData.value);
+    expect(wrapper.element.value).toBe(propsData.value.toString());
   });
 
   it('It sets the initial checked', () => {
@@ -38,8 +38,8 @@ describe("RadioButton", () => {
     expect(wrapper.attributes('checked')).toBe(propsData.checked);
   });
 
-  it('It emits an valueChanged event when typing', async () => {
-    createComponent({ listeners });
+  it('It emits an valueChanged when radio button changed', async () => {
+    createComponent({ propsData, listeners });
     await wrapper.trigger("change");
     expect(wrapper.emitted().valueChanged).toBeTruthy();
   });
