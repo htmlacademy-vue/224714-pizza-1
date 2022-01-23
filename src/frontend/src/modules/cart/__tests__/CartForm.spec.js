@@ -61,12 +61,25 @@ describe("CartForm", () => {
     wrapper.destroy();
   });
 
-  it("change delivery makes resetState setAddressOption", async () => {
+  it("change delivery makes setAddress and setAddressOption", async () => {
     authenticateUser(store);
     createComponent({ propsData, localVue, store, mocks, actions });
-    const button = wrapper.find(`[data-test="delivery-select"]`);
-    await button.trigger("change");
+    const select = wrapper.find(`[data-test="delivery-select"]`);
+    await select.trigger("change");
     expect(actions.Cart.setAddressOption).toHaveBeenCalled();
     expect(actions.Cart.setAddress).toHaveBeenCalled();
+  });
+
+  it("change delivery dispatch current select value in setAddressOption", async () => {
+    authenticateUser(store);
+    createComponent({ propsData, localVue, store, mocks, actions });
+    const options = wrapper.find(`[data-test="delivery-select"]`).findAll('option');
+    await options.at(1).setSelected();
+    const selectedOption = wrapper.find('option:checked').element.value;
+    expect(actions.Cart.setAddressOption).toHaveBeenCalledWith(
+      expect.any(Object),
+      selectedOption
+    );
+    // console.log(wrapper.find(`[data-test="delivery-select"]`).element.value);
   });
 });
