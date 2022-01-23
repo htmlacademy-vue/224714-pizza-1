@@ -29,13 +29,18 @@
           placeholder="+7 999-999-99-99"
           :value="phone"
           @change="phoneChanged"
+          data-test="phone"
         />
         <div>
           {{ validations.phone.error }}
         </div>
       </label>
 
-      <div class="cart-form__address" v-if="!isDeliveryPickup">
+      <div
+        class="cart-form__address"
+        v-if="!isDeliveryPickup"
+        data-test="new-address"
+      >
         <span class="cart-form__label">Новый адрес:</span>
 
         <div class="cart-form__input">
