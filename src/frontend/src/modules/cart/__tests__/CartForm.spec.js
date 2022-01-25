@@ -6,6 +6,7 @@ import {
   setAddressOption,
   setPhone,
   setAddresses,
+  setAddress,
 } from "@/store/mocks";
 import VueRouter from "vue-router";
 import { defaultAddressOptions, NEW_ADDRESS_OPTION } from "@/common/const";
@@ -129,11 +130,43 @@ describe("CartForm", () => {
       "disabled"
     );
   });
-  it("phone input calls setPhone action", async () => {
+  it("phone input change calls setPhone action with current input value", async () => {
     createComponent({ propsData, localVue, store, mocks, actions });
     const phoneInput = wrapper.find(`[data-test="phone"]`);
     phoneInput.element.value = "79231271111";
-    await phoneInput.trigger("input");
-    expect(actions.Cart.setPhone).toHaveBeenCalled();
+    await phoneInput.trigger("change");
+    expect(actions.Cart.setPhone).toHaveBeenCalledWith(
+      expect.any(Object),
+      "79231271111"
+    );
+  });
+
+  it("street/building/flat input change calls setAddress action", async () => {
+    setAddressOption(store, "2");
+    createComponent({ propsData, localVue, store, mocks, actions });
+    const streetInput = wrapper.find(`[data-test="street"]`);
+    const buildingInput = wrapper.find(`[data-test="building"]`);
+    const flatInput = wrapper.find(`[data-test="flat"]`);
+    await streetInput.trigger("change");
+    expect(actions.Cart.setAddress).toHaveBeenCalled();
+    await buildingInput.trigger("change");
+    expect(actions.Cart.setAddress).toHaveBeenCalled();
+    await flatInput.trigger("change");
+    expect(actions.Cart.setAddress).toHaveBeenCalled();
+  });
+
+  it("xxx", async () => {
+    setAddressOption(store, "2");
+    let address = { street: "aaa", building: "bbb", flat: "11" };
+    setAddress(store, address);
+    createComponent({ propsData, localVue, store, mocks, actions });
+    const streetInput = wrapper.find(`[data-test="street"]`);
+    streetInput.element.value = "abc";
+    await streetInput.trigger("change");
+    address.street = "abc";
+    expect(actions.Cart.setAddress).toHaveBeenCalledWith(
+      expect.any(Object),
+      address
+    );
   });
 });

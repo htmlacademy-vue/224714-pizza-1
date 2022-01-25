@@ -48,3 +48,7 @@ export const setPhone = (store, phone) => {
 export const setAddresses = (store) => {
   store.commit(`Addresses/setAddresses`, addresses);
 };
+
+export const setAddress = (store, address) => {
+  store.commit(`Cart/setAddress`, address);
+};

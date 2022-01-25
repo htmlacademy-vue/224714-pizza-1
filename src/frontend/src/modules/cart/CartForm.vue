@@ -69,6 +69,7 @@
               :value="address.building"
               @change="addressPartlyChanged($event, `building`)"
               :disabled="isDisabledInputs"
+              data-test="building"
             />
             <div>
               {{ validations.building.error }}
@@ -85,6 +86,7 @@
               :value="address.flat"
               @change="addressPartlyChanged($event, `flat`)"
               :disabled="isDisabledInputs"
+              data-test="flat"
             />
             <div>
               {{ validations.flat.error }}
@@ -124,13 +126,12 @@ export default {
       this.$store.dispatch("Cart/setAddress", this.address);
     },
     phoneChanged(event) {
-      console.log('232');
-      this.$store.commit("Cart/setPhone", event.target.value);
+      this.$store.dispatch("Cart/setPhone", event.target.value);
     },
     addressPartlyChanged(event, option) {
       let address = Object.assign({}, this.$store.state.Cart.address);
       address[option] = event.target.value;
-      this.$store.commit("Cart/setAddress", address);
+      this.$store.dispatch("Cart/setAddress", address);
     },
   },
   computed: {
