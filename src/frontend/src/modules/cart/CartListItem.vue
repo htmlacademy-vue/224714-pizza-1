@@ -7,9 +7,10 @@
         width="56"
         height="56"
         :alt="pizzaNameCapitalized"
+        data-test="pizza-image"
       />
       <div class="product__text">
-        <h2>{{ pizzaNameCapitalized }}</h2>
+        <h2 data-test="title">{{ pizzaNameCapitalized }}</h2>
         <ul>
           <li>{{ sizeRussian }}, {{ doughText }}</li>
           <li>Соус: {{ sauceRussian }}</li>

@@ -9,7 +9,7 @@ import {
   setAddress,
 } from "@/store/mocks";
 import VueRouter from "vue-router";
-import { defaultAddressOptions, NEW_ADDRESS_OPTION } from "@/common/const";
+import { defaultAddressOptions } from "@/common/const";
 
 const localVue = createLocalVue();
 const router = new VueRouter();
@@ -155,7 +155,7 @@ describe("CartForm", () => {
     expect(actions.Cart.setAddress).toHaveBeenCalled();
   });
 
-  it("xxx", async () => {
+  it("street input change dispatch Cart/setAddress with correct payload", async () => {
     setAddressOption(store, "2");
     let address = { street: "aaa", building: "bbb", flat: "11" };
     setAddress(store, address);
@@ -164,6 +164,36 @@ describe("CartForm", () => {
     streetInput.element.value = "abc";
     await streetInput.trigger("change");
     address.street = "abc";
+    expect(actions.Cart.setAddress).toHaveBeenCalledWith(
+      expect.any(Object),
+      address
+    );
+  });
+
+  it("building input change dispatch Cart/setAddress with correct payload", async () => {
+    setAddressOption(store, "2");
+    let address = { street: "aaa", building: "bbb", flat: "11" };
+    setAddress(store, address);
+    createComponent({ propsData, localVue, store, mocks, actions });
+    const input = wrapper.find(`[data-test="building"]`);
+    input.element.value = "abc";
+    await input.trigger("change");
+    address.building = "abc";
+    expect(actions.Cart.setAddress).toHaveBeenCalledWith(
+      expect.any(Object),
+      address
+    );
+  });
+
+  it("flat input change dispatch Cart/setAddress with correct payload", async () => {
+    setAddressOption(store, "2");
+    let address = { street: "aaa", building: "bbb", flat: "11" };
+    setAddress(store, address);
+    createComponent({ propsData, localVue, store, mocks, actions });
+    const input = wrapper.find(`[data-test="flat"]`);
+    input.element.value = "333";
+    await input.trigger("change");
+    address.flat = "333";
     expect(actions.Cart.setAddress).toHaveBeenCalledWith(
       expect.any(Object),
       address

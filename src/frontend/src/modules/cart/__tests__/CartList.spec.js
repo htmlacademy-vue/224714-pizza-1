@@ -1,11 +1,9 @@
 import CartList from "@/modules/cart/CartList";
 import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore } from "@/store/mocks";
-import VueRouter from "vue-router";
-import { actions } from "@/store";
+import { addPizzas, generateMockStore } from "@/store/mocks";
+import pizzas from "@/store/mocks/pizzas.json";
 
 const localVue = createLocalVue();
-const router = new VueRouter();
 
 describe("CartFooter", () => {
   let wrapper;
@@ -24,5 +22,10 @@ describe("CartFooter", () => {
     wrapper.destroy();
   });
 
-
+  it("renders correct number of cartListItems", async () => {
+    addPizzas(store, pizzas);
+    createComponent({ localVue, store });
+    const listItem = wrapper.findAll("[data-test='cart-list-item']");
+    expect(listItem).toHaveLength(pizzas.length);
+  });
 });
