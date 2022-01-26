@@ -13,7 +13,7 @@
         <h2 data-test="title">{{ pizzaNameCapitalized }}</h2>
         <ul>
           <li>{{ sizeRussian }}, {{ doughText }}</li>
-          <li>Соус: {{ sauceRussian }}</li>
+          <li data-test="sauce">Соус: {{ sauceRussian }}</li>
           <li>Начинка: {{ fillingRussian }}</li>
         </ul>
       </div>

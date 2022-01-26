@@ -72,13 +72,13 @@ describe("AppLayoutHeader", () => {
 
   it("shows login block if not authenticated", () => {
     createComponent({ localVue, store, mocks, stubs });
-    expect(wrapper.contains(`[data-test="login-link"]`)).toBe(true);
+    expect(wrapper.find(`[data-test="login-link"]`).element).toBeTruthy();
   });
 
   it("shows user block if authenticated", () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs });
-    expect(wrapper.contains(`[data-test="header__user"]`)).toBe(true);
+    expect(wrapper.find(`[data-test="header__user"]`).element).toBeTruthy();
   });
 
   it("shows user avatar picture if authenticated", () => {

@@ -3,7 +3,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 import VueRouter from "vue-router";
-import { capitalizeFirstLetter } from "@/common/helpers";
+import { capitalizeFirstLetter, sauceMap } from "@/common/helpers";
 // import ItemCounter from "@/components/ItemCounter";
 
 const localVue = createLocalVue();
@@ -56,6 +56,12 @@ describe("CartListItem", () => {
     createComponent({ propsData, store });
     expect(wrapper.find(`[data-test="title"]`).text()).toBe(capitalizeFirstLetter(propsData.pizza.name));
   });
+
+  // it("renders pizza sauce", () => {
+  //   createComponent({ propsData, store });
+  //   console.log(sauceRussian);
+  //   expect(wrapper.find(`[data-test="sauce"]`).text()).toContain(capitalizeFirstLetter(propsData.pizza.name));
+  // });
 
   // Список элементов для тестирования
   /*
