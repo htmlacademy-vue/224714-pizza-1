@@ -56,3 +56,7 @@ export const setAddress = (store, address) => {
 export const addPizzas = (store, pizzas) => {
   store.commit(`Cart/addPizzas`, pizzas);
 };
+
+export const addMiscs = (store, misc) => {
+  store.commit(`Cart/addMiscs`, misc);
+};

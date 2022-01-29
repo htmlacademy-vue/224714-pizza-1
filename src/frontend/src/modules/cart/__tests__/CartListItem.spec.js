@@ -2,16 +2,16 @@ import CartListItem from "@/modules/cart/CartListItem";
 import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
-import VueRouter from "vue-router";
 import { capitalizeFirstLetter, sauceMap } from "@/common/helpers";
-// import ItemCounter from "@/components/ItemCounter";
 
 const localVue = createLocalVue();
-const router = new VueRouter();
 
 const mocks = {
   $router: {
     push: jest.fn(),
+  },
+  $route: {
+    name: "Index",
   },
 };
 
@@ -39,13 +39,14 @@ describe("CartListItem", () => {
       },
     };
     store = generateMockStore(actions);
+    mocks.$router.push = jest.fn();
   });
 
   afterEach(() => {
     wrapper.destroy();
   });
 
-  it("has alt attribute with with pizzaNameCapitalized", () => {
+  it("has alt attribute with pizzaNameCapitalized", () => {
     createComponent({ propsData, store });
     expect(
       wrapper.find(`[data-test="pizza-image"]`).attributes("alt")
@@ -54,26 +55,49 @@ describe("CartListItem", () => {
 
   it("renders pizza name", () => {
     createComponent({ propsData, store });
-    expect(wrapper.find(`[data-test="title"]`).text()).toBe(capitalizeFirstLetter(propsData.pizza.name));
+    expect(wrapper.find(`[data-test="title"]`).text()).toBe(
+      capitalizeFirstLetter(propsData.pizza.name)
+    );
   });
 
-  // it("renders pizza sauce", () => {
-  //   createComponent({ propsData, store });
-  //   console.log(sauceRussian);
-  //   expect(wrapper.find(`[data-test="sauce"]`).text()).toContain(capitalizeFirstLetter(propsData.pizza.name));
-  // });
+  it("renders pizza size and dough", () => {
+    createComponent({ propsData, store });
+    expect(wrapper.find(`[data-test="size-and-dough"]`).text()).toContain(
+      "45 см, на тонком тесте"
+    );
+  });
 
-  // Список элементов для тестирования
-  /*
-    <li>{{ sizeRussian }}, {{ doughText }}</li>
-    <li>Соус: {{ sauceRussian }}</li>
-    <li>Начинка: {{ fillingRussian }}</li>
-    <ItemCounter
-      :name="`cart-list`"
-      :value="pizza.quantity"
-     @plusOne="plusOnePizza()"
-    @minusOne="minusOnePizza()"
-    <b>{{ pizzaSubSum }} ₽</b>
-    @click="changePizza"
- */
+  it("renders pizza sauce", () => {
+    createComponent({ propsData, store });
+    expect(wrapper.find(`[data-test="sauce"]`).text()).toContain("томатный");
+  });
+
+  it("renders pizza filling", () => {
+    createComponent({ propsData, store });
+    expect(wrapper.find(`[data-test="filling"]`).text()).toContain("ветчина");
+  });
+
+  it("renders pizza sum", () => {
+    createComponent({ propsData, store });
+    expect(wrapper.find(`[data-test="sum"]`).text()).toBe("800 ₽");
+  });
+
+  it("dispatch Builder / loadPizza on btn change pizza click", async () => {
+    createComponent({ propsData, store, mocks });
+    const button = wrapper.find(`[data-test="change-btn"]`);
+    await button.trigger("click");
+    expect(actions.Builder.loadPizza).toHaveBeenCalledWith(
+      expect.any(Object),
+      pizzas[0]
+    );
+  });
+
+  it("redirect to main page on btn change pizza click", async () => {
+    createComponent({ propsData, store, mocks });
+    const button = wrapper.find(`[data-test="change-btn"]`);
+    await button.trigger("click");
+    expect(mocks.$router.push).toHaveBeenCalledWith({ name: "Index" });
+  });
+
+  // компонент ItemCounter не тестировал, он ведь тестируется отдельно?
 });
