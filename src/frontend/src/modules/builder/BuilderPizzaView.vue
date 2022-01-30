@@ -2,6 +2,7 @@
   <AppDrop
     class="content__constructor"
     @drop="addIngredientToPizzaPicture($event)"
+    ref="app-drop"
   >
     <div :class="`pizza ${pizzaCssClass}`">
       <div class="pizza__wrapper">
@@ -11,6 +12,7 @@
             :key="`${fillingItem}-${filling[fillingItem]}`"
             :fillingItem="fillingItem"
             :filling="filling"
+            data-test="filling-item"
           ></BuilderFillingItemVisualization>
         </transition-group>
       </div>

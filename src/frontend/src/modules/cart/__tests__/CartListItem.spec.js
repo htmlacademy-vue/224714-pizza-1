@@ -99,5 +99,17 @@ describe("CartListItem", () => {
     expect(mocks.$router.push).toHaveBeenCalledWith({ name: "Index" });
   });
 
-  // компонент ItemCounter не тестировал, он ведь тестируется отдельно?
+  it("counter plus one click dispatch Cart/plusOnePizza", async () => {
+    createComponent({ propsData, store, mocks });
+    const counter = wrapper.find(`[data-test="counter"]`);
+    await counter.vm.$emit("plusOne");
+    expect(actions.Cart.plusOnePizza).toHaveBeenCalled();
+  });
+
+  it("counter plus one click dispatch Cart/minusOnePizza", async () => {
+    createComponent({ propsData, store, mocks });
+    const counter = wrapper.find(`[data-test="counter"]`);
+    await counter.vm.$emit("minusOne");
+    expect(actions.Cart.minusOnePizza).toHaveBeenCalled();
+  });
 });

@@ -60,3 +60,7 @@ export const addPizzas = (store, pizzas) => {
 export const addMiscs = (store, misc) => {
   store.commit(`Cart/addMiscs`, misc);
 };
+
+export const loadPizza = (store, pizza) => {
+  store.dispatch(`Builder/loadPizza`, pizza);
+};

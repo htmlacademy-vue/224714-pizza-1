@@ -17,6 +17,7 @@
         :value="quantity"
         :min-value="0"
         :max-value="Infinity"
+        data-test="counter"
         @plusOne="plusOneMiscItem()"
         @minusOne="minusOneMiscItem()"
       ></ItemCounter>

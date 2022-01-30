@@ -1,19 +1,9 @@
 import CartMiscListItem from "@/modules/cart/CartMiscListItem";
 import { mount, createLocalVue } from "@vue/test-utils";
-import {generateMockStore, addPizzas, addMiscs} from "@/store/mocks";
+import { generateMockStore, addPizzas, addMiscs } from "@/store/mocks";
 import misc from "@/static/misc.json";
-import pizzas from "@/store/mocks/pizzas.json";
 
 const localVue = createLocalVue();
-
-const mocks = {
-  $router: {
-    push: jest.fn(),
-  },
-  $route: {
-    name: "Index",
-  },
-};
 
 describe("CartMiscListItem", () => {
   let wrapper;
@@ -22,7 +12,6 @@ describe("CartMiscListItem", () => {
 
   const propsData = {
     miscItem: misc[0],
-    quantity: 2,
   };
 
   const createComponent = (options) => {
@@ -31,16 +20,12 @@ describe("CartMiscListItem", () => {
 
   beforeEach(() => {
     actions = {
-      Builder: {
-        loadPizza: jest.fn(),
-      },
       Cart: {
-        plusOnePizza: jest.fn(),
-        minusOnePizza: jest.fn(),
+        plusOneMiscItem: jest.fn(),
+        minusOneMiscItem: jest.fn(),
       },
     };
     store = generateMockStore(actions);
-    mocks.$router.push = jest.fn();
   });
 
   afterEach(() => {
@@ -71,6 +56,22 @@ describe("CartMiscListItem", () => {
   it("renders total sum", () => {
     addMiscs(store, { [propsData.miscItem.id]: 2 });
     createComponent({ propsData, store, localVue });
-    expect(wrapper.find(`[data-test="total"]`).text()).toBe(`${propsData.miscItem.price * 2} ₽`);
+    expect(wrapper.find(`[data-test="total"]`).text()).toBe(
+      `${propsData.miscItem.price * 2} ₽`
+    );
+  });
+
+  it("counter plus one click dispatch Cart/plusOneMiscItem", async () => {
+    createComponent({ propsData, store });
+    const counter = wrapper.find(`[data-test="counter"]`);
+    await counter.vm.$emit("plusOne");
+    expect(actions.Cart.plusOneMiscItem).toHaveBeenCalled();
+  });
+
+  it("counter plus one click dispatch Cart/minusOneMiscItem", async () => {
+    createComponent({ propsData, store });
+    const counter = wrapper.find(`[data-test="counter"]`);
+    await counter.vm.$emit("minusOne");
+    expect(actions.Cart.minusOneMiscItem).toHaveBeenCalled();
   });
 });

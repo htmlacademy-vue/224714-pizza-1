@@ -24,6 +24,7 @@
       :value="pizza.quantity"
       :min-value="0"
       :max-value="Infinity"
+      data-test="counter"
       @plusOne="plusOnePizza()"
       @minusOne="minusOnePizza()"
     ></ItemCounter>
