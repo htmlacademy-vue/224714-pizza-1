@@ -8,14 +8,16 @@
           :class="`diameter__input diameter__input--${size.value}`"
           v-for="(size, i) in sizes"
           :key="i"
+          data-test="label"
         >
           <RadioButton
             :name="`diameter`"
             :value="size.id"
             :isChecked="size.id === currentSize"
             @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
+            data-test="radio"
           ></RadioButton>
-          <span>{{ size.name }}</span>
+          <span data-test="name">{{ size.name }}</span>
         </label>
       </div>
     </div>

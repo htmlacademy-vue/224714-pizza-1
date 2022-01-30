@@ -4,7 +4,7 @@
     @drop="addIngredientToPizzaPicture($event)"
     ref="app-drop"
   >
-    <div :class="`pizza ${pizzaCssClass}`">
+    <div :class="`pizza ${pizzaCssClass}`" data-test="pizza">
       <div class="pizza__wrapper">
         <transition-group name="ingredients">
           <BuilderFillingItemVisualization

@@ -1,7 +1,7 @@
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import { createLocalVue, mount } from "@vue/test-utils";
 import Vuex from "vuex";
-import { addPizzas, generateMockStore } from "@/store/mocks";
+import { addPizzas, generateMockStore, loadPizza } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "@/modules/builder/BuilderFillingItemVisualization";
@@ -38,24 +38,26 @@ describe("BuilderPizzaView", () => {
     wrapper.destroy();
   });
 
-  // it("div has correct css class", () => {
-  //   loadPizza(store, pizzas[0]);
-  //   createComponent({ store });
-  //   expect(wrapper.attributes("class")).toContain(``);
-  // });
-  //
-  // it("dispatch Builder/plusOneIngredient on drop event", async () => {
-  //   createComponent({ store, localVue });
-  //   const transferData = { id: 1 };
-  //   await wrapper.vm.$emit("drop", transferData);
-  //   expect(actions.Builder.plusOneIngredient).toHaveBeenCalledWith(
-  //     expect.any(Object),
-  //     transferData.id
-  //   );
-  // });
+  it("div has correct css class", () => {
+    loadPizza(store, pizzas[0]);
+    createComponent({ store });
+    const pizzaDiv = wrapper.find(`[data-test="pizza"]`);
+    expect(pizzaDiv.classes()).toContain(`pizza--foundation--small-tomato`);
+  });
+
+  it("dispatch Builder/plusOneIngredient on drop event", async () => {
+    createComponent({ store });
+    const transferData = { id: 1 };
+    const appDrop = wrapper.findComponent({ ref: "app-drop" });
+    await appDrop.vm.$emit("drop", transferData);
+    expect(actions.Builder.plusOneIngredient).toHaveBeenCalledWith(
+      expect.any(Object),
+      transferData.id
+    );
+  });
 
   it("renders correct number of BuilderFillingItemVisualization", () => {
-    addPizzas(store, pizzas);
+    loadPizza(store, pizzas[0]);
     createComponent({ store, localVue });
     const fillingItems = wrapper.findAllComponents(BuilderFillingItemVisualization);
     const itemsQuantity = Object.keys(pizzas[0].filling).length;

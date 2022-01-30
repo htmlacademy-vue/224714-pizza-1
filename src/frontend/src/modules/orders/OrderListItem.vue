@@ -2,11 +2,11 @@
   <section class="sheet order">
     <div class="order__wrapper">
       <div class="order__number">
-        <b>Заказ #{{ order.id }}</b>
+        <b data-test="number">Заказ #{{ order.id }}</b>
       </div>
 
       <div class="order__sum">
-        <span>Сумма заказа: {{ order.total }} ₽</span>
+        <span data-test="sum">Сумма заказа: {{ order.total }} ₽</span>
       </div>
 
       <div class="order__button">
@@ -14,12 +14,18 @@
           type="button"
           class="button button--border"
           @click="removeOrder"
+          data-test="remove-btn"
         >
           Удалить
         </button>
       </div>
       <div class="order__button">
-        <button type="button" class="button" @click="repeatOrder">
+        <button
+          type="button"
+          class="button"
+          @click="repeatOrder"
+          data-test="repeat-btn"
+        >
           Повторить
         </button>
       </div>
@@ -34,35 +40,36 @@
             width="56"
             height="56"
             :alt="pizza.name"
+            data-test="image"
           />
           <div class="product__text">
-            <h2>{{ pizza.name }}</h2>
+            <h2 data-test="pizza-name">{{ pizza.name }}</h2>
             <ul>
-              <li>
+              <li data-test="size-and-dough">
                 {{ pizza.size }},
                 {{ pizza.dough }}
               </li>
-              <li>Соус: {{ pizza.sauce }}</li>
-              <li>Начинка: {{ pizza.ingredients }}</li>
+              <li data-test="sauce">Соус: {{ pizza.sauce }}</li>
+              <li data-test="ingredients">Начинка: {{ pizza.ingredients }}</li>
             </ul>
           </div>
         </div>
 
-        <p class="order__price">{{ pizza.quantity }}x{{ pizza.price }} ₽</p>
+        <p class="order__price" data-test="price">{{ pizza.quantity }}x{{ pizza.price }} ₽</p>
       </li>
     </ul>
 
     <ul class="order__additional">
-      <li v-for="(misc, i) in order.orderMisc" :key="i">
-        <img :src="misc.image" width="20" height="30" :alt="misc.name" />
+      <li v-for="(misc, i) in order.orderMisc" :key="i" data-test="misc-list-item">
+        <img :src="misc.image" width="20" height="30" :alt="misc.name" data-test="misc-image"/>
         <p>
-          <span>{{ misc.name }}</span>
-          <b>{{ misc.price }} ₽</b>
+          <span data-test="misc-name">{{ misc.name }}</span>
+          <b data-test="misc-price">{{ misc.price }} ₽</b>
         </p>
       </li>
     </ul>
 
-    <p class="order__address">Адрес доставки: {{ address }}</p>
+    <p class="order__address" data-test="address">Адрес доставки: {{ address }}</p>
   </section>
 </template>
 

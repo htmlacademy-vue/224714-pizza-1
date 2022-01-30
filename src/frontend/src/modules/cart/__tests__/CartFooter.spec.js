@@ -2,7 +2,6 @@ import CartFooter from "@/modules/cart/CartFooter";
 import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import VueRouter from "vue-router";
-import { actions } from "@/store";
 
 const localVue = createLocalVue();
 const router = new VueRouter();

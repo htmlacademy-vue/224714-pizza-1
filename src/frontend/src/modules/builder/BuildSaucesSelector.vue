@@ -6,12 +6,14 @@
       class="radio ingredients__input"
       v-for="(sauce, i) in sauces"
       :key="i"
+      data-test="label"
     >
       <RadioButton
         :name="`sauce`"
         :value="sauce.id"
         :isChecked="sauce.id === currentSauce"
         @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
+        data-test="radio"
       ></RadioButton>
       <span>{{ sauce.name }}</span>
     </label>

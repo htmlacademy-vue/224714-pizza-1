@@ -19,8 +19,17 @@ const initState = () => ({
 export const generateMockStore = (actions) => {
   const modulesCopy = cloneDeep(modules);
   if (actions) {
+    // Object.entries(actions).forEach(([module, actions]) => {
+    //   modulesCopy[module] = { ...modulesCopy[module], actions };
+    // });
     Object.entries(actions).forEach(([module, actions]) => {
-      modulesCopy[module] = { ...modulesCopy[module], actions };
+      modulesCopy[module] = {
+        ...modulesCopy[module],
+        actions: {
+          ...modulesCopy[module].actions,
+          ...actions,
+        },
+      };
     });
   }
 
@@ -63,4 +72,8 @@ export const addMiscs = (store, misc) => {
 
 export const loadPizza = (store, pizza) => {
   store.dispatch(`Builder/loadPizza`, pizza);
+};
+
+export const setFormStatus = (store, status) => {
+  store.commit("Addresses/setFormStatus", status);
 };
