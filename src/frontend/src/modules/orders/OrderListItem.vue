@@ -55,13 +55,25 @@
           </div>
         </div>
 
-        <p class="order__price" data-test="price">{{ pizza.quantity }}x{{ pizza.price }} ₽</p>
+        <p class="order__price" data-test="price">
+          {{ pizza.quantity }}x{{ pizza.price }} ₽
+        </p>
       </li>
     </ul>
 
     <ul class="order__additional">
-      <li v-for="(misc, i) in order.orderMisc" :key="i" data-test="misc-list-item">
-        <img :src="misc.image" width="20" height="30" :alt="misc.name" data-test="misc-image"/>
+      <li
+        v-for="(misc, i) in order.orderMisc"
+        :key="i"
+        data-test="misc-list-item"
+      >
+        <img
+          :src="misc.image"
+          width="20"
+          height="30"
+          :alt="misc.name"
+          data-test="misc-image"
+        />
         <p>
           <span data-test="misc-name">{{ misc.name }}</span>
           <b data-test="misc-price">{{ misc.price }} ₽</b>
@@ -69,7 +81,9 @@
       </li>
     </ul>
 
-    <p class="order__address" data-test="address">Адрес доставки: {{ address }}</p>
+    <p class="order__address" data-test="address">
+      Адрес доставки: {{ address }}
+    </p>
   </section>
 </template>
 

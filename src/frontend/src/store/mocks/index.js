@@ -77,3 +77,7 @@ export const loadPizza = (store, pizza) => {
 export const setFormStatus = (store, status) => {
   store.commit("Addresses/setFormStatus", status);
 };
+
+export const setOrders = (store, order) => {
+  store.commit("Orders/setOrders", order);
+};
