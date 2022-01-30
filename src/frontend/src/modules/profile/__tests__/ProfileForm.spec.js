@@ -135,13 +135,13 @@ describe("ProfileForm", () => {
     expect(input.element.value).toBe(propsData.newAddress.comment);
   });
 
-  // it("btn remove not visible when not editing", () => {
-  //   authenticateUser(store);
-  //   setFormStatus(store, addressFormStatus.NEW);
-  //   createComponent({ store, propsData });
-  //   const btn = wrapper.find(`[data-test="remove"]`);
-  //   expect(btn.isEmpty()).toBe(true)
-  // });
+  it("btn remove not visible when not editing", () => {
+    authenticateUser(store);
+    setFormStatus(store, addressFormStatus.NEW);
+    createComponent({ store, propsData });
+    const btn = wrapper.find(`[data-test="remove"]`);
+    expect(btn.exists()).toBe(false);
+  });
 
   it("btn remove is visible when editing", () => {
     authenticateUser(store);
@@ -150,12 +150,26 @@ describe("ProfileForm", () => {
     const btn = wrapper.find(`[data-test="remove"]`);
     expect(btn.isVisible()).toBe(true);
   });
+
+  it("btn remove is visible when editing", async () => {
+    authenticateUser(store);
+    setFormStatus(store, addressFormStatus.EDIT);
+    createComponent({ store, propsData });
+    const btn = wrapper.find(`[data-test="remove"]`);
+    await btn.trigger("click");
+    expect(wrapper.emitted().closeForm).toBeTruthy();
+    expect(actions.Addresses.removeAddress).toHaveBeenCalledWith(
+      expect.any(Object),
+      propsData.newAddress.id
+    );
+  });
+
+  it("btn cancel emits closeForm", async () => {
+    authenticateUser(store);
+    setFormStatus(store, addressFormStatus.NEW);
+    createComponent({ store, propsData });
+    const btn = wrapper.find(`[data-test="cancel"]`);
+    await btn.trigger("click");
+    expect(wrapper.emitted().closeForm).toBeTruthy();
+  });
 });
-
-/*
-
-                  @click="removeAddress" удалить
-                   @click="$emit('closeForm')" отменить
-
-                         this.$emit("closeForm");
- */

@@ -103,6 +103,7 @@
         type="button"
         class="button button--transparent"
         @click="$emit('closeForm')"
+        data-test="cancel"
       >
         Отменить
       </button>

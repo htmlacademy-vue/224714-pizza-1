@@ -6,9 +6,8 @@ import pizzas from "@/store/mocks/pizzas.json";
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "@/modules/builder/BuilderFillingItemVisualization";
 
-// Создаём локальный тестовый экземпляр Vue.
 const localVue = createLocalVue();
-// Добавляем к нему глобальный компонент AppIcon.
+
 localVue.component("AppDrop", AppDrop);
 localVue.component(
   "BuilderFillingItemVisualization",
