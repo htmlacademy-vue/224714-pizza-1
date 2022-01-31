@@ -6,42 +6,49 @@
 
     <div class="user">
       <picture>
-        <source type="image/webp" :srcset="user.avatar" />
+        <source type="image/webp" :srcset="user.avatar" data-test="source" />
         <img
           :src="user.avatar"
           :srcset="user.avatar"
           :alt="user.name"
           width="72"
           height="72"
+          data-test="image"
         />
       </picture>
       <div class="user__name">
-        <span>{{ user.name }}</span>
+        <span data-test="user-name">{{ user.name }}</span>
       </div>
       <p class="user__phone">
-        Контактный телефон: <span>{{ user.phone }}</span>
+        Контактный телефон: <span data-test="user-phone">{{ user.phone }}</span>
       </p>
     </div>
 
-    <div class="layout__address" v-for="(address, i) in addresses" :key="i">
+    <div
+      class="layout__address"
+      v-for="(address, i) in addresses"
+      :key="i"
+      data-test="address"
+    >
       <div class="sheet address-form">
         <div class="address-form__header">
-          <b>Адрес №{{ i + 1 }}. {{ address.name }}</b>
+          <b data-test="address-name">Адрес №{{ i + 1 }}. {{ address.name }}</b>
           <div class="address-form__edit">
             <button
               type="button"
               class="icon"
               @click="onEditClick(address.id, i + 1)"
+              data-test="change-btn"
             >
               <span class="visually-hidden">Изменить адрес</span>
             </button>
           </div>
         </div>
-        <p>
+        <p data-test="address-full">
           {{ address.street }}, д. {{ address.building }}, кв.
           {{ address.flat }}
         </p>
-        <small>{{ address.comment }}</small>
+        <small data-test="comment">{{ address.comment }}</small>
       </div>
     </div>
 
@@ -52,6 +59,7 @@
         :userId="user.id"
         :newAddress="newAddress"
         @closeForm="closeForm"
+        data-test="profile-form"
       ></ProfileForm>
     </div>
 
@@ -61,6 +69,7 @@
         class="button button--border"
         @click="onAddNewClick"
         :disabled="isBtnActive"
+        data-test="new-address-btn"
       >
         Добавить новый адрес
       </button>

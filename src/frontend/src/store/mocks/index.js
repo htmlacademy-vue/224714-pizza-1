@@ -81,3 +81,7 @@ export const setFormStatus = (store, status) => {
 export const setOrders = (store, order) => {
   store.commit("Orders/setOrders", order);
 };
+
+export const showPopup = (store, isShown) => {
+  store.commit("Cart/toggleSuccessPopup", isShown);
+};
