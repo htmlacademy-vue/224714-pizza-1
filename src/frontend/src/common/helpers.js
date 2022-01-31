@@ -92,10 +92,6 @@ export const pizzaFillingMultipleClassMapping = {
   3: "pizza__filling--third",
 };
 
-export const getPropertyId = (array, id) => {
-  return array.find((item) => +item.id === +id).id;
-};
-
 export const getNameById = (array, id) => {
   return array.find((item) => +item.id === +id).name;
 };
