@@ -134,19 +134,4 @@ describe("Profile", () => {
       addressFormStatus.EDIT
     );
   });
-
-  it("btn Изменить адрес click dispatch Addresses/setFormStatus CLOSED", async () => {
-    authenticateUser(store);
-    setFormStatus(store, addressFormStatus.EDIT);
-    setAddresses(store);
-    createComponent({ store, propsData });
-    // const addressId = addresses[0].id;
-    // const index = 1;
-    const btn = wrapper.findAll(`[data-test="change-btn"]`).at(0);
-    await btn.trigger("click");
-    expect(actions.Addresses.setFormStatus).toHaveBeenCalledWith(
-      expect.any(Object),
-      addressFormStatus.CLOSED
-    );
-  });
 });

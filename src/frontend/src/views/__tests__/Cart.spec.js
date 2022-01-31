@@ -4,17 +4,22 @@ import {
   addPizzas,
   authenticateUser,
   generateMockStore,
+  setPhone,
   showPopup,
 } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 import { setOrders } from "@/store/mocks";
 import orders from "@/store/mocks/orders.json";
+import $validator from "@/common/mixins/validator";
 
 describe("Cart", () => {
   let wrapper;
   let store;
   let actions;
 
+  const mocks = {
+    $validator,
+  };
   const createComponent = (options) => {
     wrapper = mount(Cart, options);
   };
@@ -35,14 +40,19 @@ describe("Cart", () => {
     wrapper.destroy();
   });
 
-  // it("form submit dispatch Orders/post", async () => {
-  //   authenticateUser(store);
-  //   setOrders(store, orders);
-  //   createComponent({ store });
-  //   const form = wrapper.find(`[data-test="form"]`);
-  //   await form.trigger("submit");
-  //   expect(actions.Orders.post).toHaveBeenCalled();
-  // });
+  it("form submit dispatch Orders/post", async () => {
+    authenticateUser(store);
+    setOrders(store, orders);
+    createComponent({ store, mocks });
+    setPhone(store, "324234234");
+    const form = wrapper.find(`[data-test="form"]`);
+    await form.trigger("submit");
+    expect(actions.Orders.post).toHaveBeenCalled();
+    expect(actions.Cart.toggleSuccessPopup).toHaveBeenCalledWith(
+      expect.any(Object),
+      true
+    );
+  });
 
   it("empty block shows when cart empty", async () => {
     createComponent({ store });

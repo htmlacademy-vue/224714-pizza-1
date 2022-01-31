@@ -107,10 +107,6 @@ export default {
         this.newAddress.id === this.editableAddressId
       ) {
         //схлопнуть открытую форму редактирования при клике по её карандашу
-        this.$store.dispatch(
-          "Addresses/setFormStatus",
-          addressFormStatus.CLOSED
-        );
         this.closeForm();
         return;
       }
