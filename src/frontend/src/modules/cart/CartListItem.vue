@@ -7,13 +7,14 @@
         width="56"
         height="56"
         :alt="pizzaNameCapitalized"
+        data-test="pizza-image"
       />
       <div class="product__text">
-        <h2>{{ pizzaNameCapitalized }}</h2>
+        <h2 data-test="title">{{ pizzaNameCapitalized }}</h2>
         <ul>
-          <li>{{ sizeRussian }}, {{ doughText }}</li>
-          <li>Соус: {{ sauceRussian }}</li>
-          <li>Начинка: {{ fillingRussian }}</li>
+          <li data-test="size-and-dough">{{ sizeRussian }}, {{ doughText }}</li>
+          <li data-test="sauce">Соус: {{ sauceRussian }}</li>
+          <li data-test="filling">Начинка: {{ fillingRussian }}</li>
         </ul>
       </div>
     </div>
@@ -23,16 +24,22 @@
       :value="pizza.quantity"
       :min-value="0"
       :max-value="Infinity"
+      data-test="counter"
       @plusOne="plusOnePizza()"
       @minusOne="minusOnePizza()"
     ></ItemCounter>
 
     <div class="cart-list__price">
-      <b>{{ pizzaSubSum }} ₽</b>
+      <b data-test="sum">{{ pizzaSubSum }} ₽</b>
     </div>
 
     <div class="cart-list__button">
-      <button type="button" class="cart-list__edit" @click="changePizza">
+      <button
+        type="button"
+        class="cart-list__edit"
+        @click="changePizza"
+        data-test="change-btn"
+      >
         Изменить
       </button>
     </div>

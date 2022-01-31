@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__logo">
-      <router-link to="/">
+      <router-link to="/" data-test="logo">
         <img
           src="@/assets/img/logo.svg"
           alt="V!U!E! Pizza logo"
@@ -11,14 +11,14 @@
       </router-link>
     </div>
     <div class="header__cart">
-      <router-link to="/cart">{{ price }} ₽</router-link>
+      <router-link to="/cart" data-test="price">{{ price }} ₽</router-link>
     </div>
     <div class="header__user" v-if="!isAuthenticated">
-      <a class="header__login" @click="showLogin">
-        <span>Войти</span>
-      </a>
+      <router-link class="header__login" :to="loginLink" data-test="login-link"
+        ><span>Войти</span></router-link
+      >
     </div>
-    <div class="header__user" v-else>
+    <div class="header__user" v-else data-test="header__user">
       <router-link to="/profile">
         <picture>
           <source type="image/webp" :srcset="user.avatar" />
@@ -28,11 +28,12 @@
             alt="Василий Ложкин"
             width="32"
             height="32"
+            data-test="user-avatar"
           />
         </picture>
-        <span>{{ user.name }}</span>
+        <span data-test="user-name">{{ user.name }}</span>
       </router-link>
-      <a class="header__logout" @click="logout">
+      <a class="header__logout" @click="logout" data-test="header__logout">
         <span>Выйти</span>
       </a>
     </div>
@@ -46,6 +47,9 @@ export default {
   created() {},
   computed: {
     ...mapState("Auth", ["user"]),
+    loginLink() {
+      return this.$route.path === "/" ? "/login-modal" : "/login";
+    },
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
     },
@@ -54,16 +58,6 @@ export default {
     },
   },
   methods: {
-    showLogin() {
-      if (this.$route.path === "/") {
-        this.$router.push({
-          name: "LoginModal",
-          params: { "from-main": "true" },
-        });
-      } else {
-        this.$router.push("/login");
-      }
-    },
     async logout() {
       if (this.$route.path !== "/") {
         await this.$router.push("/");

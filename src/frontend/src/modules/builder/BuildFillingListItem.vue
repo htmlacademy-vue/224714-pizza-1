@@ -13,6 +13,7 @@
       :maxValue="maxValue"
       @plusOne="plusOne()"
       @minusOne="minusOne()"
+      data-test="counter"
     ></ItemCounter>
   </li>
 </template>

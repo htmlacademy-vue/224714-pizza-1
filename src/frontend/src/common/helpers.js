@@ -92,10 +92,6 @@ export const pizzaFillingMultipleClassMapping = {
   3: "pizza__filling--third",
 };
 
-export const getPropertyId = (array, id) => {
-  return array.find((item) => +item.id === +id).id;
-};
-
 export const getNameById = (array, id) => {
   return array.find((item) => +item.id === +id).name;
 };
@@ -165,7 +161,6 @@ export const createResources = (notifier) => {
 export const setAuth = (store) => {
   store.$api.auth.setAuthHeader();
   store.dispatch("Auth/getMe");
-  // store.dispatch("Auth/setAuthentication", true);
 };
 
 export const defaultAddress = {

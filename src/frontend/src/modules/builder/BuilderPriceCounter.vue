@@ -1,9 +1,10 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ price }} ₽</p>
+    <p data-test="price">Итого: {{ price }} ₽</p>
     <button
       type="button"
       class="button"
+      data-test="btn"
       :disabled="!isBtnActive"
       @click="addPizza"
     >
@@ -13,8 +14,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
-
 export default {
   name: "BuilderPriceCounter",
   props: {

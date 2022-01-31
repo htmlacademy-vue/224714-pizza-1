@@ -13,21 +13,27 @@ const defaultLayout = "AppLayoutDefault";
 
 export default {
   name: "AppLayout",
+  data() {
+    return {
+      animation: Object,
+    };
+  },
   computed: {
     layout() {
       const layout = this.$route.meta.layout || defaultLayout;
       return () => import(`@/layouts/${layout}.vue`);
     },
-    animation() {
-      let animation = { name: "slide", mode: "out-in" };
-      if (this.$route.name === "LoginModal") {
-        animation.name = "fade";
-        animation.mode = "in-out";
+  },
+  watch: {
+    $route: function (newRoute, oldRoute) {
+      this.animation = { name: "slide", mode: "out-in" };
+      if (newRoute.name === "LoginModal") {
+        this.animation.name = "fade";
+        this.animation.mode = "in-out";
       }
-      if (this.$route.name === "Index" && this.$route.params["from-main"]) {
-        animation.mode = "in-out";
+      if (newRoute.name === "Index" && oldRoute.name === "LoginModal") {
+        this.animation.mode = "in-out";
       }
-      return animation;
     },
   },
 };

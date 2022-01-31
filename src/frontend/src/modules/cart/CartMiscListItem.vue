@@ -1,21 +1,28 @@
 <template>
   <li class="additional-list__item sheet">
     <p class="additional-list__description">
-      <img :src="miscItem.image" width="39" height="60" :alt="miscItem.name" />
-      <span>{{ miscItem.name }}</span>
+      <img
+        :src="miscItem.image"
+        width="39"
+        height="60"
+        :alt="miscItem.name"
+        data-test="image"
+      />
+      <span data-test="misc-name">{{ miscItem.name }}</span>
     </p>
 
     <div class="additional-list__wrapper">
       <ItemCounter
         :name="`additional-list`"
-        :value="value"
+        :value="quantity"
         :min-value="0"
         :max-value="Infinity"
+        data-test="counter"
         @plusOne="plusOneMiscItem()"
         @minusOne="minusOneMiscItem()"
       ></ItemCounter>
       <div class="additional-list__price">
-        <b>{{ subTotal }} ₽</b>
+        <b data-test="total">{{ subTotal }} ₽</b>
       </div>
     </div>
   </li>
@@ -41,11 +48,11 @@ export default {
     },
   },
   computed: {
-    value() {
+    quantity() {
       return this.$store.state.Cart.misc[this.miscItem.id] || 0;
     },
     subTotal() {
-      return this.miscItem.price * this.value;
+      return this.miscItem.price * this.quantity;
     },
   },
 };

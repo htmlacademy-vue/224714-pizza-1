@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "phone": 234234234224,
+    "userId": "4f1cdc0d-73bd-4941-badc-385aadc58c75",
+    "addressId": 1,
+    "orderPizzas": [
+      {
+        "id": 1,
+        "name": "sdfasfa",
+        "quantity": 1,
+        "sauceId": 1,
+        "doughId": 1,
+        "sizeId": 2,
+        "orderId": 1,
+        "ingredients": [
+          {
+            "id": 1,
+            "quantity": 1,
+            "pizzaId": 1,
+            "ingredientId": 4
+          }
+        ]
+      }
+    ],
+    "orderAddress": {
+      "id": 1,
+      "name": "ул.Trol, д.22, кв.22",
+      "street": "Trol",
+      "building": 22,
+      "flat": 22,
+      "comment": "",
+      "userId": "4f1cdc0d-73bd-4941-badc-385aadc58c75"
+    }
+  }
+]

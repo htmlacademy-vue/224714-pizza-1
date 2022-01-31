@@ -7,6 +7,7 @@
       v-for="order in ordersFormatted"
       :key="order.id"
       :order="order"
+      data-test="order-list-item"
     ></OrderListItem>
   </div>
 </template>

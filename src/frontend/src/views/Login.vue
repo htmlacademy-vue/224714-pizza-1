@@ -1,12 +1,12 @@
 <template>
   <div class="sign-form">
-    <a class="close close--white" @click="closePopup">
+    <a class="close close--white" @click="$router.go(-1)" data-test="close">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
-    <form method="post" @submit.prevent="login">
+    <form method="post" @submit.prevent="login" data-test="form">
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
@@ -16,6 +16,7 @@
             name="email"
             placeholder="example@mail.ru"
             v-model="email"
+            data-test="email"
           />
           <span>
             {{ validations.email.error }}
@@ -31,6 +32,7 @@
             name="pass"
             placeholder="***********"
             v-model="password"
+            data-test="password"
           />
           <span>
             {{ validations.password.error }}
@@ -73,16 +75,8 @@ export default {
   },
   mounted() {
     this.$refs.email.focus();
-    console.log();
   },
   methods: {
-    closePopup() {
-      if (this.$route.name === "LoginModal") {
-        this.$router.push({ name: "Index", params: { "from-main": "true" } });
-      } else {
-        this.$router.go(-1);
-      }
-    },
     async login() {
       if (
         !this.$validateFields(
@@ -97,6 +91,7 @@ export default {
         email: this.email,
         password: this.password,
       });
+
       // После успешной авторизации отправляем пользователя на главную страницу.
       await this.$router.push("/");
     },

@@ -6,6 +6,7 @@
         v-for="(ingredient, i) in ingredients"
         :key="i"
         :ingredient="ingredient"
+        data-test="list-item"
       >
       </BuildFillingListItem>
     </ul>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Адрес",
+    "street": "улица",
+    "building": "1",
+    "flat": "11",
+    "comment": "232 fadsf"
+  },
+  {
+    "id": 2,
+    "name": "Адрес 2",
+    "street": "улица 2",
+    "building": "1",
+    "flat": "11",
+    "comment": ""
+  }
+]

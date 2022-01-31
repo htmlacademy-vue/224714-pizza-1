@@ -5,6 +5,7 @@
         v-for="(pizza, index) in pizzas"
         :key="index"
         :pizza="pizza"
+        data-test="cart-list-item"
       ></CartListItem>
     </ul>
   </div>

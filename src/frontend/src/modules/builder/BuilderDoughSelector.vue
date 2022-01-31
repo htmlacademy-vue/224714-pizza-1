@@ -8,15 +8,17 @@
           :class="`dough__input dough__input--${dough.value}`"
           v-for="(dough, i) in doughs"
           :key="i"
+          data-test="label"
         >
           <RadioButton
             :name="`dough`"
             :value="dough.id"
             :isChecked="dough.id === currentDough"
             @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
+            data-test="radio"
           ></RadioButton>
-          <b>{{ dough.name }}</b>
-          <span>{{ dough.description }}</span>
+          <b data-test="name">{{ dough.name }}</b>
+          <span data-test="description">{{ dough.description }}</span>
         </label>
       </div>
     </div>

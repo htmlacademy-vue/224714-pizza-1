@@ -6,9 +6,10 @@
     @submit.prevent="submit"
     v-show="isFormShown"
     ref="addressForm"
+    data-test="form"
   >
     <div class="address-form__header">
-      <b>Адрес №{{ this.addressIndex }}</b>
+      <b data-test="address-number">Адрес №{{ this.addressIndex }}</b>
     </div>
 
     <div class="address-form__wrapper">
@@ -21,6 +22,7 @@
             placeholder="Введите название адреса"
             v-model="newAddress.name"
             ref="address"
+            data-test="address-name"
           />
           <span>
             {{ validations.name.error }}
@@ -35,6 +37,7 @@
             name="addr-street"
             placeholder="Введите название улицы"
             v-model="newAddress.street"
+            data-test="street"
           />
           <span>
             {{ validations.street.error }}
@@ -49,6 +52,7 @@
             name="addr-house"
             placeholder="Введите номер дома"
             v-model="newAddress.building"
+            data-test="building"
           />
           <span>
             {{ validations.building.error }}
@@ -62,6 +66,7 @@
             type="text"
             name="addr-apartment"
             v-model="newAddress.flat"
+            data-test="flat"
             placeholder="Введите № квартиры"
           />
           <span>
@@ -77,6 +82,7 @@
             name="addr-comment"
             v-model="newAddress.comment"
             placeholder="Введите комментарий"
+            data-test="comment"
           />
         </label>
       </div>
@@ -88,6 +94,7 @@
         type="button"
         class="button button--transparent"
         @click="removeAddress"
+        data-test="remove"
       >
         Удалить
       </button>
@@ -96,6 +103,7 @@
         type="button"
         class="button button--transparent"
         @click="$emit('closeForm')"
+        data-test="cancel"
       >
         Отменить
       </button>

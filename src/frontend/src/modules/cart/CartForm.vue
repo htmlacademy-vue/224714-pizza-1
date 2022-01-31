@@ -8,6 +8,7 @@
           class="select"
           :value="addressOption"
           @change="addressChanged($event)"
+          data-test="delivery-select"
         >
           <option
             v-for="(address, i) in addressOptions"
@@ -28,13 +29,18 @@
           placeholder="+7 999-999-99-99"
           :value="phone"
           @change="phoneChanged"
+          data-test="phone"
         />
         <div>
           {{ validations.phone.error }}
         </div>
       </label>
 
-      <div class="cart-form__address" v-if="!isDeliveryPickup">
+      <div
+        class="cart-form__address"
+        v-if="!isDeliveryPickup"
+        data-test="new-address"
+      >
         <span class="cart-form__label">Новый адрес:</span>
 
         <div class="cart-form__input">
@@ -46,6 +52,7 @@
               :value="address.street"
               @change="addressPartlyChanged($event, `street`)"
               :disabled="isDisabledInputs"
+              data-test="street"
             />
             <div>
               {{ validations.street.error }}
@@ -62,6 +69,7 @@
               :value="address.building"
               @change="addressPartlyChanged($event, `building`)"
               :disabled="isDisabledInputs"
+              data-test="building"
             />
             <div>
               {{ validations.building.error }}
@@ -78,6 +86,7 @@
               :value="address.flat"
               @change="addressPartlyChanged($event, `flat`)"
               :disabled="isDisabledInputs"
+              data-test="flat"
             />
             <div>
               {{ validations.flat.error }}
@@ -117,12 +126,12 @@ export default {
       this.$store.dispatch("Cart/setAddress", this.address);
     },
     phoneChanged(event) {
-      this.$store.commit("Cart/setPhone", event.target.value);
+      this.$store.dispatch("Cart/setPhone", event.target.value);
     },
     addressPartlyChanged(event, option) {
       let address = Object.assign({}, this.$store.state.Cart.address);
       address[option] = event.target.value;
-      this.$store.commit("Cart/setAddress", address);
+      this.$store.dispatch("Cart/setAddress", address);
     },
   },
   computed: {

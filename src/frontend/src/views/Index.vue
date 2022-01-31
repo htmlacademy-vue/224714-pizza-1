@@ -16,6 +16,7 @@
                 name="pizza_name"
                 placeholder="Введите название пиццы"
                 v-model="$store.state.Builder.pizzaName"
+                data-test="pizza-name"
               />
             </label>
 

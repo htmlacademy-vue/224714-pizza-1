@@ -24,7 +24,6 @@ export default {
     isChecked: {
       type: Boolean,
       required: true,
-      default: false,
     },
   },
 };

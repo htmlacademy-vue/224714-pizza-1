@@ -1,7 +1,11 @@
 <template>
   <section class="footer">
     <div class="footer__more">
-      <a class="button button--border button--arrow" @click="makeOneMorePizza">
+      <a
+        class="button button--border button--arrow"
+        @click="makeOneMorePizza"
+        data-test="one-more"
+      >
         Хочу еще одну
       </a>
     </div>

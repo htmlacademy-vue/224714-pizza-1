@@ -5,6 +5,7 @@
       method="post"
       class="layout-form"
       @submit.prevent="checkForm"
+      data-test="form"
     >
       <main class="content cart">
         <div class="container">
@@ -12,9 +13,12 @@
             <h1 class="title title--big">Корзина</h1>
           </div>
 
-          <CartEmpty v-if="!$store.state.Cart.pizzas.length"></CartEmpty>
+          <CartEmpty
+            v-if="!$store.state.Cart.pizzas.length"
+            data-test="empty"
+          ></CartEmpty>
 
-          <div v-else>
+          <div v-else data-test="not-empty">
             <CartList></CartList>
 
             <CartAdditional></CartAdditional>
@@ -26,7 +30,7 @@
       <CartFooter></CartFooter>
     </form>
     <transition name="fade" mode="in-out">
-      <Popup v-if="isSuccessPopupShown"></Popup>
+      <Popup v-if="isSuccessPopupShown" data-test="popup"></Popup>
     </transition>
   </div>
 </template>
