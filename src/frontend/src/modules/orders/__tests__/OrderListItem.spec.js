@@ -8,6 +8,7 @@ import {
 } from "@/store/mocks";
 import Cart from "@/views/Cart";
 import pizzas from "@/store/mocks/pizzas.json";
+import orders from "@/store/mocks/orders.json";
 
 const mocks = {
   $router: {
@@ -94,42 +95,7 @@ describe("OrderListItem", () => {
 
   it("repeat-btn dispatch Cart/addPizzas and redirect to Cart", async () => {
     authenticateUser(store);
-    setOrders(store, [
-      {
-        id: 1,
-        phone: 234234234224,
-        userId: "4f1cdc0d-73bd-4941-badc-385aadc58c75",
-        addressId: 1,
-        orderPizzas: [
-          {
-            id: 1,
-            name: "sdfasfa",
-            quantity: 1,
-            sauceId: 1,
-            doughId: 1,
-            sizeId: 2,
-            orderId: 1,
-            ingredients: [
-              {
-                id: 1,
-                quantity: 1,
-                pizzaId: 1,
-                ingredientId: 4,
-              },
-            ],
-          },
-        ],
-        orderAddress: {
-          id: 1,
-          name: "ул.Trol, д.22, кв.22",
-          street: "Trol",
-          building: 22,
-          flat: 22,
-          comment: "",
-          userId: "4f1cdc0d-73bd-4941-badc-385aadc58c75",
-        },
-      },
-    ]);
+    setOrders(store, orders);
     createComponent({ store, propsData, mocks });
     const btn = wrapper.find(`[data-test="repeat-btn"]`);
     await btn.trigger("click");
@@ -138,23 +104,3 @@ describe("OrderListItem", () => {
   });
 });
 
-/*
-
-
-
-        v-for="(pizza, i) in order.orderPizzas" amount
-         :alt="pizza.name"
-         <h2 data-test="pizza-name">{{ pizza.name }}</h2>
-         {{ pizza.size }},
-                {{ pizza.dough }}
-              <li data-test="sauce">Соус: {{ pizza.sauce }}</li>
-              <li data-test="ingredients">Начинка: {{ pizza.ingredients }}</li>
-                    <li v-for="(misc, i) in order.orderMisc" :key="i">
-                     :src="misc.image"
-                    :alt="misc.name"
-                              <span data-test="misc-name">{{ misc.name }}</span>
-                                        <b data-test="misc-price">{{ misc.price }} ₽</b>
-    <p class="order__address" data-test="address">
-
-
- */
