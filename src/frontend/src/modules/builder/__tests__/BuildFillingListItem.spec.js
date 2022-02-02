@@ -25,28 +25,28 @@ describe("BuildFillingListItem", () => {
     wrapper.destroy();
   });
 
-  it("counter plus one click dispatch Builder/plusOneIngredient", async () => {
+  it("counter plus one click dispatch Builder/plusOneIngredient", () => {
     const ingredientItem = store.getters["Builder/ingredients"][0];
     const propsData = {
       ingredient: ingredientItem,
     };
     createComponent({ propsData, store });
     const counter = wrapper.find(`[data-test="counter"]`);
-    await counter.vm.$emit("plusOne");
+    counter.vm.$emit("plusOne");
     expect(actions.Builder.plusOneIngredient).toHaveBeenCalledWith(
       expect.any(Object),
       ingredientItem.id
     );
   });
 
-  it("counter plus one click dispatch Builder/minusOneIngredient", async () => {
+  it("counter plus one click dispatch Builder/minusOneIngredient", () => {
     const ingredientItem = store.getters["Builder/ingredients"][0];
     const propsData = {
       ingredient: ingredientItem,
     };
     createComponent({ propsData, store });
     const counter = wrapper.find(`[data-test="counter"]`);
-    await counter.vm.$emit("minusOne");
+    counter.vm.$emit("minusOne");
     expect(actions.Builder.minusOneIngredient).toHaveBeenCalledWith(
       expect.any(Object),
       ingredientItem.id

@@ -33,12 +33,12 @@ describe("BuildSaucesSelector", () => {
     expect(labels).toHaveLength(store.getters["Builder/sauces"].length);
   });
 
-  it("radio btn change dispatch Builder/setSauce", async () => {
+  it("radio btn change dispatch Builder/setSauce", () => {
     createComponent({ store });
 
     const doughRadio = wrapper.findAll(`[data-test="radio"]`).at(1);
     const newValue = store.getters["Builder/sauces"][1].id;
-    await doughRadio.vm.$emit("valueChanged", newValue);
+    doughRadio.vm.$emit("valueChanged", newValue);
     expect(actions.Builder.setSauce).toHaveBeenCalledWith(
       expect.any(Object),
       newValue
