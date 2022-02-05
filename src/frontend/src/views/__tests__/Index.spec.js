@@ -1,6 +1,6 @@
 import Index from "@/views/Index";
 import { mount } from "@vue/test-utils";
-import {generateMockStore, loadPizza} from "@/store/mocks";
+import { generateMockStore, loadPizza } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 
 describe("Index", () => {

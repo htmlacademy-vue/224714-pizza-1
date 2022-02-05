@@ -46,8 +46,11 @@
 
 <script>
 import { validator } from "@/common/mixins";
+import { isLoggedIn } from "@/middlewares";
 export default {
   name: "Login",
+  middlewares: [isLoggedIn],
+  layout: "AppLayoutDefault",
   mixins: [validator],
   data: function () {
     return {

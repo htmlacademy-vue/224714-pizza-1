@@ -6,6 +6,7 @@ import {
   calculateFilling,
 } from "@/common/helpers";
 import Vue from "vue";
+import { defaultSizeArrayIndex } from "@/common/const";
 
 const getDefaultState = () => {
   return {
@@ -48,7 +49,7 @@ export default {
             value: sizeMap.find(
               (item) => item.multiplier === sizeItem.multiplier
             ).value,
-            isChecked: index === 1,
+            isChecked: index === defaultSizeArrayIndex,
           };
         });
       }

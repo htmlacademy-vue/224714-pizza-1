@@ -48,7 +48,7 @@ export default {
   computed: {
     ...mapState("Auth", ["user"]),
     loginLink() {
-      return this.$route.path === "/" ? "/login-modal" : "/login";
+      return this.$route.path === "/" ? "/loginmodal" : "/login";
     },
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;

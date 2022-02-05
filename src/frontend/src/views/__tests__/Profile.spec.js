@@ -10,12 +10,6 @@ import user from "@/static/user.json";
 import addresses from "@/store/mocks/addresses.json";
 import { addressFormStatus } from "@/common/const";
 
-const propsData = {
-  newAddress: {
-    id: 1,
-  },
-};
-
 describe("Profile", () => {
   let wrapper;
   let store;

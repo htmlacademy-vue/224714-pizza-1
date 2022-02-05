@@ -1,4 +1,4 @@
-import Popup from "@/views/Popup";
+import Popup from "@/modules/cart/Popup";
 import { mount } from "@vue/test-utils";
 import { authenticateUser, generateMockStore } from "@/store/mocks";
 

@@ -30,3 +30,5 @@ export const defaultAddressOptions = [
 ];
 
 export const DEFAULT_ADDRESS_OPTION = 1;
+
+export const defaultSizeArrayIndex = 1;

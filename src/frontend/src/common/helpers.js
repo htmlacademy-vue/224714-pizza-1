@@ -32,14 +32,14 @@ export const sizeMap = [
     id: 1,
   },
   {
-    multiplier: 3,
-    value: "big",
+    multiplier: 2,
+    value: "normal",
     id: 2,
   },
   {
-    multiplier: 2,
-    value: "normal",
-    id: 3,
+    multiplier: 3,
+    value: "big",
+    id: 2,
   },
 ];
 
