@@ -48,13 +48,9 @@
 
 <script>
 import {
-  sauceMap,
   doughCartTextMap,
-  sizeTextMap,
   capitalizeFirstLetter,
-  getValueById,
-  sizeMap,
-  doughMap,
+  getNameById,
 } from "@/common/helpers";
 import ItemCounter from "@/components/ItemCounter";
 
@@ -84,12 +80,13 @@ export default {
       return capitalizeFirstLetter(this.pizza.name);
     },
     sauceRussian() {
-      return sauceMap
-        .find((sauce) => sauce.id === this.pizza.sauce)
-        .name.toLowerCase();
+      return getNameById(
+        this.$store.state.pizza.sauces,
+        this.pizza.sauce
+      ).toLowerCase();
     },
     sizeRussian() {
-      return sizeTextMap[getValueById(sizeMap, this.pizza.size)];
+      return getNameById(this.$store.state.pizza.sizes, this.pizza.size);
     },
     fillingRussian() {
       return Object.keys(this.pizza.filling)
@@ -101,7 +98,9 @@ export default {
         .join(`, `);
     },
     doughText() {
-      return doughCartTextMap[getValueById(doughMap, this.pizza.dough)];
+      return doughCartTextMap[
+        getNameById(this.$store.state.pizza.dough, this.pizza.dough)
+      ];
     },
     pizzaSubSum() {
       return this.pizza.price * this.pizza.quantity;

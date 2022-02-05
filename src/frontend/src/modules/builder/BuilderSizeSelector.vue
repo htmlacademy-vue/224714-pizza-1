@@ -27,7 +27,6 @@
 <script>
 import RadioButton from "@/components/RadioButton";
 import { mapGetters } from "vuex";
-import { DEFAULT_SIZE_ARRAY_INDEX } from "@/common/const";
 
 export default {
   name: "BuilderSizeSelector",
@@ -35,7 +34,7 @@ export default {
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {
-        const currentSize = this.sizes[DEFAULT_SIZE_ARRAY_INDEX].id;
+        const currentSize = this.sizes.find((size) => size.isChecked).id;
         this.$store.dispatch("Builder/setDiameter", currentSize);
       }
     }
@@ -44,6 +43,14 @@ export default {
     ...mapGetters("Builder", ["sizes"]),
     currentSize() {
       return this.$store.state.Builder.size;
+    },
+  },
+  watch: {
+    sizes: function (val) {
+      if (!this.currentSize) {
+        const currentSize = val.find((size) => size.isChecked).id;
+        this.$store.dispatch("Builder/setDiameter", currentSize);
+      }
     },
   },
 };

@@ -28,7 +28,6 @@
 <script>
 import RadioButton from "@/components/RadioButton";
 import { mapGetters } from "vuex";
-import { DEFAULT_DOUGH_ARRAY_INDEX } from "@/common/const";
 
 export default {
   name: "BuilderDoughSelector",
@@ -36,7 +35,7 @@ export default {
   created() {
     if (this.doughs && this.doughs.length) {
       if (!this.currentDough) {
-        const currentDough = this.doughs[DEFAULT_DOUGH_ARRAY_INDEX].id;
+        const currentDough = this.doughs.find((dough) => dough.isChecked).id;
         this.$store.dispatch("Builder/setDough", currentDough);
       }
     }
@@ -45,6 +44,14 @@ export default {
     ...mapGetters("Builder", ["doughs"]),
     currentDough() {
       return this.$store.state.Builder.dough;
+    },
+  },
+  watch: {
+    doughs: function (val) {
+      if (!this.currentDough) {
+        const currentDough = val.find((dough) => dough.isChecked).id;
+        this.$store.dispatch("Builder/setDough", currentDough);
+      }
     },
   },
 };

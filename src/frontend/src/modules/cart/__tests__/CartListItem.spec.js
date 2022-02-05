@@ -2,7 +2,7 @@ import CartListItem from "@/modules/cart/CartListItem";
 import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
-import { capitalizeFirstLetter, sauceMap } from "@/common/helpers";
+import { capitalizeFirstLetter } from "@/common/helpers";
 
 const localVue = createLocalVue();
 

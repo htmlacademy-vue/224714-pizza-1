@@ -23,15 +23,13 @@
 <script>
 import RadioButton from "@/components/RadioButton";
 import { mapGetters } from "vuex";
-import { DEFAULT_SAUCE_ARRAY_INDEX } from "@/common/const";
-
 export default {
   name: "BuildSaucesSelector",
   components: { RadioButton },
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {
-        const currentSauce = this.sauces[DEFAULT_SAUCE_ARRAY_INDEX].id;
+        const currentSauce = this.sauces.find((sauce) => sauce.isChecked).id;
         this.$store.dispatch("Builder/setSauce", currentSauce);
       }
     }
@@ -40,6 +38,14 @@ export default {
     ...mapGetters("Builder", ["sauces"]),
     currentSauce() {
       return this.$store.state.Builder.sauce;
+    },
+  },
+  watch: {
+    sauces: function (val) {
+      if (!this.currentSauce) {
+        const currentSauce = val.find((sauce) => sauce.isChecked).id;
+        this.$store.dispatch("Builder/setSauce", currentSauce);
+      }
     },
   },
 };
