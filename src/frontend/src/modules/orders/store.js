@@ -1,12 +1,7 @@
 import {
   calculateFilling,
   doughCartTextMap,
-  doughMap,
   getNameById,
-  getValueById,
-  sauceMap,
-  sizeTextMap,
-  sizeMap,
 } from "@/common/helpers";
 
 const calculatePrice = (pizza, rootState) => {
@@ -37,9 +32,9 @@ const formatPizzaFromId = (pizzas, rootState) => {
   }
   return pizzas.map((pizza) => ({
     name: pizza.name,
-    sauce: getNameById(sauceMap, pizza.sauceId),
-    dough: doughCartTextMap[getValueById(doughMap, pizza.doughId)],
-    size: sizeTextMap[getValueById(sizeMap, pizza.sizeId)],
+    sauce: getNameById(rootState.pizza.sauces, pizza.sauceId),
+    dough: doughCartTextMap[getNameById(rootState.pizza.dough, pizza.doughId)],
+    size: getNameById(rootState.pizza.sizes, pizza.sizeId),
     ingredients: pizza.ingredients
       .map((ingredient) =>
         getNameById(rootState.pizza.ingredients, ingredient.ingredientId)

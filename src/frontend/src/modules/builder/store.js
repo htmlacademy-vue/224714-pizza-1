@@ -1,11 +1,16 @@
 import {
-  doughMap,
   ingredientMap,
-  sauceMap,
-  sizeMap,
   calculateFilling,
+  sizeMapEnglishByMultiplier,
+  doughMapEnglishByName,
+  sauceMapEnglishByName,
 } from "@/common/helpers";
 import Vue from "vue";
+import {
+  DEFAULT_DOUGH_ARRAY_INDEX,
+  DEFAULT_SAUCE_ARRAY_INDEX,
+  DEFAULT_SIZE_ARRAY_INDEX,
+} from "@/common/const";
 
 const getDefaultState = () => {
   return {
@@ -31,8 +36,8 @@ export default {
             image: doughItem.image,
             description: doughItem.description,
             price: doughItem.price,
-            value: doughMap.find((item) => item.name === doughItem.name).value,
-            isChecked: index === 0,
+            value: doughMapEnglishByName[doughItem.name],
+            isChecked: index === DEFAULT_DOUGH_ARRAY_INDEX,
           };
         });
       }
@@ -45,10 +50,8 @@ export default {
             id: sizeItem.id,
             image: sizeItem.image,
             multiplier: sizeItem.multiplier,
-            value: sizeMap.find(
-              (item) => item.multiplier === sizeItem.multiplier
-            ).value,
-            isChecked: index === 1,
+            value: sizeMapEnglishByMultiplier[sizeItem.multiplier],
+            isChecked: index === DEFAULT_SIZE_ARRAY_INDEX,
           };
         });
       }
@@ -60,8 +63,8 @@ export default {
             name: sauceItem.name,
             id: sauceItem.id,
             price: sauceItem.price,
-            value: sauceMap.find((item) => item.name === sauceItem.name).value,
-            isChecked: index === 0,
+            value: sauceMapEnglishByName[sauceItem.name],
+            isChecked: index === DEFAULT_SAUCE_ARRAY_INDEX,
           };
         });
       }

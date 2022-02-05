@@ -29,9 +29,7 @@
         </div>
       </form>
     </main>
-    <transition name="fade" mode="in-out">
-      <router-view name="modal"></router-view>
-    </transition>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -45,6 +43,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "Index",
+  layout: "AppLayoutMain",
   components: {
     BuilderPizzaView,
     BuilderIngredientsSelector,

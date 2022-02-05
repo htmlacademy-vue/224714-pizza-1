@@ -10,12 +10,6 @@ import user from "@/static/user.json";
 import addresses from "@/store/mocks/addresses.json";
 import { addressFormStatus } from "@/common/const";
 
-const propsData = {
-  newAddress: {
-    id: 1,
-  },
-};
-
 describe("Profile", () => {
   let wrapper;
   let store;
@@ -92,11 +86,11 @@ describe("Profile", () => {
     expect(addressComment.text()).toBe(addresses[0].comment);
   });
 
-  it("profile form on closeForm dispatch Addresses/setFormStatus", async () => {
+  it("profile form on closeForm dispatch Addresses/setFormStatus", () => {
     authenticateUser(store);
     createComponent({ store });
     const profileForm = wrapper.find(`[data-test="profile-form"]`);
-    await profileForm.vm.$emit("closeForm");
+    profileForm.vm.$emit("closeForm");
     expect(actions.Addresses.setFormStatus).toHaveBeenCalledWith(
       expect.any(Object),
       addressFormStatus.CLOSED

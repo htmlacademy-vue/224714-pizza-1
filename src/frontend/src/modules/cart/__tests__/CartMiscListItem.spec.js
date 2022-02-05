@@ -64,7 +64,7 @@ describe("CartMiscListItem", () => {
   it("counter plus one click dispatch Cart/plusOneMiscItem", async () => {
     createComponent({ propsData, store });
     const counter = wrapper.find(`[data-test="counter"]`);
-    await counter.vm.$emit("plusOne");
+    counter.vm.$emit("plusOne");
     expect(actions.Cart.plusOneMiscItem).toHaveBeenCalled();
   });
 

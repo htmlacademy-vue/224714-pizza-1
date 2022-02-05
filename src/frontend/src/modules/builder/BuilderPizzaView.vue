@@ -25,9 +25,8 @@ import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "./BuilderFillingItemVisualization";
 import {
   doughClassMapping,
-  doughMap,
-  getValueById,
-  sauceMap,
+  getNameById,
+  sauceMapEnglishByName,
 } from "@/common/helpers";
 import { mapState } from "vuex";
 
@@ -49,8 +48,14 @@ export default {
     pizzaCssClass() {
       return this.dough && this.sauce
         ? `pizza--foundation--${
-            doughClassMapping[getValueById(doughMap, this.dough)]
-          }-${getValueById(sauceMap, this.sauce)}`
+            doughClassMapping[
+              getNameById(this.$store.state.pizza.dough, this.dough)
+            ]
+          }-${
+            sauceMapEnglishByName[
+              getNameById(this.$store.state.pizza.sauces, this.sauce)
+            ]
+          }`
         : ``;
     },
   },

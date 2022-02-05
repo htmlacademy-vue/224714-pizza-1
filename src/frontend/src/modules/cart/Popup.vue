@@ -16,8 +16,12 @@
 </template>
 
 <script>
+import { auth } from "@/middlewares";
+
 export default {
   name: "Popup",
+  layout: "AppLayoutProfile",
+  middlewares: [auth],
   methods: {
     redirect() {
       this.$store.dispatch("Cart/toggleSuccessPopup", false);

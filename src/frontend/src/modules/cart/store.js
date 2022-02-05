@@ -83,7 +83,6 @@ export default {
         Object.assign(newPizza, { quantity: 1 });
         state.pizzas.push(newPizza);
       }
-      console.log(state.pizzas);
     },
     addPizzas(state, pizzas) {
       state.pizzas = pizzas;

@@ -53,12 +53,12 @@ describe("BuilderDoughSelector", () => {
     );
   });
 
-  it("change dough", async () => {
+  it("change dough", () => {
     createComponent({ store });
 
     const doughRadio = wrapper.findAll(`[data-test="radio"]`).at(0);
     const newValue = store.getters["Builder/doughs"][0].id;
-    await doughRadio.vm.$emit("change", newValue);
+    doughRadio.vm.$emit("change", newValue);
     expect(actions.Builder.setDough).toHaveBeenCalledWith(
       expect.any(Object),
       newValue

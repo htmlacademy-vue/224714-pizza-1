@@ -14,11 +14,6 @@ const mocks = {
   $validator,
 };
 
-const propsData = {
-  email: "dd@ff.rr",
-  password: "123",
-};
-
 describe("Login", () => {
   let wrapper;
   let store;

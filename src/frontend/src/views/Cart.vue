@@ -44,10 +44,11 @@ import CartFooter from "@/modules/cart/CartFooter";
 import { validator } from "@/common/mixins";
 import { mapState } from "vuex";
 import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
-import Popup from "@/views/Popup";
+import Popup from "@/modules/cart/Popup";
 
 export default {
   name: "Cart",
+  layout: "AppLayoutMain",
   mixins: [validator],
   components: {
     Popup,

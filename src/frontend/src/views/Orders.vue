@@ -15,9 +15,12 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import OrderListItem from "@/modules/orders/OrderListItem";
+import { auth } from "@/middlewares";
 
 export default {
   name: "Orders",
+  layout: "AppLayoutProfile",
+  middlewares: [auth],
   components: { OrderListItem },
   beforeCreate() {
     this.$store.dispatch("Orders/query");

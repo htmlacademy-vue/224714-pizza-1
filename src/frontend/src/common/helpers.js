@@ -7,60 +7,31 @@ import {
 import resources from "@/common/enums/resources";
 import { defaultAddressOptions } from "@/common/const";
 
-export const doughMap = [
-  {
-    name: "Тонкое",
-    value: "light",
-    id: 1,
-  },
-  {
-    name: "Толстое",
-    value: "large",
-    id: 2,
-  },
-];
+export const doughMapEnglishByName = {
+  ["Тонкое"]: "light",
+  ["Толстое"]: "large",
+};
 
 export const doughCartTextMap = {
-  light: "на тонком тесте",
-  large: "на толстом тесте",
+  ["Тонкое"]: "на тонком тесте",
+  ["Толстое"]: "на толстом тесте",
 };
 
-export const sizeMap = [
-  {
-    multiplier: 1,
-    value: "small",
-    id: 1,
-  },
-  {
-    multiplier: 3,
-    value: "big",
-    id: 2,
-  },
-  {
-    multiplier: 2,
-    value: "normal",
-    id: 3,
-  },
-];
-
-export const sizeTextMap = {
-  small: "23 см",
-  normal: "32 см",
-  big: "45 см",
+export const doughClassMapping = {
+  ["Тонкое"]: "small",
+  ["Толстое"]: "big",
 };
 
-export const sauceMap = [
-  {
-    name: "Томатный",
-    value: "tomato",
-    id: 1,
-  },
-  {
-    name: "Сливочный",
-    value: "creamy",
-    id: 2,
-  },
-];
+export const sizeMapEnglishByMultiplier = {
+  1: "small",
+  2: "normal",
+  3: "big",
+};
+
+export const sauceMapEnglishByName = {
+  ["Томатный"]: "tomato",
+  ["Сливочный"]: "creamy",
+};
 
 export const ingredientMap = {
   ["Грибы"]: "mushrooms",
@@ -78,11 +49,6 @@ export const ingredientMap = {
   ["Лук"]: "onion",
   ["Халапеньо"]: "jalapeno",
   ["Чили"]: "chile",
-};
-
-export const doughClassMapping = {
-  light: "small",
-  large: "big",
 };
 
 export const defaultPizzaCssClass = "pizza--foundation--small-tomato";

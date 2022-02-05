@@ -82,8 +82,11 @@ import { mapState } from "vuex";
 import ProfileForm from "@/modules/profile/ProfileForm";
 import { addressFormStatus } from "@/common/const";
 import { defaultAddress } from "@/common/helpers";
+import { auth } from "@/middlewares";
 export default {
   name: "Profile",
+  layout: "AppLayoutProfile",
+  middlewares: [auth],
   components: { ProfileForm },
   data() {
     return {

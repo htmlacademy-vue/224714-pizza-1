@@ -2,7 +2,7 @@ import CartListItem from "@/modules/cart/CartListItem";
 import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
-import { capitalizeFirstLetter, sauceMap } from "@/common/helpers";
+import { capitalizeFirstLetter } from "@/common/helpers";
 
 const localVue = createLocalVue();
 
@@ -99,10 +99,10 @@ describe("CartListItem", () => {
     expect(mocks.$router.push).toHaveBeenCalledWith({ name: "Index" });
   });
 
-  it("counter plus one click dispatch Cart/plusOnePizza", async () => {
+  it("counter plus one click dispatch Cart/plusOnePizza", () => {
     createComponent({ propsData, store, mocks });
     const counter = wrapper.find(`[data-test="counter"]`);
-    await counter.vm.$emit("plusOne");
+    counter.vm.$emit("plusOne");
     expect(actions.Cart.plusOnePizza).toHaveBeenCalled();
   });
 

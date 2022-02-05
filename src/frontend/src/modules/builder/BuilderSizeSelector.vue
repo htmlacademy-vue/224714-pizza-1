@@ -27,6 +27,7 @@
 <script>
 import RadioButton from "@/components/RadioButton";
 import { mapGetters } from "vuex";
+
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },

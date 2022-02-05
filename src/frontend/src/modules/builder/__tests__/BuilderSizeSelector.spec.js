@@ -44,12 +44,12 @@ describe("BuilderSizeSelector", () => {
     );
   });
 
-  it("radio btn change dispatch Builder/setDiameter", async () => {
+  it("radio btn change dispatch Builder/setDiameter", () => {
     createComponent({ store });
 
     const doughRadio = wrapper.findAll(`[data-test="radio"]`).at(1);
     const newValue = store.getters["Builder/sizes"][1].id;
-    await doughRadio.vm.$emit("change", newValue);
+    doughRadio.vm.$emit("change", newValue);
     expect(actions.Builder.setDiameter).toHaveBeenCalledWith(
       expect.any(Object),
       newValue

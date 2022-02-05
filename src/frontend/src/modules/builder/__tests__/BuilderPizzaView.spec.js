@@ -44,11 +44,11 @@ describe("BuilderPizzaView", () => {
     expect(pizzaDiv.classes()).toContain(`pizza--foundation--small-tomato`);
   });
 
-  it("dispatch Builder/plusOneIngredient on drop event", async () => {
+  it("dispatch Builder/plusOneIngredient on drop event", () => {
     createComponent({ store });
     const transferData = { id: 1 };
     const appDrop = wrapper.findComponent({ ref: "app-drop" });
-    await appDrop.vm.$emit("drop", transferData);
+    appDrop.vm.$emit("drop", transferData);
     expect(actions.Builder.plusOneIngredient).toHaveBeenCalledWith(
       expect.any(Object),
       transferData.id
