@@ -6,7 +6,11 @@ import {
   calculateFilling,
 } from "@/common/helpers";
 import Vue from "vue";
-import { defaultSizeArrayIndex } from "@/common/const";
+import {
+  DEFAULT_DOUGH_ARRAY_INDEX,
+  DEFAULT_SAUCE_ARRAY_INDEX,
+  DEFAULT_SIZE_ARRAY_INDEX,
+} from "@/common/const";
 
 const getDefaultState = () => {
   return {
@@ -33,7 +37,7 @@ export default {
             description: doughItem.description,
             price: doughItem.price,
             value: doughMap.find((item) => item.name === doughItem.name).value,
-            isChecked: index === 0,
+            isChecked: index === DEFAULT_DOUGH_ARRAY_INDEX,
           };
         });
       }
@@ -49,7 +53,7 @@ export default {
             value: sizeMap.find(
               (item) => item.multiplier === sizeItem.multiplier
             ).value,
-            isChecked: index === defaultSizeArrayIndex,
+            isChecked: index === DEFAULT_SIZE_ARRAY_INDEX,
           };
         });
       }
@@ -62,7 +66,7 @@ export default {
             id: sauceItem.id,
             price: sauceItem.price,
             value: sauceMap.find((item) => item.name === sauceItem.name).value,
-            isChecked: index === 0,
+            isChecked: index === DEFAULT_SAUCE_ARRAY_INDEX,
           };
         });
       }

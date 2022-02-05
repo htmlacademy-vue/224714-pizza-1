@@ -31,4 +31,8 @@ export const defaultAddressOptions = [
 
 export const DEFAULT_ADDRESS_OPTION = 1;
 
-export const defaultSizeArrayIndex = 1;
+export const DEFAULT_SIZE_ARRAY_INDEX = 1;
+
+export const DEFAULT_SAUCE_ARRAY_INDEX = 0;
+
+export const DEFAULT_DOUGH_ARRAY_INDEX = 0;

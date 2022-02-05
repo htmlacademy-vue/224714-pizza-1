@@ -28,7 +28,7 @@ export default {
   methods: {
     makeOneMorePizza() {
       this.$store.dispatch("Builder/resetState");
-      this.$router.push({ name: `Index` });
+      this.$router.push(`/`);
     },
   },
 };

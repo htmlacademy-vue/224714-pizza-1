@@ -70,7 +70,7 @@ export default {
   methods: {
     changePizza() {
       this.$store.dispatch("Builder/loadPizza", this.pizza);
-      this.$router.push({ name: `Index` });
+      this.$router.push(`/`);
     },
     plusOnePizza() {
       this.$store.dispatch(`Cart/plusOnePizza`, this.pizza.id);

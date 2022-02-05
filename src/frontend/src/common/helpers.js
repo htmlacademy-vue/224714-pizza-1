@@ -39,7 +39,7 @@ export const sizeMap = [
   {
     multiplier: 3,
     value: "big",
-    id: 2,
+    id: 3,
   },
 ];
 

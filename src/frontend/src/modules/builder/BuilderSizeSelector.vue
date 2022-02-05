@@ -27,14 +27,15 @@
 <script>
 import RadioButton from "@/components/RadioButton";
 import { mapGetters } from "vuex";
-import { defaultSizeArrayIndex } from "@/common/const";
+import { DEFAULT_SIZE_ARRAY_INDEX } from "@/common/const";
+
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {
-        const currentSize = this.sizes[defaultSizeArrayIndex].id;
+        const currentSize = this.sizes[DEFAULT_SIZE_ARRAY_INDEX].id;
         this.$store.dispatch("Builder/setDiameter", currentSize);
       }
     }
