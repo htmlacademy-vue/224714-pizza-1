@@ -45,14 +45,6 @@ export default {
       return this.$store.state.Builder.size;
     },
   },
-  watch: {
-    sizes: function (val) {
-      if (!this.currentSize) {
-        const currentSize = val.find((size) => size.isChecked).id;
-        this.$store.dispatch("Builder/setDiameter", currentSize);
-      }
-    },
-  },
 };
 </script>
 

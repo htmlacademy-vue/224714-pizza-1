@@ -46,14 +46,6 @@ export default {
       return this.$store.state.Builder.dough;
     },
   },
-  watch: {
-    doughs: function (val) {
-      if (!this.currentDough) {
-        const currentDough = val.find((dough) => dough.isChecked).id;
-        this.$store.dispatch("Builder/setDough", currentDough);
-      }
-    },
-  },
 };
 </script>
 

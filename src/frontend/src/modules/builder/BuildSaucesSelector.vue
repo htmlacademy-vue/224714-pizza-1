@@ -40,14 +40,6 @@ export default {
       return this.$store.state.Builder.sauce;
     },
   },
-  watch: {
-    sauces: function (val) {
-      if (!this.currentSauce) {
-        const currentSauce = val.find((sauce) => sauce.isChecked).id;
-        this.$store.dispatch("Builder/setSauce", currentSauce);
-      }
-    },
-  },
 };
 </script>
 

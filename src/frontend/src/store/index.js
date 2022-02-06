@@ -1,7 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import modules from "@/store/modules";
-import { MESSAGE_LIVE_TIME } from "@/common/const";
+import {
+  DEFAULT_DOUGH_ARRAY_INDEX,
+  DEFAULT_SAUCE_ARRAY_INDEX,
+  DEFAULT_SIZE_ARRAY_INDEX,
+  MESSAGE_LIVE_TIME,
+} from "@/common/const";
 
 import VuexPlugins from "@/plugins/vuexPlugins";
 
@@ -37,6 +42,13 @@ export const actions = {
       sauces,
       sizes,
     };
+    const defaultSizeId = sizes[DEFAULT_SIZE_ARRAY_INDEX].id;
+    this.commit("Builder/setDiameter", defaultSizeId, { root: true });
+    const defaultSauceId = sauces[DEFAULT_SAUCE_ARRAY_INDEX].id;
+    this.commit("Builder/setSauce", defaultSauceId, { root: true });
+    const defaultDoughId = sizes[DEFAULT_DOUGH_ARRAY_INDEX].id;
+    this.commit("Builder/setDough", defaultDoughId, { root: true });
+
     this.commit("SET_PIZZA", pizza);
   },
   async createNotification({ ...notification }) {
