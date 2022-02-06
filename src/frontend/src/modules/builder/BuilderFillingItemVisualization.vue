@@ -17,6 +17,7 @@ export default {
       type: String,
       required: true,
     },
+
     filling: {
       type: Object,
       required: true,
@@ -29,6 +30,7 @@ export default {
         this.fillingItem
       );
     },
+
     fillingCssQuantity() {
       const fillingCount = this.filling[this.fillingItem];
       return pizzaFillingMultipleClassMapping[fillingCount] || ``;

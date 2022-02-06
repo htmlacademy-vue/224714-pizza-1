@@ -1,6 +1,6 @@
 <template>
   <div class="popup">
-    <a href="#" class="close" @click.prevent="redirect" data-test="btn-close">
+    <a href="#" class="close" data-test="btn-close" @click.prevent="redirect">
       <span class="visually-hidden">Закрыть попап</span>
     </a>
     <div class="popup__title">
@@ -8,7 +8,7 @@
     </div>
     <p>Мы начали готовить Ваш заказ, скоро привезём его вам ;)</p>
     <div class="popup__button">
-      <a href="#" class="button" @click.prevent="redirect" data-test="btn-wait"
+      <a href="#" class="button" data-test="btn-wait" @click.prevent="redirect"
         >Отлично, я жду!</a
       >
     </div>
@@ -19,7 +19,7 @@
 import { auth } from "@/middlewares";
 
 export default {
-  name: "Popup",
+  name: "CartPopup",
   layout: "AppLayoutProfile",
   middlewares: [auth],
   methods: {

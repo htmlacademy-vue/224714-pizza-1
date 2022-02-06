@@ -25,10 +25,10 @@
     </div>
 
     <div
-      class="layout__address"
       v-for="(address, i) in addresses"
-      :key="i"
+      :key="address.id"
       data-test="address"
+      class="layout__address"
     >
       <div class="sheet address-form">
         <div class="address-form__header">
@@ -37,8 +37,8 @@
             <button
               type="button"
               class="icon"
-              @click="onEditClick(address.id, i + 1)"
               data-test="change-btn"
+              @click="onEditClick(address.id, i + 1)"
             >
               <span class="visually-hidden">Изменить адрес</span>
             </button>
@@ -58,18 +58,18 @@
         :addressIndex="addressIndex"
         :userId="user.id"
         :newAddress="newAddress"
-        @closeForm="closeForm"
         data-test="profile-form"
+        @closeForm="closeForm"
       ></ProfileForm>
     </div>
 
     <div class="layout__button">
       <button
+        :disabled="isBtnActive"
         type="button"
         class="button button--border"
-        @click="onAddNewClick"
-        :disabled="isBtnActive"
         data-test="new-address-btn"
+        @click="onAddNewClick"
       >
         Добавить новый адрес
       </button>
@@ -95,6 +95,15 @@ export default {
       newAddress: {},
     };
   },
+  computed: {
+    ...mapState("Auth", ["user"]),
+
+    ...mapState("Addresses", ["addresses", "formStatus"]),
+
+    isBtnActive() {
+      return this.formStatus !== addressFormStatus.CLOSED;
+    },
+  },
   beforeCreate() {
     this.$store.dispatch("Addresses/getAddresses");
   },
@@ -116,27 +125,22 @@ export default {
       this.newAddress = this.addresses.find((address) => address.id === id);
       this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.EDIT);
     },
+
     onAddNewClick() {
       this.addressIndex = this.addresses.length + 1;
       this.newAddress = defaultAddress;
       this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.NEW);
     },
+
     closeForm() {
       this.newAddress = defaultAddress;
       this.$store.dispatch("Addresses/setFormStatus", addressFormStatus.CLOSED);
     },
   },
-  computed: {
-    ...mapState("Auth", ["user"]),
-    ...mapState("Addresses", ["addresses", "formStatus"]),
-    isBtnActive() {
-      return this.formStatus !== addressFormStatus.CLOSED;
-    },
-  },
 };
 </script>
 
-<style>
+<style scoped>
 .layout__content {
   padding-bottom: 40px;
 }

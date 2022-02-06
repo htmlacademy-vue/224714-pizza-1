@@ -63,7 +63,7 @@ describe("CartListItem", () => {
   it("renders pizza size and dough", () => {
     createComponent({ propsData, store });
     expect(wrapper.find(`[data-test="size-and-dough"]`).text()).toContain(
-      "45 см, на тонком тесте"
+      "32 см, на тонком тесте"
     );
   });
 
@@ -96,7 +96,7 @@ describe("CartListItem", () => {
     createComponent({ propsData, store, mocks });
     const button = wrapper.find(`[data-test="change-btn"]`);
     await button.trigger("click");
-    expect(mocks.$router.push).toHaveBeenCalledWith({ name: "Index" });
+    expect(mocks.$router.push).toHaveBeenCalledWith(`/`);
   });
 
   it("counter plus one click dispatch Cart/plusOnePizza", () => {

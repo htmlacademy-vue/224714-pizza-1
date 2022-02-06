@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import ItemCounter from "@/components/ItemCounter";
+import ItemCounter from "@/components/AppCounter";
 export default {
   name: "CartMiscListItem",
   components: { ItemCounter },
@@ -39,20 +39,22 @@ export default {
       required: true,
     },
   },
-  methods: {
-    plusOneMiscItem() {
-      this.$store.dispatch("Cart/plusOneMiscItem", this.miscItem.id);
-    },
-    minusOneMiscItem() {
-      this.$store.dispatch("Cart/minusOneMiscItem", this.miscItem.id);
-    },
-  },
   computed: {
     quantity() {
       return this.$store.state.Cart.misc[this.miscItem.id] || 0;
     },
+
     subTotal() {
       return this.miscItem.price * this.quantity;
+    },
+  },
+  methods: {
+    plusOneMiscItem() {
+      this.$store.dispatch("Cart/plusOneMiscItem", this.miscItem.id);
+    },
+
+    minusOneMiscItem() {
+      this.$store.dispatch("Cart/minusOneMiscItem", this.miscItem.id);
     },
   },
 };

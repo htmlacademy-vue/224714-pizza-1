@@ -5,9 +5,9 @@
 
       <div class="sheet__content diameter">
         <label
-          :class="`diameter__input diameter__input--${size.value}`"
           v-for="(size, i) in sizes"
           :key="i"
+          :class="`diameter__input diameter__input--${size.value}`"
           data-test="label"
         >
           <RadioButton
@@ -25,12 +25,18 @@
 </template>
 
 <script>
-import RadioButton from "@/components/RadioButton";
+import RadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderSizeSelector",
   components: { RadioButton },
+  computed: {
+    ...mapGetters("Builder", ["sizes"]),
+    currentSize() {
+      return this.$store.state.Builder.size;
+    },
+  },
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {
@@ -38,20 +44,6 @@ export default {
         this.$store.dispatch("Builder/setDiameter", currentSize);
       }
     }
-  },
-  computed: {
-    ...mapGetters("Builder", ["sizes"]),
-    currentSize() {
-      return this.$store.state.Builder.size;
-    },
-  },
-  watch: {
-    sizes: function (val) {
-      if (!this.currentSize) {
-        const currentSize = val.find((size) => size.isChecked).id;
-        this.$store.dispatch("Builder/setDiameter", currentSize);
-      }
-    },
   },
 };
 </script>

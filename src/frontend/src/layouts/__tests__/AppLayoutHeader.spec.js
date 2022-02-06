@@ -60,14 +60,14 @@ describe("AppLayoutHeader", () => {
   it("shows correct login link on main page", () => {
     createComponent({ localVue, store, mocks, stubs });
     const loginLink = wrapper.find(`[data-test="login-link"]`);
-    expect(loginLink.attributes("to")).toBe('/login-modal');
+    expect(loginLink.attributes("to")).toBe("/loginmodal");
   });
 
   it("shows correct login link on other page", () => {
     mocks.$route = { path: "/abc" };
     createComponent({ localVue, store, mocks, stubs });
     const loginLink = wrapper.find(`[data-test="login-link"]`);
-    expect(loginLink.attributes("to")).toBe('/login');
+    expect(loginLink.attributes("to")).toBe("/login");
   });
 
   it("shows login block if not authenticated", () => {
@@ -84,14 +84,20 @@ describe("AppLayoutHeader", () => {
   it("shows user avatar picture if authenticated", () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs });
-    expect(wrapper.find(`[data-test="user-avatar"]`).attributes("src")).toBe(store.state.Auth.user.avatar);
-    expect(wrapper.find(`[data-test="user-avatar"]`).attributes("srcset")).toBe(store.state.Auth.user.avatar);
+    expect(wrapper.find(`[data-test="user-avatar"]`).attributes("src")).toBe(
+      store.state.Auth.user.avatar
+    );
+    expect(wrapper.find(`[data-test="user-avatar"]`).attributes("srcset")).toBe(
+      store.state.Auth.user.avatar
+    );
   });
 
   it("shows user name if authenticated", () => {
     authenticateUser(store);
     createComponent({ localVue, store, mocks, stubs });
-    expect(wrapper.find(`[data-test="user-name"]`).text()).toBe(store.state.Auth.user.name);
+    expect(wrapper.find(`[data-test="user-name"]`).text()).toBe(
+      store.state.Auth.user.name
+    );
   });
 
   it("logout button makes redirect to main", async () => {

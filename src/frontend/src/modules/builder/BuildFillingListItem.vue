@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import ItemCounter from "@/components/ItemCounter";
-import SelectorItem from "@/components/SelectorItem";
+import ItemCounter from "@/components/AppCounter";
+import SelectorItem from "@/components/AppSelectorItem";
 import AppDrag from "@/components/AppDrag";
 import {
   FILLING_COUNTER_MAX_VALUE,
@@ -30,25 +30,17 @@ import {
 export default {
   name: "BuildFillingListItem",
   components: { SelectorItem, ItemCounter, AppDrag },
-  data() {
-    return {
-      minValue: FILLING_COUNTER_MIN_VALUE,
-      maxValue: FILLING_COUNTER_MAX_VALUE,
-    };
-  },
   props: {
     ingredient: {
       type: Object,
       required: true,
     },
   },
-  methods: {
-    plusOne() {
-      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.id);
-    },
-    minusOne() {
-      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.id);
-    },
+  data() {
+    return {
+      minValue: FILLING_COUNTER_MIN_VALUE,
+      maxValue: FILLING_COUNTER_MAX_VALUE,
+    };
   },
   computed: {
     isDraggable() {
@@ -57,8 +49,18 @@ export default {
         FILLING_COUNTER_MAX_VALUE
       );
     },
+
     value() {
       return this.$store.state.Builder.filling[this.ingredient.id] || 0;
+    },
+  },
+  methods: {
+    plusOne() {
+      this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.id);
+    },
+
+    minusOne() {
+      this.$store.dispatch("Builder/minusOneIngredient", this.ingredient.id);
     },
   },
 };

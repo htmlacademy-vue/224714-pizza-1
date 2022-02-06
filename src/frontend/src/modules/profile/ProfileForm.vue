@@ -2,11 +2,11 @@
   <form
     action=""
     method="post"
-    class="address-form address-form--opened sheet"
-    @submit.prevent="submit"
     v-show="isFormShown"
     ref="addressForm"
     data-test="form"
+    class="address-form address-form--opened sheet"
+    @submit.prevent="submit"
   >
     <div class="address-form__header">
       <b data-test="address-number">Адрес №{{ this.addressIndex }}</b>
@@ -17,11 +17,11 @@
         <label class="input">
           <span>Название адреса*</span>
           <input
+            ref="address"
+            v-model="newAddress.name"
             type="text"
             name="addr-name"
             placeholder="Введите название адреса"
-            v-model="newAddress.name"
-            ref="address"
             data-test="address-name"
           />
           <span>
@@ -33,10 +33,10 @@
         <label class="input">
           <span>Улица*</span>
           <input
+            v-model="newAddress.street"
             type="text"
             name="addr-street"
             placeholder="Введите название улицы"
-            v-model="newAddress.street"
             data-test="street"
           />
           <span>
@@ -48,10 +48,10 @@
         <label class="input">
           <span>Дом*</span>
           <input
+            v-model="newAddress.building"
             type="text"
             name="addr-house"
             placeholder="Введите номер дома"
-            v-model="newAddress.building"
             data-test="building"
           />
           <span>
@@ -63,9 +63,9 @@
         <label class="input">
           <span>Квартира*</span>
           <input
+            v-model="newAddress.flat"
             type="text"
             name="addr-apartment"
-            v-model="newAddress.flat"
             data-test="flat"
             placeholder="Введите № квартиры"
           />
@@ -78,9 +78,9 @@
         <label class="input">
           <span>Комментарий</span>
           <input
+            v-model="newAddress.comment"
             type="text"
             name="addr-comment"
-            v-model="newAddress.comment"
             placeholder="Введите комментарий"
             data-test="comment"
           />
@@ -91,19 +91,21 @@
     <div class="address-form__buttons">
       <button
         v-if="isEditShown"
+        key="delete"
         type="button"
         class="button button--transparent"
-        @click="removeAddress"
         data-test="remove"
+        @click="removeAddress"
       >
         Удалить
       </button>
       <button
         v-else
+        key="close"
         type="button"
         class="button button--transparent"
-        @click="$emit('closeForm')"
         data-test="cancel"
+        @click="$emit('closeForm')"
       >
         Отменить
       </button>
@@ -125,14 +127,17 @@ export default {
       type: Number,
       required: false,
     },
+
     addressIndex: {
       type: Number,
       required: true,
     },
+
     userId: {
       type: String,
       required: true,
     },
+
     newAddress: {
       type: Object,
       required: false,
@@ -145,20 +150,34 @@ export default {
           error: "",
           rules: ["required"],
         },
+
         street: {
           error: "",
           rules: ["required"],
         },
+
         building: {
           error: "",
           rules: ["required"],
         },
+
         flat: {
           error: "",
           rules: ["required"],
         },
       },
     };
+  },
+  computed: {
+    ...mapState("Addresses", ["addresses", "formStatus"]),
+
+    isFormShown() {
+      return this.formStatus !== addressFormStatus.CLOSED;
+    },
+
+    isEditShown() {
+      return this.formStatus === addressFormStatus.EDIT;
+    },
   },
   mounted() {
     this.$refs.address.focus();
@@ -169,6 +188,7 @@ export default {
       this.$refs.addressForm.reset();
       this.$emit("closeForm");
     },
+
     async submit() {
       if (
         !this.$validateFields(
@@ -192,15 +212,6 @@ export default {
       }
       this.$refs.addressForm.reset();
       this.$emit("closeForm");
-    },
-  },
-  computed: {
-    ...mapState("Addresses", ["addresses", "formStatus"]),
-    isFormShown() {
-      return this.formStatus !== addressFormStatus.CLOSED;
-    },
-    isEditShown() {
-      return this.formStatus === addressFormStatus.EDIT;
     },
   },
 };

@@ -32,7 +32,11 @@
     </div>
 
     <ul class="order__list">
-      <li class="order__item" v-for="(pizza, i) in order.orderPizzas" :key="i">
+      <li
+        v-for="pizza in order.orderPizzas"
+        :key="pizza.id"
+        class="order__item"
+      >
         <div class="product">
           <img
             src="@/assets/img/product.svg"
@@ -63,8 +67,8 @@
 
     <ul class="order__additional">
       <li
-        v-for="(misc, i) in order.orderMisc"
-        :key="i"
+        v-for="misc in order.orderMisc"
+        :key="misc.id"
         data-test="misc-list-item"
       >
         <img
@@ -99,14 +103,21 @@ export default {
       type: Object,
     },
   },
+  computed: {
+    address() {
+      return this.order.orderAddress?.name ?? "самовывоз";
+    },
+  },
   methods: {
     async removeOrder() {
       await this.$store.dispatch("Orders/delete", this.order.id);
     },
+
     repeatOrder() {
       const orderOriginal = this.$store.state.Orders.orders.find(
         (order) => order.id === this.order.id
       );
+
       const makeFillingObject = (filling) => {
         let fillingObject = {};
         filling.forEach((fillingItem) => {
@@ -114,6 +125,7 @@ export default {
         });
         return fillingObject;
       };
+
       const pizzasFormatted = orderOriginal.orderPizzas.map((pizza, i) => {
         return {
           name: pizza.name,
@@ -126,6 +138,7 @@ export default {
           id: new Date().getTime(),
         };
       });
+
       const getMiscFormatted = () => {
         let miscFormatted = {};
         if (orderOriginal.orderMisc) {
@@ -155,11 +168,6 @@ export default {
         address: this.order.orderAddress ?? null,
       });
       this.$router.push({ name: `Cart` });
-    },
-  },
-  computed: {
-    address() {
-      return this.order.orderAddress?.name ?? "самовывоз";
     },
   },
 };

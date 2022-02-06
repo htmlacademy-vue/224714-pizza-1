@@ -1,4 +1,4 @@
-import Popup from "@/modules/cart/Popup";
+import CartPopup from "@/modules/cart/CartPopup";
 import { mount } from "@vue/test-utils";
 import { authenticateUser, generateMockStore } from "@/store/mocks";
 
@@ -8,13 +8,13 @@ const mocks = {
   },
 };
 
-describe("Popup", () => {
+describe("CartPopup", () => {
   let wrapper;
   let store;
   let actions;
 
   const createComponent = (options) => {
-    wrapper = mount(Popup, options);
+    wrapper = mount(CartPopup, options);
   };
 
   beforeEach(() => {

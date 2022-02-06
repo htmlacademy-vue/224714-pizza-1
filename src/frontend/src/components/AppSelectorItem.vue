@@ -12,6 +12,7 @@ export default {
       type: String,
       required: true,
     },
+
     ingredientValue: {
       type: String,
       required: true,

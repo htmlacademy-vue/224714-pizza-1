@@ -1,10 +1,10 @@
 <template>
   <input
-    type="radio"
     :name="name"
     :value="value"
-    class="visually-hidden"
     :checked="isChecked"
+    type="radio"
+    class="visually-hidden"
     @change="$emit('valueChanged', value)"
   />
 </template>
@@ -17,10 +17,12 @@ export default {
       type: String,
       required: true,
     },
+
     value: {
       type: Number,
       required: true,
     },
+
     isChecked: {
       type: Boolean,
       required: true,

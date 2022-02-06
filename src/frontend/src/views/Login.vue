@@ -6,16 +6,16 @@
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
-    <form method="post" @submit.prevent="login" data-test="form">
+    <form method="post" data-test="form" @submit.prevent="login">
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
           <input
+            v-model="email"
             ref="email"
             type="email"
             name="email"
             placeholder="example@mail.ru"
-            v-model="email"
             data-test="email"
           />
           <span>
@@ -28,10 +28,10 @@
         <label class="input">
           <span>Пароль</span>
           <input
+            v-model="password"
             type="password"
             name="pass"
             placeholder="***********"
-            v-model="password"
             data-test="password"
           />
           <span>
@@ -49,13 +49,15 @@ import { validator } from "@/common/mixins";
 import { isLoggedIn } from "@/middlewares";
 export default {
   name: "Login",
-  middlewares: [isLoggedIn],
   layout: "AppLayoutDefault",
+  middlewares: [isLoggedIn],
   mixins: [validator],
   data: function () {
     return {
       email: "",
+
       password: "",
+
       validations: {
         email: {
           error: "",
@@ -72,6 +74,7 @@ export default {
     email() {
       this.$clearValidationErrors();
     },
+
     password() {
       this.$clearValidationErrors();
     },

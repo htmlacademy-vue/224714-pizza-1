@@ -5,9 +5,9 @@
 
       <div class="sheet__content dough">
         <label
-          :class="`dough__input dough__input--${dough.value}`"
           v-for="(dough, i) in doughs"
           :key="i"
+          :class="`dough__input dough__input--${dough.value}`"
           data-test="label"
         >
           <RadioButton
@@ -26,12 +26,19 @@
 </template>
 
 <script>
-import RadioButton from "@/components/RadioButton";
+import RadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
   components: { RadioButton },
+  computed: {
+    ...mapGetters("Builder", ["doughs"]),
+
+    currentDough() {
+      return this.$store.state.Builder.dough;
+    },
+  },
   created() {
     if (this.doughs && this.doughs.length) {
       if (!this.currentDough) {
@@ -39,20 +46,6 @@ export default {
         this.$store.dispatch("Builder/setDough", currentDough);
       }
     }
-  },
-  computed: {
-    ...mapGetters("Builder", ["doughs"]),
-    currentDough() {
-      return this.$store.state.Builder.dough;
-    },
-  },
-  watch: {
-    doughs: function (val) {
-      if (!this.currentDough) {
-        const currentDough = val.find((dough) => dough.isChecked).id;
-        this.$store.dispatch("Builder/setDough", currentDough);
-      }
-    },
   },
 };
 </script>

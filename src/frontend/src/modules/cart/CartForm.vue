@@ -12,7 +12,7 @@
         >
           <option
             v-for="(address, i) in addressOptions"
-            :key="i"
+            :key="`${i}-${address.index}`"
             :selected="address.index === defaultAddressOption"
             :value="address.index"
           >
@@ -37,8 +37,8 @@
       </label>
 
       <div
-        class="cart-form__address"
         v-if="!isDeliveryPickup"
+        class="cart-form__address"
         data-test="new-address"
       >
         <span class="cart-form__label">Новый адрес:</span>
@@ -115,6 +115,45 @@ export default {
       defaultAddressOption: DEFAULT_ADDRESS_OPTION,
     };
   },
+  computed: {
+    ...mapState("Cart", ["addressOption", "phone"]),
+
+    isDeliveryPickup() {
+      return this.addressOption === DEFAULT_ADDRESS_OPTION;
+    },
+
+    isDisabledInputs() {
+      return this.addressOption >= defaultAddressOptions.length + 1;
+    },
+
+    addresses() {
+      return this.$store.state.Auth.isAuthenticated
+        ? this.$store.state.Addresses.addresses
+        : [];
+    },
+
+    formattedAddresses() {
+      return this.addresses.map((address, i) => {
+        return {
+          index: getAddressIndex(i),
+          text: address.name,
+          address: address,
+        };
+      });
+    },
+
+    addressOptions() {
+      return defaultAddressOptions.concat(this.formattedAddresses);
+    },
+
+    address() {
+      return (
+        this.addressOptions.find(
+          (option) => +option.index === +this.addressOption
+        ).address || defaultAddress
+      );
+    },
+  },
   beforeCreate() {
     if (this.$store.state.Auth.isAuthenticated) {
       this.$store.dispatch("Addresses/getAddresses");
@@ -132,37 +171,6 @@ export default {
       let address = Object.assign({}, this.$store.state.Cart.address);
       address[option] = event.target.value;
       this.$store.dispatch("Cart/setAddress", address);
-    },
-  },
-  computed: {
-    ...mapState("Cart", ["addressOption", "phone"]),
-    isDeliveryPickup() {
-      return this.addressOption === DEFAULT_ADDRESS_OPTION;
-    },
-    isDisabledInputs() {
-      return this.addressOption >= defaultAddressOptions.length + 1;
-    },
-    addresses() {
-      return this.$store.state.Auth.isAuthenticated
-        ? this.$store.state.Addresses.addresses
-        : [];
-    },
-    addressOptions() {
-      let formattedAddresses = this.addresses.map((address, i) => {
-        return {
-          index: getAddressIndex(i),
-          text: address.name,
-          address: address,
-        };
-      });
-      return defaultAddressOptions.concat(formattedAddresses);
-    },
-    address() {
-      return (
-        this.addressOptions.find(
-          (option) => +option.index === +this.addressOption
-        ).address || defaultAddress
-      );
     },
   },
 };
