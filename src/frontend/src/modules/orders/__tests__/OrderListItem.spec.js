@@ -103,4 +103,3 @@ describe("OrderListItem", () => {
     expect(mocks.$router.push).toHaveBeenCalledWith({ name: `Cart` });
   });
 });
-

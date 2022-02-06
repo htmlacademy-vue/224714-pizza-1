@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
-import ItemCounter from "@/components/ItemCounter";
+import AppCounter from "@/components/AppCounter";
 
-describe("ItemCounter", () => {
+describe("AppCounter", () => {
   const propsData = {
     name: "testName",
     value: 123,
@@ -11,21 +11,23 @@ describe("ItemCounter", () => {
 
   let wrapper;
   const createComponent = (options) => {
-    wrapper = shallowMount(ItemCounter, options);
+    wrapper = shallowMount(AppCounter, options);
   };
 
   afterEach(() => {
     wrapper.destroy();
   });
 
-  it('has class with name', () => {
+  it("has class with name", () => {
     createComponent({ propsData });
-    expect(wrapper.attributes('class')).toContain(propsData.name);
+    expect(wrapper.attributes("class")).toContain(propsData.name);
   });
 
-  it('It sets the initial input value', () => {
+  it("It sets the initial input value", () => {
     createComponent({ propsData });
-    expect(wrapper.find('input').element.value).toBe(propsData.value.toString());
+    expect(wrapper.find("input").element.value).toBe(
+      propsData.value.toString()
+    );
   });
 
   it("Emits minusOne event when click button minus", async () => {

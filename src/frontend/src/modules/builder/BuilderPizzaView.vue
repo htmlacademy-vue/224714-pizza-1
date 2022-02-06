@@ -1,8 +1,8 @@
 <template>
   <AppDrop
+    ref="app-drop"
     class="content__constructor"
     @drop="addIngredientToPizzaPicture($event)"
-    ref="app-drop"
   >
     <div :class="`pizza ${pizzaCssClass}`" data-test="pizza">
       <div class="pizza__wrapper">
@@ -33,18 +33,15 @@ import { mapState } from "vuex";
 export default {
   name: "BuilderPizzaView",
   components: { BuilderFillingItemVisualization, AppDrop },
-  methods: {
-    addIngredientToPizzaPicture(ingredient) {
-      this.$store.dispatch("Builder/plusOneIngredient", ingredient.id);
-    },
-  },
   computed: {
     ...mapState("Builder", ["dough", "sauce", "filling"]),
+
     fillingItems() {
       return Object.keys(this.filling).filter(
         (fillingName) => this.filling[fillingName] !== 0
       );
     },
+
     pizzaCssClass() {
       return this.dough && this.sauce
         ? `pizza--foundation--${
@@ -57,6 +54,11 @@ export default {
             ]
           }`
         : ``;
+    },
+  },
+  methods: {
+    addIngredientToPizzaPicture(ingredient) {
+      this.$store.dispatch("Builder/plusOneIngredient", ingredient.id);
     },
   },
 };

@@ -12,11 +12,12 @@
             <label class="input">
               <span class="visually-hidden">Название пиццы</span>
               <input
+                :value="pizzaName"
                 type="text"
                 name="pizza_name"
                 placeholder="Введите название пиццы"
-                v-model="$store.state.Builder.pizzaName"
                 data-test="pizza-name"
+                @change="changeName($event.target.value)"
               />
             </label>
 
@@ -53,10 +54,18 @@ export default {
   },
   computed: {
     ...mapState("Builder", ["filling", "pizzaName"]),
+
+    isFillingEmpty() {
+      return Object.keys(this.$store.state.Builder.filling).length === 0;
+    },
+
     isBtnActive() {
-      const isFillingEmpty =
-        Object.keys(this.$store.state.Builder.filling).length === 0;
-      return !!this.pizzaName.length && !isFillingEmpty;
+      return !!this.pizzaName.length && !this.isFillingEmpty;
+    },
+  },
+  methods: {
+    changeName(name) {
+      this.$store.dispatch("Builder/setPizzaName", name);
     },
   },
 };

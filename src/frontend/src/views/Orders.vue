@@ -20,15 +20,15 @@ import { auth } from "@/middlewares";
 export default {
   name: "Orders",
   layout: "AppLayoutProfile",
-  middlewares: [auth],
   components: { OrderListItem },
-  beforeCreate() {
-    this.$store.dispatch("Orders/query");
-  },
-  methods: {},
+  middlewares: [auth],
   computed: {
     ...mapState("Orders", ["orders"]),
+
     ...mapGetters("Orders", ["ordersFormatted"]),
+  },
+  beforeCreate() {
+    this.$store.dispatch("Orders/query");
   },
 };
 </script>

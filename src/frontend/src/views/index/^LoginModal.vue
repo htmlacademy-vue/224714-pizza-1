@@ -10,8 +10,8 @@ import { isLoggedIn } from "@/middlewares";
 
 export default {
   name: "LoginModal",
-  middlewares: [isLoggedIn],
   layout: "AppLayoutMain",
+  middlewares: [isLoggedIn],
   components: { Login },
 };
 </script>

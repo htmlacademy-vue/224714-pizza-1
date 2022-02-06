@@ -4,8 +4,8 @@
       action=""
       method="post"
       class="layout-form"
-      @submit.prevent="checkForm"
       data-test="form"
+      @submit.prevent="checkForm"
     >
       <main class="content cart">
         <div class="container">
@@ -30,7 +30,7 @@
       <CartFooter></CartFooter>
     </form>
     <transition name="fade" mode="in-out">
-      <Popup v-if="isSuccessPopupShown" data-test="popup"></Popup>
+      <ThePopup v-if="isSuccessPopupShown" data-test="popup"></ThePopup>
     </transition>
   </div>
 </template>
@@ -44,24 +44,27 @@ import CartFooter from "@/modules/cart/CartFooter";
 import { validator } from "@/common/mixins";
 import { mapState } from "vuex";
 import { DEFAULT_ADDRESS_OPTION } from "@/common/const";
-import Popup from "@/modules/cart/Popup";
+import ThePopup from "@/modules/cart/CartPopup";
 
 export default {
   name: "Cart",
   layout: "AppLayoutMain",
-  mixins: [validator],
   components: {
-    Popup,
+    ThePopup,
     CartFooter,
     CartEmpty,
     CartList,
     CartAdditional,
     CartForm,
   },
+  mixins: [validator],
   data() {
     return {
       validations: this.defineValidations(),
     };
+  },
+  computed: {
+    ...mapState("Cart", ["address", "isSuccessPopupShown"]),
   },
   methods: {
     checkForm() {
@@ -97,11 +100,13 @@ export default {
       }
       this.sendOrder();
     },
+
     sendOrder() {
       const order = this.$store.getters["Cart/order"];
       this.$store.dispatch("Orders/post", order);
       this.$store.dispatch("Cart/toggleSuccessPopup", true);
     },
+
     defineValidations(isExtraFieldsRequired) {
       return {
         phone: {
@@ -122,9 +127,6 @@ export default {
         },
       };
     },
-  },
-  computed: {
-    ...mapState("Cart", ["address", "isSuccessPopupShown"]),
   },
 };
 </script>

@@ -52,7 +52,7 @@ import {
   capitalizeFirstLetter,
   getNameById,
 } from "@/common/helpers";
-import ItemCounter from "@/components/ItemCounter";
+import ItemCounter from "@/components/AppCounter";
 
 export default {
   name: "CartListItem",
@@ -63,31 +63,22 @@ export default {
       type: Object,
     },
   },
-  methods: {
-    changePizza() {
-      this.$store.dispatch("Builder/loadPizza", this.pizza);
-      this.$router.push(`/`);
-    },
-    plusOnePizza() {
-      this.$store.dispatch(`Cart/plusOnePizza`, this.pizza.id);
-    },
-    minusOnePizza() {
-      this.$store.dispatch(`Cart/minusOnePizza`, this.pizza.id);
-    },
-  },
   computed: {
     pizzaNameCapitalized() {
       return capitalizeFirstLetter(this.pizza.name);
     },
+
     sauceRussian() {
       return getNameById(
         this.$store.state.pizza.sauces,
         this.pizza.sauce
       ).toLowerCase();
     },
+
     sizeRussian() {
       return getNameById(this.$store.state.pizza.sizes, this.pizza.size);
     },
+
     fillingRussian() {
       return Object.keys(this.pizza.filling)
         .map((fillingItem) => {
@@ -97,13 +88,29 @@ export default {
         })
         .join(`, `);
     },
+
     doughText() {
       return doughCartTextMap[
         getNameById(this.$store.state.pizza.dough, this.pizza.dough)
       ];
     },
+
     pizzaSubSum() {
       return this.pizza.price * this.pizza.quantity;
+    },
+  },
+  methods: {
+    changePizza() {
+      this.$store.dispatch("Builder/loadPizza", this.pizza);
+      this.$router.push(`/`);
+    },
+
+    plusOnePizza() {
+      this.$store.dispatch(`Cart/plusOnePizza`, this.pizza.id);
+    },
+
+    minusOnePizza() {
+      this.$store.dispatch(`Cart/minusOnePizza`, this.pizza.id);
     },
   },
 };

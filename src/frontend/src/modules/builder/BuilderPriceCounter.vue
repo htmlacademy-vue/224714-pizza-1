@@ -22,6 +22,11 @@ export default {
       default: false,
     },
   },
+  computed: {
+    price() {
+      return this.$store.getters["Builder/price"];
+    },
+  },
   methods: {
     addPizza() {
       this.$store.dispatch(
@@ -29,11 +34,6 @@ export default {
         this.$store.getters["Builder/pizza"]
       );
       this.$router.push({ name: `Cart` });
-    },
-  },
-  computed: {
-    price() {
-      return this.$store.getters["Builder/price"];
     },
   },
 };

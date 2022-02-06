@@ -13,12 +13,12 @@
     <div class="header__cart">
       <router-link to="/cart" data-test="price">{{ price }} ₽</router-link>
     </div>
-    <div class="header__user" v-if="!isAuthenticated">
+    <div v-if="!isAuthenticated" key="header-user" class="header__user">
       <router-link class="header__login" :to="loginLink" data-test="login-link"
         ><span>Войти</span></router-link
       >
     </div>
-    <div class="header__user" v-else data-test="header__user">
+    <div class="header__user" v-else data-test="header__user" key="header-user">
       <router-link to="/profile">
         <picture>
           <source type="image/webp" :srcset="user.avatar" />
@@ -47,12 +47,15 @@ export default {
   created() {},
   computed: {
     ...mapState("Auth", ["user"]),
+
     loginLink() {
       return this.$route.path === "/" ? "/loginmodal" : "/login";
     },
+
     price() {
       return this.$store.getters["Cart/totalPrice"] || 0;
     },
+
     isAuthenticated() {
       return this.$store.state.Auth.isAuthenticated;
     },

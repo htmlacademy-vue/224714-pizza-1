@@ -3,8 +3,8 @@
     <div class="footer__more">
       <a
         class="button button--border button--arrow"
-        @click="makeOneMorePizza"
         data-test="one-more"
+        @click="makeOneMorePizza"
       >
         Хочу еще одну
       </a>

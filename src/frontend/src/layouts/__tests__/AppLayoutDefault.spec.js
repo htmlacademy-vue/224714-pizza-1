@@ -15,7 +15,7 @@ describe("AppLayoutDefault", () => {
     wrapper.destroy();
   });
 
-  it('renders out the slot content', () => {
+  it("renders out the slot content", () => {
     createComponent({ slots });
     expect(wrapper.exists()).toBeTruthy();
   });

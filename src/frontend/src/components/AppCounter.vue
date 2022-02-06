@@ -1,21 +1,21 @@
 <template>
   <div :class="`counter counter--orange ${name}__counter`">
     <button
+      :disabled="value === minValue"
       type="button"
       class="counter__button counter__button--minus"
-      @click="minusOne"
       data-test="button--minus"
-      :disabled="value === minValue"
+      @click="minusOne"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
     <input type="text" name="counter" class="counter__input" :value="value" />
     <button
+      :disabled="value === maxValue"
       type="button"
       class="counter__button counter__button--plus"
-      @click="plusOne"
       data-test="button--plus"
-      :disabled="value === maxValue"
+      @click="plusOne"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -30,14 +30,17 @@ export default {
       type: String,
       required: true,
     },
+
     value: {
       type: Number,
       required: true,
     },
+
     minValue: {
       type: Number,
       required: true,
     },
+
     maxValue: {
       type: Number,
       required: true,
@@ -47,6 +50,7 @@ export default {
     plusOne() {
       this.$emit("plusOne");
     },
+
     minusOne() {
       this.$emit("minusOne");
     },

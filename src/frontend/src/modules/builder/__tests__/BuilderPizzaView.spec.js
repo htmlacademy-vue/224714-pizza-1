@@ -58,7 +58,9 @@ describe("BuilderPizzaView", () => {
   it("renders correct number of BuilderFillingItemVisualization", () => {
     loadPizza(store, pizzas[0]);
     createComponent({ store, localVue });
-    const fillingItems = wrapper.findAllComponents(BuilderFillingItemVisualization);
+    const fillingItems = wrapper.findAllComponents(
+      BuilderFillingItemVisualization
+    );
     const itemsQuantity = Object.keys(pizzas[0].filling).length;
     expect(fillingItems).toHaveLength(itemsQuantity);
   });
