@@ -60,7 +60,7 @@ describe("AppLayoutHeader", () => {
   it("shows correct login link on main page", () => {
     createComponent({ localVue, store, mocks, stubs });
     const loginLink = wrapper.find(`[data-test="login-link"]`);
-    expect(loginLink.attributes("to")).toBe("/login-modal");
+    expect(loginLink.attributes("to")).toBe("/loginmodal");
   });
 
   it("shows correct login link on other page", () => {

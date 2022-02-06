@@ -1,5 +1,5 @@
 // Используем функцию require.context webpack для получения списка файлов системы
-const requireContext = require.context("@/modules/", true, /store\.js$/);
+const requireContext = require.context("../../modules/", true, /store\.js$/);
 
 // Преобразуем каждый файл в модуль vuex
 export default requireContext.keys().reduce((modules, filename) => {

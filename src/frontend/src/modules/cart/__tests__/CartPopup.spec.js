@@ -14,7 +14,7 @@ describe("CartPopup", () => {
   let actions;
 
   const createComponent = (options) => {
-    wrapper = mount(ThePopup, options);
+    wrapper = mount(CartPopup, options);
   };
 
   beforeEach(() => {

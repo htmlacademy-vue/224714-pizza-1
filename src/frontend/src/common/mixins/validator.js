@@ -1,4 +1,4 @@
-import { emailRegex } from "@/common/const";
+import { EMAIL_REGEX } from "@/common/const";
 
 const rules = {
   required: {
@@ -7,7 +7,7 @@ const rules = {
   },
   email: {
     rule: (value) =>
-      value ? emailRegex.test(String(value).toLowerCase()) : true,
+      value ? EMAIL_REGEX.test(String(value).toLowerCase()) : true,
     message: "Электроная почта имеет неверный формат",
   },
 };

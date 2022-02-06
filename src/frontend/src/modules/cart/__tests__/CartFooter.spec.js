@@ -38,7 +38,7 @@ describe("CartFooter", () => {
     createComponent({ localVue, store, mocks });
     const button = wrapper.find(`[data-test="one-more"]`);
     await button.trigger("click");
-    expect(mocks.$router.push).toHaveBeenCalledWith({ name: `Index` });
+    expect(mocks.$router.push).toHaveBeenCalledWith(`/`);
   });
 
   it("button 'хочу ещё одну' makes resetState", async () => {
