@@ -44,7 +44,6 @@
 import { mapState } from "vuex";
 export default {
   name: "AppLayoutHeader",
-  created() {},
   computed: {
     ...mapState("Auth", ["user"]),
 

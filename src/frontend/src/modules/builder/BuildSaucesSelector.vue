@@ -26,6 +26,13 @@ import { mapGetters } from "vuex";
 export default {
   name: "BuildSaucesSelector",
   components: { AppRadioButton },
+  computed: {
+    ...mapGetters("Builder", ["sauces"]),
+
+    currentSauce() {
+      return this.$store.state.Builder.sauce;
+    },
+  },
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {
@@ -33,13 +40,6 @@ export default {
         this.$store.dispatch("Builder/setSauce", currentSauce);
       }
     }
-  },
-  computed: {
-    ...mapGetters("Builder", ["sauces"]),
-
-    currentSauce() {
-      return this.$store.state.Builder.sauce;
-    },
   },
 };
 </script>
