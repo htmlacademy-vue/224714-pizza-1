@@ -51,4 +51,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/radio.scss";
+@import "@/assets/scss/blocks/dough.scss";
+</style>

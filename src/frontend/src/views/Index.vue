@@ -72,9 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/app";
-@import "@/assets/scss/fonts";
-@import "@/assets/scss/scaffolding";
-@import "@/assets/scss/visually-hidden";
 @import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/title.scss";
 </style>

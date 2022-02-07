@@ -137,8 +137,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/title.scss";
 </style>
 
 <style scoped>

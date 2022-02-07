@@ -76,3 +76,7 @@ export default {
   opacity: 0;
 }
 </style>
+
+<style lang="scss">
+@import "@/assets/scss/blocks/pizza.scss";
+</style>

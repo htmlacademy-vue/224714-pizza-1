@@ -40,4 +40,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss">
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/filling.scss";
+@import "@/assets/scss/blocks/pizza.scss";
+</style>
