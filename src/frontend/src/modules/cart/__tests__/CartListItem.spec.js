@@ -1,10 +1,8 @@
 import CartListItem from "@/modules/cart/CartListItem";
-import { mount, createLocalVue } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 import { capitalizeFirstLetter } from "@/common/helpers";
-
-const localVue = createLocalVue();
 
 const mocks = {
   $router: {

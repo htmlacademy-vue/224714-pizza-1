@@ -1,13 +1,7 @@
 import OrderListItem from "@/modules/orders/OrderListItem";
 import { mount } from "@vue/test-utils";
-import {
-  addPizzas,
-  authenticateUser,
-  generateMockStore,
-  setOrders,
-} from "@/store/mocks";
-import Cart from "@/views/Cart";
-import pizzas from "@/store/mocks/pizzas.json";
+import { authenticateUser, generateMockStore, setOrders } from "@/store/mocks";
+
 import orders from "@/store/mocks/orders.json";
 
 const mocks = {

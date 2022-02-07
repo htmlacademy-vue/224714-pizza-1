@@ -1,5 +1,5 @@
 import BuildSaucesSelector from "@/modules/builder/BuildSaucesSelector";
-import { createLocalVue, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
 
 describe("BuildSaucesSelector", () => {

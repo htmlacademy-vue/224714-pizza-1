@@ -1,11 +1,7 @@
 import BuilderPriceCounter from "@/modules/builder/BuilderPriceCounter";
-import { createLocalVue, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { addPizzas, generateMockStore } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
-import VueRouter from "vue-router";
-
-const localVue = createLocalVue();
-const router = new VueRouter();
 
 const mocks = {
   $router: {

@@ -1,6 +1,6 @@
 import CartMiscListItem from "@/modules/cart/CartMiscListItem";
 import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, addPizzas, addMiscs } from "@/store/mocks";
+import { generateMockStore, addMiscs } from "@/store/mocks";
 import misc from "@/static/misc.json";
 
 const localVue = createLocalVue();
