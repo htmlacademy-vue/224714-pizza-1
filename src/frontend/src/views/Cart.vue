@@ -18,7 +18,9 @@
             data-test="empty"
           />
 
-          <div v-else data-test="not-empty">
+          <div
+            v-else
+            data-test="not-empty">
             <CartList />
 
             <CartAdditional />
@@ -29,8 +31,12 @@
       </main>
       <CartFooter />
     </form>
-    <transition name="fade" mode="in-out">
-      <ThePopup v-if="isSuccessPopupShown" data-test="popup" />
+    <transition
+      name="fade"
+      mode="in-out">
+      <ThePopup
+        v-if="isSuccessPopupShown"
+        data-test="popup" />
     </transition>
   </div>
 </template>

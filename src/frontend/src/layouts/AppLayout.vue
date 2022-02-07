@@ -1,6 +1,8 @@
 <template>
   <div>
-    <transition :name="animation.name" :mode="animation.mode">
+    <transition
+      :name="animation.name"
+      :mode="animation.mode">
       <component :is="layout">
         <slot />
       </component>

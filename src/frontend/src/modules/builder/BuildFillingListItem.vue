@@ -1,6 +1,8 @@
 <template>
   <li class="ingredients__item">
-    <AppDrag :transfer-data="ingredient" :draggable="isDraggable">
+    <AppDrag
+      :transfer-data="ingredient"
+      :draggable="isDraggable">
       <AppSelectorItem
         :ingredient-value="ingredient.value"
         :ingredient-name="ingredient.name"

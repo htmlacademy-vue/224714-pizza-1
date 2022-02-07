@@ -59,7 +59,9 @@
           </div>
         </div>
 
-        <p class="order__price" data-test="price">
+        <p
+          class="order__price"
+          data-test="price">
           {{ pizza.quantity }}x{{ pizza.price }} ₽
         </p>
       </li>
@@ -85,7 +87,9 @@
       </li>
     </ul>
 
-    <p class="order__address" data-test="address">
+    <p
+      class="order__address"
+      data-test="address">
       Адрес доставки: {{ address }}
     </p>
   </section>

@@ -6,7 +6,10 @@
 
     <div class="user">
       <picture>
-        <source type="image/webp" :srcset="user.avatar" data-test="source" />
+        <source
+          type="image/webp"
+          :srcset="user.avatar"
+          data-test="source" />
         <img
           :src="user.avatar"
           :srcset="user.avatar"

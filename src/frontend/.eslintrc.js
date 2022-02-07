@@ -3,7 +3,7 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
+  extends: ["plugin:vue/essential", "eslint:recommended"],
   parserOptions: {
     parser: "babel-eslint",
   },
@@ -21,7 +21,9 @@ module.exports = {
       },
     ],
     "vue/attributes-order": "error",
-    "vue/new-line-between-multi-line-property": "error",
+    // "vue/new-line-between-multi-line-property": "error",
+    "vue/max-attributes-per-line": "error",
+    "vue/html-indent": "error",
   },
   overrides: [
     {
