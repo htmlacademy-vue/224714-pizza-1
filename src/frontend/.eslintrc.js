@@ -20,6 +20,7 @@ module.exports = {
         },
       },
     ],
+    "vue/attributes-order": "error",
   },
   overrides: [
     {

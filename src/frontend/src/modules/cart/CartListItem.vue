@@ -37,8 +37,8 @@
       <button
         type="button"
         class="cart-list__edit"
-        @click="changePizza"
         data-test="change-btn"
+        @click="changePizza"
       >
         Изменить
       </button>

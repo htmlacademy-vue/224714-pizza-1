@@ -12,8 +12,8 @@
         :name="`sauce`"
         :value="sauce.id"
         :is-checked="sauce.id === currentSauce"
-        @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
         data-test="radio"
+        @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
       />
       <span>{{ sauce.name }}</span>
     </label>

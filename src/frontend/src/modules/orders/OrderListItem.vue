@@ -13,8 +13,8 @@
         <button
           type="button"
           class="button button--border"
-          @click="removeOrder"
           data-test="remove-btn"
+          @click="removeOrder"
         >
           Удалить
         </button>
@@ -23,8 +23,8 @@
         <button
           type="button"
           class="button"
-          @click="repeatOrder"
           data-test="repeat-btn"
+          @click="repeatOrder"
         >
           Повторить
         </button>

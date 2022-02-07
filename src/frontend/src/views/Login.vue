@@ -1,6 +1,6 @@
 <template>
   <div class="sign-form">
-    <a class="close close--white" @click="$router.go(-1)" data-test="close">
+    <a class="close close--white" data-test="close" @click="$router.go(-1)">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
@@ -11,8 +11,8 @@
         <label class="input">
           <span>E-mail</span>
           <input
-            v-model="email"
             ref="email"
+            v-model="email"
             type="email"
             name="email"
             placeholder="example@mail.ru"

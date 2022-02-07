@@ -11,9 +11,9 @@
       :value="value"
       :min-value="minValue"
       :max-value="maxValue"
+      data-test="counter"
       @plusOne="plusOne()"
       @minusOne="minusOne()"
-      data-test="counter"
     />
   </li>
 </template>

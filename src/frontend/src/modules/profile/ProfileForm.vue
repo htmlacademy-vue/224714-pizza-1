@@ -1,9 +1,9 @@
 <template>
   <form
-    action=""
-    method="post"
     v-show="isFormShown"
     ref="addressForm"
+    action=""
+    method="post"
     data-test="form"
     class="address-form address-form--opened sheet"
     @submit.prevent="submit"

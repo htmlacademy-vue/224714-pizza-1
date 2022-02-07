@@ -18,7 +18,7 @@
         ><span>Войти</span></router-link
       >
     </div>
-    <div class="header__user" v-else data-test="header__user" key="header-user">
+    <div v-else key="header-user" class="header__user" data-test="header__user">
       <router-link to="/profile">
         <picture>
           <source type="image/webp" :srcset="user.avatar" />
@@ -33,7 +33,7 @@
         </picture>
         <span data-test="user-name">{{ user.name }}</span>
       </router-link>
-      <a class="header__logout" @click="logout" data-test="header__logout">
+      <a class="header__logout" data-test="header__logout" @click="logout">
         <span>Выйти</span>
       </a>
     </div>
