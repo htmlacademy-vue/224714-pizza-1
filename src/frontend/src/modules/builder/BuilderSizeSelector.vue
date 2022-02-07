@@ -10,13 +10,13 @@
           :class="`diameter__input diameter__input--${size.value}`"
           data-test="label"
         >
-          <RadioButton
+          <AppRadioButton
             :name="`diameter`"
             :value="size.id"
             :isChecked="size.id === currentSize"
             @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
             data-test="radio"
-          ></RadioButton>
+          />
           <span data-test="name">{{ size.name }}</span>
         </label>
       </div>
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderSizeSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
   computed: {
     ...mapGetters("Builder", ["sizes"]),
     currentSize() {

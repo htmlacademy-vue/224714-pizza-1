@@ -10,13 +10,13 @@
           :class="`dough__input dough__input--${dough.value}`"
           data-test="label"
         >
-          <RadioButton
+          <AppRadioButton
             :name="`dough`"
             :value="dough.id"
             :isChecked="dough.id === currentDough"
             @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
             data-test="radio"
-          ></RadioButton>
+          />
           <b data-test="name">{{ dough.name }}</b>
           <span data-test="description">{{ dough.description }}</span>
         </label>
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
   computed: {
     ...mapGetters("Builder", ["doughs"]),
 

@@ -8,24 +8,24 @@
       class="radio ingredients__input"
       data-test="label"
     >
-      <RadioButton
+      <AppRadioButton
         :name="`sauce`"
         :value="sauce.id"
         :isChecked="sauce.id === currentSauce"
         @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
         data-test="radio"
-      ></RadioButton>
+      />
       <span>{{ sauce.name }}</span>
     </label>
   </div>
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 export default {
   name: "BuildSaucesSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {
@@ -44,4 +44,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

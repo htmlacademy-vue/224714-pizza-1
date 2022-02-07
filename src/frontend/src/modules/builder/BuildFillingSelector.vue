@@ -7,8 +7,7 @@
         :key="i"
         :ingredient="ingredient"
         data-test="list-item"
-      >
-      </BuildFillingListItem>
+      />
     </ul>
   </div>
 </template>

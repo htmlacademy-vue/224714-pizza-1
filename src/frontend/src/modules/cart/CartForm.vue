@@ -176,4 +176,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/select.scss";
+</style>

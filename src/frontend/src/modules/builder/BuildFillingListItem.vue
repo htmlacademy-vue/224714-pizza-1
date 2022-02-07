@@ -1,12 +1,12 @@
 <template>
   <li class="ingredients__item">
     <AppDrag :transfer-data="ingredient" :draggable="isDraggable">
-      <SelectorItem
+      <AppSelectorItem
         :ingredient-value="ingredient.value"
         :ingredient-name="ingredient.name"
-      ></SelectorItem>
+      />
     </AppDrag>
-    <ItemCounter
+    <AppCounter
       :name="`ingredients`"
       :value="value"
       :minValue="minValue"
@@ -14,13 +14,13 @@
       @plusOne="plusOne()"
       @minusOne="minusOne()"
       data-test="counter"
-    ></ItemCounter>
+    />
   </li>
 </template>
 
 <script>
-import ItemCounter from "@/components/AppCounter";
-import SelectorItem from "@/components/AppSelectorItem";
+import AppCounter from "@/components/AppCounter";
+import AppSelectorItem from "@/components/AppSelectorItem";
 import AppDrag from "@/components/AppDrag";
 import {
   FILLING_COUNTER_MAX_VALUE,
@@ -29,7 +29,7 @@ import {
 
 export default {
   name: "BuildFillingListItem",
-  components: { SelectorItem, ItemCounter, AppDrag },
+  components: { AppCounter, AppSelectorItem, AppDrag },
   props: {
     ingredient: {
       type: Object,

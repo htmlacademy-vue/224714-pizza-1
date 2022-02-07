@@ -13,7 +13,7 @@
             :fillingItem="fillingItem"
             :filling="filling"
             data-test="filling-item"
-          ></BuilderFillingItemVisualization>
+          />
         </transition-group>
       </div>
     </div>

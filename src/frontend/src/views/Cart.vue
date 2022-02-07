@@ -16,21 +16,21 @@
           <CartEmpty
             v-if="!$store.state.Cart.pizzas.length"
             data-test="empty"
-          ></CartEmpty>
+          />
 
           <div v-else data-test="not-empty">
-            <CartList></CartList>
+            <CartList />
 
-            <CartAdditional></CartAdditional>
+            <CartAdditional />
 
-            <CartForm :validations="validations"></CartForm>
+            <CartForm :validations="validations" />
           </div>
         </div>
       </main>
-      <CartFooter></CartFooter>
+      <CartFooter />
     </form>
     <transition name="fade" mode="in-out">
-      <ThePopup v-if="isSuccessPopupShown" data-test="popup"></ThePopup>
+      <ThePopup v-if="isSuccessPopupShown" data-test="popup" />
     </transition>
   </div>
 </template>
@@ -130,6 +130,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+@import "@/assets/scss/blocks/input.scss";
+</style>
 
 <style scoped>
 .cart {

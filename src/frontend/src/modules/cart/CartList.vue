@@ -6,7 +6,7 @@
         :key="pizza.id"
         :pizza="pizza"
         data-test="cart-list-item"
-      ></CartListItem>
+      />
     </ul>
   </div>
 </template>

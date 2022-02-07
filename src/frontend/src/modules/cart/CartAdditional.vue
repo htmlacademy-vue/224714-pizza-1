@@ -6,8 +6,7 @@
         :key="i"
         :miscItem="miscItem"
         data-test="misc-item"
-      >
-      </CartMiscListItem>
+      />
     </ul>
   </div>
 </template>

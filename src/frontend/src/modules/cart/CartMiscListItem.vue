@@ -12,7 +12,7 @@
     </p>
 
     <div class="additional-list__wrapper">
-      <ItemCounter
+      <AppCounter
         :name="`additional-list`"
         :value="quantity"
         :min-value="0"
@@ -20,7 +20,7 @@
         data-test="counter"
         @plusOne="plusOneMiscItem()"
         @minusOne="minusOneMiscItem()"
-      ></ItemCounter>
+      />
       <div class="additional-list__price">
         <b data-test="total">{{ subTotal }} ₽</b>
       </div>
@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import ItemCounter from "@/components/AppCounter";
+import AppCounter from "@/components/AppCounter";
 export default {
   name: "CartMiscListItem",
-  components: { ItemCounter },
+  components: { AppCounter },
   props: {
     miscItem: {
       type: Object,

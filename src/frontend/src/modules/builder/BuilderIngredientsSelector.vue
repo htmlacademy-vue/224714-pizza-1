@@ -4,8 +4,8 @@
       <h2 class="title title--small sheet__title">Выберите ингридиенты</h2>
       <div class="sheet__content ingredients">
         <div class="ingredients__filling">
-          <BuildSaucesSelector></BuildSaucesSelector>
-          <BuildFillingSelector></BuildFillingSelector>
+          <BuildSaucesSelector />
+          <BuildFillingSelector />
         </div>
       </div>
     </div>

@@ -61,7 +61,7 @@ export default {
   opacity: 0;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/scss/app";
 @import "@/assets/scss/fonts";
 @import "@/assets/scss/scaffolding";

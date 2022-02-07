@@ -60,7 +60,7 @@
         :newAddress="newAddress"
         data-test="profile-form"
         @closeForm="closeForm"
-      ></ProfileForm>
+      />
     </div>
 
     <div class="layout__button">
@@ -140,6 +140,10 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/icon.scss";
+@import "@/assets/scss/blocks/input.scss";
+</style>
 <style scoped>
 .layout__content {
   padding-bottom: 40px;

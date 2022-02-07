@@ -8,7 +8,7 @@
       :key="order.id"
       :order="order"
       data-test="order-list-item"
-    ></OrderListItem>
+    />
   </div>
 </template>
 
@@ -32,3 +32,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/input.scss";
+</style>

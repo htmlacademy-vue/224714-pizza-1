@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <ItemCounter
+    <AppCounter
       :name="`cart-list`"
       :value="pizza.quantity"
       :min-value="0"
@@ -27,7 +27,7 @@
       data-test="counter"
       @plusOne="plusOnePizza()"
       @minusOne="minusOnePizza()"
-    ></ItemCounter>
+    />
 
     <div class="cart-list__price">
       <b data-test="sum">{{ pizzaSubSum }} ₽</b>
@@ -52,11 +52,11 @@ import {
   capitalizeFirstLetter,
   getNameById,
 } from "@/common/helpers";
-import ItemCounter from "@/components/AppCounter";
+import AppCounter from "@/components/AppCounter";
 
 export default {
   name: "CartListItem",
-  components: { ItemCounter },
+  components: { AppCounter },
   props: {
     pizza: {
       required: true,
