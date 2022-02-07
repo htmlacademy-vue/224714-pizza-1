@@ -4,7 +4,7 @@
       <CartMiscListItem
         v-for="(miscItem, i) in misc"
         :key="i"
-        :miscItem="miscItem"
+        :misc-item="miscItem"
         data-test="misc-item"
       />
     </ul>

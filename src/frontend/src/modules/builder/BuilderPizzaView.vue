@@ -10,7 +10,7 @@
           <BuilderFillingItemVisualization
             v-for="fillingItem in fillingItems"
             :key="`${fillingItem}-${filling[fillingItem]}`"
-            :fillingItem="fillingItem"
+            :filling-item="fillingItem"
             :filling="filling"
             data-test="filling-item"
           />

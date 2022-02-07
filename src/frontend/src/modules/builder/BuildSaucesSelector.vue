@@ -11,7 +11,7 @@
       <AppRadioButton
         :name="`sauce`"
         :value="sauce.id"
-        :isChecked="sauce.id === currentSauce"
+        :is-checked="sauce.id === currentSauce"
         @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
         data-test="radio"
       />

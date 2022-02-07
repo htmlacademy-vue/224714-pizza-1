@@ -54,10 +54,10 @@
 
     <div class="layout__address">
       <ProfileForm
-        :editableAddressId="editableAddressId"
-        :addressIndex="addressIndex"
-        :userId="user.id"
-        :newAddress="newAddress"
+        :editable-address-id="editableAddressId"
+        :address-index="addressIndex"
+        :user-id="user.id"
+        :new-address="newAddress"
         data-test="profile-form"
         @closeForm="closeForm"
       />

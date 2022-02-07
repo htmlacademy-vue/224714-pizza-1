@@ -23,7 +23,7 @@
 
             <BuilderPizzaView />
 
-            <BuilderPriceCounter :isBtnActive="isBtnActive" />
+            <BuilderPriceCounter :is-btn-active="isBtnActive" />
           </div>
         </div>
       </form>

@@ -13,9 +13,9 @@
           <AppRadioButton
             :name="`diameter`"
             :value="size.id"
-            :isChecked="size.id === currentSize"
-            @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
+            :is-checked="size.id === currentSize"
             data-test="radio"
+            @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
           />
           <span data-test="name">{{ size.name }}</span>
         </label>

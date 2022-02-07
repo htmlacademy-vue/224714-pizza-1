@@ -9,8 +9,8 @@
     <AppCounter
       :name="`ingredients`"
       :value="value"
-      :minValue="minValue"
-      :maxValue="maxValue"
+      :min-value="minValue"
+      :max-value="maxValue"
       @plusOne="plusOne()"
       @minusOne="minusOne()"
       data-test="counter"
