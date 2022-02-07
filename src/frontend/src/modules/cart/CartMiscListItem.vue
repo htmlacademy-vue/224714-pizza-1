@@ -39,6 +39,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     quantity() {
       return this.$store.state.Cart.misc[this.miscItem.id] || 0;
@@ -48,6 +49,7 @@ export default {
       return this.miscItem.price * this.quantity;
     },
   },
+
   methods: {
     plusOneMiscItem() {
       this.$store.dispatch("Cart/plusOneMiscItem", this.miscItem.id);

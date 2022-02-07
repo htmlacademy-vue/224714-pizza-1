@@ -4,6 +4,7 @@ export default {
   created() {
     this.$router.push("/");
   },
+
   render() {
     return "";
   },

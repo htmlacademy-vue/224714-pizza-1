@@ -18,12 +18,14 @@ export default {
       animation: Object,
     };
   },
+
   computed: {
     layout() {
       const layout = this.$route.meta.layout || defaultLayout;
       return () => import(`@/layouts/${layout}.vue`);
     },
   },
+
   watch: {
     $route: function (newRoute, oldRoute) {
       this.animation = { name: "slide", mode: "out-in" };

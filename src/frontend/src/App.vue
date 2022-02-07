@@ -14,6 +14,7 @@ export default {
   components: {
     AppLayout,
   },
+
   created() {
     window.onerror = function (msg, url, line, col, error) {
       console.error(error);

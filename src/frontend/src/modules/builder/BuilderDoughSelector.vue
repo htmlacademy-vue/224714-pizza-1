@@ -39,6 +39,7 @@ export default {
       return this.$store.state.Builder.dough;
     },
   },
+
   created() {
     if (this.doughs && this.doughs.length) {
       if (!this.currentDough) {

@@ -21,6 +21,7 @@ module.exports = {
       },
     ],
     "vue/attributes-order": "error",
+    "vue/new-line-between-multi-line-property": "error",
   },
   overrides: [
     {

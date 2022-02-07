@@ -33,6 +33,7 @@ export default {
       return this.$store.state.Builder.sauce;
     },
   },
+
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {

@@ -23,6 +23,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     fillingName() {
       return getIngredientValueById(

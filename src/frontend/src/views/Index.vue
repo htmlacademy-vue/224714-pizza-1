@@ -50,6 +50,7 @@ export default {
     BuilderDoughSelector,
     BuilderPriceCounter,
   },
+
   computed: {
     ...mapState("Builder", ["filling", "pizzaName"]),
 
@@ -61,6 +62,7 @@ export default {
       return !!this.pizzaName.length && !this.isFillingEmpty;
     },
   },
+
   methods: {
     changeName(name) {
       this.$store.dispatch("Builder/setPizzaName", name);

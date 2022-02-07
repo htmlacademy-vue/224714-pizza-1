@@ -59,6 +59,7 @@ export default {
       return this.$store.state.Auth.isAuthenticated;
     },
   },
+
   methods: {
     async logout() {
       if (this.$route.path !== "/") {

@@ -37,6 +37,7 @@ export default {
       return this.$store.state.Builder.size;
     },
   },
+
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {

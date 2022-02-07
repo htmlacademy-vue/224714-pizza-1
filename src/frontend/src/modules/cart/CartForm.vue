@@ -110,11 +110,13 @@ export default {
       required: false,
     },
   },
+
   data() {
     return {
       defaultAddressOption: DEFAULT_ADDRESS_OPTION,
     };
   },
+
   computed: {
     ...mapState("Cart", ["addressOption", "phone"]),
 
@@ -154,19 +156,23 @@ export default {
       );
     },
   },
+
   beforeCreate() {
     if (this.$store.state.Auth.isAuthenticated) {
       this.$store.dispatch("Addresses/getAddresses");
     }
   },
+
   methods: {
     addressChanged(event) {
       this.$store.dispatch("Cart/setAddressOption", event.target.value);
       this.$store.dispatch("Cart/setAddress", this.address);
     },
+
     phoneChanged(event) {
       this.$store.dispatch("Cart/setPhone", event.target.value);
     },
+
     addressPartlyChanged(event, option) {
       let address = Object.assign({}, this.$store.state.Cart.address);
       address[option] = event.target.value;

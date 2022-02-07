@@ -27,6 +27,7 @@ export default {
 
     ...mapGetters("Orders", ["ordersFormatted"]),
   },
+
   beforeCreate() {
     this.$store.dispatch("Orders/query");
   },

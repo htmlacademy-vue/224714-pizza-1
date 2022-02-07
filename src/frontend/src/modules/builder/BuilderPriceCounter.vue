@@ -22,11 +22,13 @@ export default {
       default: false,
     },
   },
+
   computed: {
     price() {
       return this.$store.getters["Builder/price"];
     },
   },
+
   methods: {
     addPizza() {
       this.$store.dispatch(

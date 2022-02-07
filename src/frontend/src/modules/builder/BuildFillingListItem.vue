@@ -36,12 +36,14 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
       minValue: FILLING_COUNTER_MIN_VALUE,
       maxValue: FILLING_COUNTER_MAX_VALUE,
     };
   },
+
   computed: {
     isDraggable() {
       return (
@@ -54,6 +56,7 @@ export default {
       return this.$store.state.Builder.filling[this.ingredient.id] || 0;
     },
   },
+
   methods: {
     plusOne() {
       this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.id);

@@ -103,11 +103,13 @@ export default {
       type: Object,
     },
   },
+
   computed: {
     address() {
       return this.order.orderAddress?.name ?? "самовывоз";
     },
   },
+
   methods: {
     async removeOrder() {
       await this.$store.dispatch("Orders/delete", this.order.id);

@@ -23,6 +23,7 @@ export default {
       required: true,
     },
   },
+
   methods: {
     onDrag({ dataTransfer }) {
       dataTransfer.effectAllowed = "move";

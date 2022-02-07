@@ -95,6 +95,7 @@ export default {
       newAddress: {},
     };
   },
+
   computed: {
     ...mapState("Auth", ["user"]),
 
@@ -104,12 +105,15 @@ export default {
       return this.formStatus !== addressFormStatus.CLOSED;
     },
   },
+
   beforeCreate() {
     this.$store.dispatch("Addresses/getAddresses");
   },
+
   created() {
     this.newAddress = defaultAddress;
   },
+
   methods: {
     onEditClick(id, index) {
       this.editableAddressId = id;

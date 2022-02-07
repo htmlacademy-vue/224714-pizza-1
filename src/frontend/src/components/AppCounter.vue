@@ -46,6 +46,7 @@ export default {
       required: true,
     },
   },
+
   methods: {
     plusOne() {
       this.$emit("plusOne");

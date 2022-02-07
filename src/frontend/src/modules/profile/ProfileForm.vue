@@ -143,6 +143,7 @@ export default {
       required: false,
     },
   },
+
   data() {
     return {
       validations: {
@@ -168,6 +169,7 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapState("Addresses", ["addresses", "formStatus"]),
 
@@ -179,9 +181,11 @@ export default {
       return this.formStatus === addressFormStatus.EDIT;
     },
   },
+
   mounted() {
     this.$refs.address.focus();
   },
+
   methods: {
     async removeAddress() {
       await this.$store.dispatch("Addresses/removeAddress", this.newAddress.id);

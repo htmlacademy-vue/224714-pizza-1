@@ -56,6 +56,7 @@ export default {
         : ``;
     },
   },
+
   methods: {
     addIngredientToPizzaPicture(ingredient) {
       this.$store.dispatch("Builder/plusOneIngredient", ingredient.id);

@@ -57,15 +57,18 @@ export default {
     CartAdditional,
     CartForm,
   },
+
   mixins: [validator],
   data() {
     return {
       validations: this.defineValidations(),
     };
   },
+
   computed: {
     ...mapState("Cart", ["address", "isSuccessPopupShown"]),
   },
+
   methods: {
     checkForm() {
       if (this.$store.state.Cart.addressOption === DEFAULT_ADDRESS_OPTION) {
@@ -113,14 +116,17 @@ export default {
           error: "",
           rules: ["required"],
         },
+
         street: {
           error: "",
           rules: [isExtraFieldsRequired],
         },
+
         building: {
           error: "",
           rules: [isExtraFieldsRequired],
         },
+
         flat: {
           error: "",
           rules: [isExtraFieldsRequired],

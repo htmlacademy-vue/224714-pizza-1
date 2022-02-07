@@ -63,6 +63,7 @@ export default {
       type: Object,
     },
   },
+
   computed: {
     pizzaNameCapitalized() {
       return capitalizeFirstLetter(this.pizza.name);
@@ -99,6 +100,7 @@ export default {
       return this.pizza.price * this.pizza.quantity;
     },
   },
+
   methods: {
     changePizza() {
       this.$store.dispatch("Builder/loadPizza", this.pizza);

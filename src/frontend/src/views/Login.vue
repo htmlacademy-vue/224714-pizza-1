@@ -63,6 +63,7 @@ export default {
           error: "",
           rules: ["required", "email"],
         },
+
         password: {
           error: "",
           rules: ["required"],
@@ -70,6 +71,7 @@ export default {
       },
     };
   },
+
   watch: {
     email() {
       this.$clearValidationErrors();
@@ -79,9 +81,11 @@ export default {
       this.$clearValidationErrors();
     },
   },
+
   mounted() {
     this.$refs.email.focus();
   },
+
   methods: {
     async login() {
       if (
