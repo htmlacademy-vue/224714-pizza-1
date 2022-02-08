@@ -24,4 +24,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/ingredients.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/pizza.scss";
+</style>

@@ -55,4 +55,6 @@ export default {
 @import "@/assets/scss/mixins/m_center.scss";
 @import "@/assets/scss/blocks/radio.scss";
 @import "@/assets/scss/blocks/dough.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>

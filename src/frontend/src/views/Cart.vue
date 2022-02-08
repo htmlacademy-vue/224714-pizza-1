@@ -147,6 +147,7 @@ export default {
 @import "@/assets/scss/blocks/input.scss";
 @import "@/assets/scss/blocks/button.scss";
 @import "@/assets/scss/blocks/title.scss";
+@import "@/assets/scss/blocks/cart.scss";
 </style>
 
 <style scoped>

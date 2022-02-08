@@ -66,4 +66,5 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/mixins/m_center.scss";
 @import "@/assets/scss/blocks/counter.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>

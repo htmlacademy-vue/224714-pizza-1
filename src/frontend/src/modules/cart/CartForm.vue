@@ -184,4 +184,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/blocks/select.scss";
+@import "@/assets/scss/blocks/cart-form.scss";
 </style>

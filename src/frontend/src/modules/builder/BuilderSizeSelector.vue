@@ -52,4 +52,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/mixins/m_center.scss";
 @import "@/assets/scss/blocks/radio.scss";
+@import "@/assets/scss/blocks/diameter.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>

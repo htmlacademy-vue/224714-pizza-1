@@ -81,4 +81,6 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/blocks/pizza.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>
