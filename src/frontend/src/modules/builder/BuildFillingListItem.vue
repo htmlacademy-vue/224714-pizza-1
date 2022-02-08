@@ -1,26 +1,28 @@
 <template>
   <li class="ingredients__item">
-    <AppDrag :transfer-data="ingredient" :draggable="isDraggable">
-      <SelectorItem
+    <AppDrag
+      :transfer-data="ingredient"
+      :draggable="isDraggable">
+      <AppSelectorItem
         :ingredient-value="ingredient.value"
         :ingredient-name="ingredient.name"
-      ></SelectorItem>
+      />
     </AppDrag>
-    <ItemCounter
+    <AppCounter
       :name="`ingredients`"
       :value="value"
-      :minValue="minValue"
-      :maxValue="maxValue"
+      :min-value="minValue"
+      :max-value="maxValue"
+      data-test="counter"
       @plusOne="plusOne()"
       @minusOne="minusOne()"
-      data-test="counter"
-    ></ItemCounter>
+    />
   </li>
 </template>
 
 <script>
-import ItemCounter from "@/components/AppCounter";
-import SelectorItem from "@/components/AppSelectorItem";
+import AppCounter from "@/components/AppCounter";
+import AppSelectorItem from "@/components/AppSelectorItem";
 import AppDrag from "@/components/AppDrag";
 import {
   FILLING_COUNTER_MAX_VALUE,
@@ -29,19 +31,21 @@ import {
 
 export default {
   name: "BuildFillingListItem",
-  components: { SelectorItem, ItemCounter, AppDrag },
+  components: { AppCounter, AppSelectorItem, AppDrag },
   props: {
     ingredient: {
       type: Object,
       required: true,
     },
   },
+
   data() {
     return {
       minValue: FILLING_COUNTER_MIN_VALUE,
       maxValue: FILLING_COUNTER_MAX_VALUE,
     };
   },
+
   computed: {
     isDraggable() {
       return (
@@ -54,6 +58,7 @@ export default {
       return this.$store.state.Builder.filling[this.ingredient.id] || 0;
     },
   },
+
   methods: {
     plusOne() {
       this.$store.dispatch("Builder/plusOneIngredient", this.ingredient.id);
@@ -66,4 +71,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/ingredients.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>

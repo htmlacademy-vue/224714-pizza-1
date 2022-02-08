@@ -8,7 +8,7 @@
       :key="order.id"
       :order="order"
       data-test="order-list-item"
-    ></OrderListItem>
+    />
   </div>
 </template>
 
@@ -27,8 +27,15 @@ export default {
 
     ...mapGetters("Orders", ["ordersFormatted"]),
   },
+
   beforeCreate() {
     this.$store.dispatch("Orders/query");
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/title.scss";
+</style>

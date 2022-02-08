@@ -13,8 +13,8 @@
         <button
           type="button"
           class="button button--border"
-          @click="removeOrder"
           data-test="remove-btn"
+          @click="removeOrder"
         >
           Удалить
         </button>
@@ -23,8 +23,8 @@
         <button
           type="button"
           class="button"
-          @click="repeatOrder"
           data-test="repeat-btn"
+          @click="repeatOrder"
         >
           Повторить
         </button>
@@ -59,7 +59,9 @@
           </div>
         </div>
 
-        <p class="order__price" data-test="price">
+        <p
+          class="order__price"
+          data-test="price">
           {{ pizza.quantity }}x{{ pizza.price }} ₽
         </p>
       </li>
@@ -85,7 +87,9 @@
       </li>
     </ul>
 
-    <p class="order__address" data-test="address">
+    <p
+      class="order__address"
+      data-test="address">
       Адрес доставки: {{ address }}
     </p>
   </section>
@@ -103,11 +107,13 @@ export default {
       type: Object,
     },
   },
+
   computed: {
     address() {
       return this.order.orderAddress?.name ?? "самовывоз";
     },
   },
+
   methods: {
     async removeOrder() {
       await this.$store.dispatch("Orders/delete", this.order.id);
@@ -173,4 +179,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/product.scss";
+@import "@/assets/scss/blocks/order.scss";
+</style>

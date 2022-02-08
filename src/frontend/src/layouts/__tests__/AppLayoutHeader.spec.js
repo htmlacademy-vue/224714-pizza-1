@@ -1,10 +1,8 @@
 import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 import { mount, createLocalVue } from "@vue/test-utils";
-import VueRouter from "vue-router";
 import { generateMockStore, authenticateUser } from "@/store/mocks";
 
 const localVue = createLocalVue();
-const router = new VueRouter();
 
 const mocks = {
   $router: {

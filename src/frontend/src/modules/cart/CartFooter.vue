@@ -17,7 +17,9 @@
     </div>
 
     <div class="footer__submit">
-      <button type="submit" class="button">Оформить заказ</button>
+      <button
+        type="submit"
+        class="button">Оформить заказ</button>
     </div>
   </section>
 </template>
@@ -34,4 +36,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/footer.scss";
+</style>

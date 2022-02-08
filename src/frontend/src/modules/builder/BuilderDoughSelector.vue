@@ -10,13 +10,13 @@
           :class="`dough__input dough__input--${dough.value}`"
           data-test="label"
         >
-          <RadioButton
+          <AppRadioButton
             :name="`dough`"
             :value="dough.id"
-            :isChecked="dough.id === currentDough"
-            @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
+            :is-checked="dough.id === currentDough"
             data-test="radio"
-          ></RadioButton>
+            @valueChanged="$store.dispatch(`Builder/setDough`, $event)"
+          />
           <b data-test="name">{{ dough.name }}</b>
           <span data-test="description">{{ dough.description }}</span>
         </label>
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderDoughSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
   computed: {
     ...mapGetters("Builder", ["doughs"]),
 
@@ -39,6 +39,7 @@ export default {
       return this.$store.state.Builder.dough;
     },
   },
+
   created() {
     if (this.doughs && this.doughs.length) {
       if (!this.currentDough) {
@@ -50,4 +51,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/radio.scss";
+@import "@/assets/scss/blocks/dough.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>

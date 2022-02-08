@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "SelectorItem",
+  name: "AppSelectorItem",
   props: {
     ingredientName: {
       type: String,
@@ -21,4 +21,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/select.scss";
+@import "@/assets/scss/blocks/filling.scss";
+@import "@/assets/scss/blocks/pizza.scss";
+</style>

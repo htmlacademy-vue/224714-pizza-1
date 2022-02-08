@@ -4,10 +4,9 @@
       <CartMiscListItem
         v-for="(miscItem, i) in misc"
         :key="i"
-        :miscItem="miscItem"
+        :misc-item="miscItem"
         data-test="misc-item"
-      >
-      </CartMiscListItem>
+      />
     </ul>
   </div>
 </template>
@@ -25,4 +24,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/cart.scss";
+@import "@/assets/scss/blocks/additional-list.scss";
+</style>

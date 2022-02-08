@@ -1,12 +1,14 @@
 <template>
   <div>
     <main class="content">
-      <form action="#" method="post">
+      <form
+        action="#"
+        method="post">
         <div class="content__wrapper">
           <h1 class="title title--big">Конструктор пиццы</h1>
-          <BuilderDoughSelector></BuilderDoughSelector>
-          <BuilderSizeSelector></BuilderSizeSelector>
-          <BuilderIngredientsSelector></BuilderIngredientsSelector>
+          <BuilderDoughSelector />
+          <BuilderSizeSelector />
+          <BuilderIngredientsSelector />
 
           <div class="content__pizza">
             <label class="input">
@@ -17,20 +19,18 @@
                 name="pizza_name"
                 placeholder="Введите название пиццы"
                 data-test="pizza-name"
-                @change="changeName($event.target.value)"
+                @keyup="changeName($event.target.value)"
               />
             </label>
 
-            <BuilderPizzaView></BuilderPizzaView>
+            <BuilderPizzaView />
 
-            <BuilderPriceCounter
-              :isBtnActive="isBtnActive"
-            ></BuilderPriceCounter>
+            <BuilderPriceCounter :is-btn-active="isBtnActive" />
           </div>
         </div>
       </form>
     </main>
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -52,6 +52,7 @@ export default {
     BuilderDoughSelector,
     BuilderPriceCounter,
   },
+
   computed: {
     ...mapState("Builder", ["filling", "pizzaName"]),
 
@@ -63,6 +64,7 @@ export default {
       return !!this.pizzaName.length && !this.isFillingEmpty;
     },
   },
+
   methods: {
     changeName(name) {
       this.$store.dispatch("Builder/setPizzaName", name);
@@ -71,9 +73,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/scss/app";
-@import "@/assets/scss/fonts";
-@import "@/assets/scss/scaffolding";
-@import "@/assets/scss/visually-hidden";
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/title.scss";
 </style>

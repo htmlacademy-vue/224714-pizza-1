@@ -1,10 +1,8 @@
 import CartFooter from "@/modules/cart/CartFooter";
 import { mount, createLocalVue } from "@vue/test-utils";
 import { generateMockStore } from "@/store/mocks";
-import VueRouter from "vue-router";
 
 const localVue = createLocalVue();
-const router = new VueRouter();
 
 const mocks = {
   $router: {

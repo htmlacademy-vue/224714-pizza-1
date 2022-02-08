@@ -6,7 +6,7 @@
         :key="pizza.id"
         :pizza="pizza"
         data-test="cart-list-item"
-      ></CartListItem>
+      />
     </ul>
   </div>
 </template>
@@ -24,4 +24,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/cart-list.scss";
+</style>
+

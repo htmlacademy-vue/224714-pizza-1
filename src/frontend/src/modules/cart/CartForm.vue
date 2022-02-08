@@ -7,8 +7,8 @@
           name="delivery"
           class="select"
           :value="addressOption"
-          @change="addressChanged($event)"
           data-test="delivery-select"
+          @change="addressChanged($event)"
         >
           <option
             v-for="(address, i) in addressOptions"
@@ -28,8 +28,8 @@
           name="phone"
           placeholder="+7 999-999-99-99"
           :value="phone"
-          @change="phoneChanged"
           data-test="phone"
+          @change="phoneChanged"
         />
         <div>
           {{ validations.phone.error }}
@@ -50,9 +50,9 @@
               type="text"
               name="street"
               :value="address.street"
-              @change="addressPartlyChanged($event, `street`)"
               :disabled="isDisabledInputs"
               data-test="street"
+              @change="addressPartlyChanged($event, `street`)"
             />
             <div>
               {{ validations.street.error }}
@@ -67,9 +67,9 @@
               type="text"
               name="building"
               :value="address.building"
-              @change="addressPartlyChanged($event, `building`)"
               :disabled="isDisabledInputs"
               data-test="building"
+              @change="addressPartlyChanged($event, `building`)"
             />
             <div>
               {{ validations.building.error }}
@@ -84,9 +84,9 @@
               type="text"
               name="flat"
               :value="address.flat"
-              @change="addressPartlyChanged($event, `flat`)"
               :disabled="isDisabledInputs"
               data-test="flat"
+              @change="addressPartlyChanged($event, `flat`)"
             />
             <div>
               {{ validations.flat.error }}
@@ -110,11 +110,13 @@ export default {
       required: false,
     },
   },
+
   data() {
     return {
       defaultAddressOption: DEFAULT_ADDRESS_OPTION,
     };
   },
+
   computed: {
     ...mapState("Cart", ["addressOption", "phone"]),
 
@@ -154,19 +156,23 @@ export default {
       );
     },
   },
+
   beforeCreate() {
     if (this.$store.state.Auth.isAuthenticated) {
       this.$store.dispatch("Addresses/getAddresses");
     }
   },
+
   methods: {
     addressChanged(event) {
       this.$store.dispatch("Cart/setAddressOption", event.target.value);
       this.$store.dispatch("Cart/setAddress", this.address);
     },
+
     phoneChanged(event) {
       this.$store.dispatch("Cart/setPhone", event.target.value);
     },
+
     addressPartlyChanged(event, option) {
       let address = Object.assign({}, this.$store.state.Cart.address);
       address[option] = event.target.value;
@@ -176,4 +182,18 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.cart-form__select {
+  display: flex;
+  align-items: center;
+
+  margin-right: auto;
+
+  span {
+    margin-right: 16px;
+  }
+}
+@import "@/assets/scss/blocks/select.scss";
+@import "@/assets/scss/blocks/cart-form.scss";
+@import "@/assets/scss/blocks/input.scss";
+</style>

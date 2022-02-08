@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <ItemCounter
+    <AppCounter
       :name="`cart-list`"
       :value="pizza.quantity"
       :min-value="0"
@@ -27,7 +27,7 @@
       data-test="counter"
       @plusOne="plusOnePizza()"
       @minusOne="minusOnePizza()"
-    ></ItemCounter>
+    />
 
     <div class="cart-list__price">
       <b data-test="sum">{{ pizzaSubSum }} ₽</b>
@@ -37,8 +37,8 @@
       <button
         type="button"
         class="cart-list__edit"
-        @click="changePizza"
         data-test="change-btn"
+        @click="changePizza"
       >
         Изменить
       </button>
@@ -52,17 +52,18 @@ import {
   capitalizeFirstLetter,
   getNameById,
 } from "@/common/helpers";
-import ItemCounter from "@/components/AppCounter";
+import AppCounter from "@/components/AppCounter";
 
 export default {
   name: "CartListItem",
-  components: { ItemCounter },
+  components: { AppCounter },
   props: {
     pizza: {
       required: true,
       type: Object,
     },
   },
+
   computed: {
     pizzaNameCapitalized() {
       return capitalizeFirstLetter(this.pizza.name);
@@ -99,6 +100,7 @@ export default {
       return this.pizza.price * this.pizza.quantity;
     },
   },
+
   methods: {
     changePizza() {
       this.$store.dispatch("Builder/loadPizza", this.pizza);
@@ -116,4 +118,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/cart-list.scss";
+@import "@/assets/scss/blocks/product.scss";
+</style>

@@ -4,8 +4,8 @@
       <h2 class="title title--small sheet__title">Выберите ингридиенты</h2>
       <div class="sheet__content ingredients">
         <div class="ingredients__filling">
-          <BuildSaucesSelector></BuildSaucesSelector>
-          <BuildFillingSelector></BuildFillingSelector>
+          <BuildSaucesSelector />
+          <BuildFillingSelector />
         </div>
       </div>
     </div>
@@ -24,4 +24,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/ingredients.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/pizza.scss";
+</style>

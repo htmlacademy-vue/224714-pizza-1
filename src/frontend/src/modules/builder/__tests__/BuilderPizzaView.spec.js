@@ -1,7 +1,7 @@
 import BuilderPizzaView from "@/modules/builder/BuilderPizzaView";
 import { createLocalVue, mount } from "@vue/test-utils";
 import Vuex from "vuex";
-import { addPizzas, generateMockStore, loadPizza } from "@/store/mocks";
+import { generateMockStore, loadPizza } from "@/store/mocks";
 import pizzas from "@/store/mocks/pizzas.json";
 import AppDrop from "@/components/AppDrop";
 import BuilderFillingItemVisualization from "@/modules/builder/BuilderFillingItemVisualization";

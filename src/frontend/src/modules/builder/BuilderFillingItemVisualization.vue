@@ -23,6 +23,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     fillingName() {
       return getIngredientValueById(
@@ -39,4 +40,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/filling.scss";
+@import "@/assets/scss/blocks/pizza.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>

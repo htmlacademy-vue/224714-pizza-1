@@ -16,21 +16,27 @@
           <CartEmpty
             v-if="!$store.state.Cart.pizzas.length"
             data-test="empty"
-          ></CartEmpty>
+          />
 
-          <div v-else data-test="not-empty">
-            <CartList></CartList>
+          <div
+            v-else
+            data-test="not-empty">
+            <CartList />
 
-            <CartAdditional></CartAdditional>
+            <CartAdditional />
 
-            <CartForm :validations="validations"></CartForm>
+            <CartForm :validations="validations" />
           </div>
         </div>
       </main>
-      <CartFooter></CartFooter>
+      <CartFooter />
     </form>
-    <transition name="fade" mode="in-out">
-      <ThePopup v-if="isSuccessPopupShown" data-test="popup"></ThePopup>
+    <transition
+      name="fade"
+      mode="in-out">
+      <ThePopup
+        v-if="isSuccessPopupShown"
+        data-test="popup" />
     </transition>
   </div>
 </template>
@@ -57,15 +63,18 @@ export default {
     CartAdditional,
     CartForm,
   },
+
   mixins: [validator],
   data() {
     return {
       validations: this.defineValidations(),
     };
   },
+
   computed: {
     ...mapState("Cart", ["address", "isSuccessPopupShown"]),
   },
+
   methods: {
     checkForm() {
       if (this.$store.state.Cart.addressOption === DEFAULT_ADDRESS_OPTION) {
@@ -113,14 +122,17 @@ export default {
           error: "",
           rules: ["required"],
         },
+
         street: {
           error: "",
           rules: [isExtraFieldsRequired],
         },
+
         building: {
           error: "",
           rules: [isExtraFieldsRequired],
         },
+
         flat: {
           error: "",
           rules: [isExtraFieldsRequired],
@@ -130,6 +142,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/title.scss";
+@import "@/assets/scss/blocks/cart.scss";
+</style>
 
 <style scoped>
 .cart {

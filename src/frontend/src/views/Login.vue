@@ -1,18 +1,24 @@
 <template>
   <div class="sign-form">
-    <a class="close close--white" @click="$router.go(-1)" data-test="close">
+    <a
+      class="close close--white"
+      data-test="close"
+      @click="$router.go(-1)">
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
-    <form method="post" data-test="form" @submit.prevent="login">
+    <form
+      method="post"
+      data-test="form"
+      @submit.prevent="login">
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
           <input
-            v-model="email"
             ref="email"
+            v-model="email"
             type="email"
             name="email"
             placeholder="example@mail.ru"
@@ -39,7 +45,9 @@
           </span>
         </label>
       </div>
-      <button type="submit" class="button">Авторизоваться</button>
+      <button
+        type="submit"
+        class="button">Авторизоваться</button>
     </form>
   </div>
 </template>
@@ -63,6 +71,7 @@ export default {
           error: "",
           rules: ["required", "email"],
         },
+
         password: {
           error: "",
           rules: ["required"],
@@ -70,6 +79,7 @@ export default {
       },
     };
   },
+
   watch: {
     email() {
       this.$clearValidationErrors();
@@ -79,9 +89,11 @@ export default {
       this.$clearValidationErrors();
     },
   },
+
   mounted() {
     this.$refs.email.focus();
   },
+
   methods: {
     async login() {
       if (
@@ -104,3 +116,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.sign-form {
+  button {
+    margin: 0 auto;
+    padding: 16px 14px;
+  }
+}
+@import "@/assets/scss/blocks/close.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/title.scss";
+</style>

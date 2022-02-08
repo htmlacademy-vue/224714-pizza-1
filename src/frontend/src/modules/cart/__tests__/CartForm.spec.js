@@ -8,11 +8,9 @@ import {
   setAddresses,
   setAddress,
 } from "@/store/mocks";
-import VueRouter from "vue-router";
 import { defaultAddressOptions } from "@/common/const";
 
 const localVue = createLocalVue();
-const router = new VueRouter();
 
 const mocks = {
   $router: {

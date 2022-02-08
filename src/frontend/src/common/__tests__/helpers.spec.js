@@ -5,7 +5,6 @@ import {
   getFillingArrayFromObject,
   calculateFilling,
   capitalizeFirstLetter,
-  createResources,
   getAddressIndex,
 } from "@/common/helpers";
 

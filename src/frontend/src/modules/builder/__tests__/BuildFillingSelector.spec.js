@@ -1,6 +1,6 @@
 import BuildFillingSelector from "@/modules/builder/BuildFillingSelector";
 import { mount } from "@vue/test-utils";
-import { addPizzas, generateMockStore } from "@/store/mocks";
+import { generateMockStore } from "@/store/mocks";
 
 describe("BuildFillingSelector", () => {
   let wrapper;

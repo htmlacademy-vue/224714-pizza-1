@@ -10,13 +10,13 @@
           :class="`diameter__input diameter__input--${size.value}`"
           data-test="label"
         >
-          <RadioButton
+          <AppRadioButton
             :name="`diameter`"
             :value="size.id"
-            :isChecked="size.id === currentSize"
-            @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
+            :is-checked="size.id === currentSize"
             data-test="radio"
-          ></RadioButton>
+            @valueChanged="$store.dispatch(`Builder/setDiameter`, $event)"
+          />
           <span data-test="name">{{ size.name }}</span>
         </label>
       </div>
@@ -25,18 +25,19 @@
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderSizeSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
   computed: {
     ...mapGetters("Builder", ["sizes"]),
     currentSize() {
       return this.$store.state.Builder.size;
     },
   },
+
   created() {
     if (this.sizes && this.sizes.length) {
       if (!this.currentSize) {
@@ -48,4 +49,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/radio.scss";
+@import "@/assets/scss/blocks/diameter.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>

@@ -4,16 +4,18 @@
     class="content__constructor"
     @drop="addIngredientToPizzaPicture($event)"
   >
-    <div :class="`pizza ${pizzaCssClass}`" data-test="pizza">
+    <div
+      :class="`pizza ${pizzaCssClass}`"
+      data-test="pizza">
       <div class="pizza__wrapper">
         <transition-group name="ingredients">
           <BuilderFillingItemVisualization
             v-for="fillingItem in fillingItems"
             :key="`${fillingItem}-${filling[fillingItem]}`"
-            :fillingItem="fillingItem"
+            :filling-item="fillingItem"
             :filling="filling"
             data-test="filling-item"
-          ></BuilderFillingItemVisualization>
+          />
         </transition-group>
       </div>
     </div>
@@ -56,6 +58,7 @@ export default {
         : ``;
     },
   },
+
   methods: {
     addIngredientToPizzaPicture(ingredient) {
       this.$store.dispatch("Builder/plusOneIngredient", ingredient.id);
@@ -74,4 +77,10 @@ export default {
   transform: scale(1.1);
   opacity: 0;
 }
+</style>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/pizza.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="modal-overlay">
-    <Login></Login>
+    <Login />
   </div>
 </template>
 

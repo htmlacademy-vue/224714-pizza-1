@@ -6,7 +6,10 @@
 
     <div class="user">
       <picture>
-        <source type="image/webp" :srcset="user.avatar" data-test="source" />
+        <source
+          type="image/webp"
+          :srcset="user.avatar"
+          data-test="source" />
         <img
           :src="user.avatar"
           :srcset="user.avatar"
@@ -54,13 +57,13 @@
 
     <div class="layout__address">
       <ProfileForm
-        :editableAddressId="editableAddressId"
-        :addressIndex="addressIndex"
-        :userId="user.id"
-        :newAddress="newAddress"
+        :editable-address-id="editableAddressId"
+        :address-index="addressIndex"
+        :user-id="user.id"
+        :new-address="newAddress"
         data-test="profile-form"
         @closeForm="closeForm"
-      ></ProfileForm>
+      />
     </div>
 
     <div class="layout__button">
@@ -95,6 +98,7 @@ export default {
       newAddress: {},
     };
   },
+
   computed: {
     ...mapState("Auth", ["user"]),
 
@@ -104,12 +108,15 @@ export default {
       return this.formStatus !== addressFormStatus.CLOSED;
     },
   },
+
   beforeCreate() {
     this.$store.dispatch("Addresses/getAddresses");
   },
+
   created() {
     this.newAddress = defaultAddress;
   },
+
   methods: {
     onEditClick(id, index) {
       this.editableAddressId = id;
@@ -140,7 +147,18 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/icon.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/title.scss";
+@import "@/assets/scss/blocks/user.scss";
+@import "@/assets/scss/blocks/address-form.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>
 <style scoped>
+.layout__button button {
+  padding: 12px 23px;
+}
 .layout__content {
   padding-bottom: 40px;
 }

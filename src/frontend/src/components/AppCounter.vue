@@ -9,7 +9,11 @@
     >
       <span class="visually-hidden">Меньше</span>
     </button>
-    <input type="text" name="counter" class="counter__input" :value="value" />
+    <input
+      type="text"
+      name="counter"
+      class="counter__input"
+      :value="value" />
     <button
       :disabled="value === maxValue"
       type="button"
@@ -24,7 +28,7 @@
 
 <script>
 export default {
-  name: "ItemCounter",
+  name: "AppCounter",
   props: {
     name: {
       type: String,
@@ -46,6 +50,7 @@ export default {
       required: true,
     },
   },
+
   methods: {
     plusOne() {
       this.$emit("plusOne");
@@ -58,4 +63,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/m_center.scss";
+@import "@/assets/scss/blocks/counter.scss";
+@import "@/assets/scss/blocks/button.scss";
+</style>

@@ -8,24 +8,32 @@
       class="radio ingredients__input"
       data-test="label"
     >
-      <RadioButton
+      <AppRadioButton
         :name="`sauce`"
         :value="sauce.id"
-        :isChecked="sauce.id === currentSauce"
-        @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
+        :is-checked="sauce.id === currentSauce"
         data-test="radio"
-      ></RadioButton>
+        @valueChanged="$store.dispatch(`Builder/setSauce`, $event)"
+      />
       <span>{{ sauce.name }}</span>
     </label>
   </div>
 </template>
 
 <script>
-import RadioButton from "@/components/AppRadioButton";
+import AppRadioButton from "@/components/AppRadioButton";
 import { mapGetters } from "vuex";
 export default {
   name: "BuildSaucesSelector",
-  components: { RadioButton },
+  components: { AppRadioButton },
+  computed: {
+    ...mapGetters("Builder", ["sauces"]),
+
+    currentSauce() {
+      return this.$store.state.Builder.sauce;
+    },
+  },
+
   created() {
     if (this.sauces && this.sauces.length) {
       if (!this.currentSauce) {
@@ -34,14 +42,13 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters("Builder", ["sauces"]),
-
-    currentSauce() {
-      return this.$store.state.Builder.sauce;
-    },
-  },
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/mixins/mixins.scss";
+@import "@/assets/scss/blocks/radio.scss";
+@import "@/assets/scss/blocks/input.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/ingredients.scss";
+</style>

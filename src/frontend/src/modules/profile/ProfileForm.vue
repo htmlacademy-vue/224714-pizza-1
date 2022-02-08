@@ -1,9 +1,9 @@
 <template>
   <form
-    action=""
-    method="post"
     v-show="isFormShown"
     ref="addressForm"
+    action=""
+    method="post"
     data-test="form"
     class="address-form address-form--opened sheet"
     @submit.prevent="submit"
@@ -109,7 +109,9 @@
       >
         Отменить
       </button>
-      <button type="submit" class="button">Сохранить</button>
+      <button
+        type="submit"
+        class="button">Сохранить</button>
     </div>
   </form>
 </template>
@@ -143,6 +145,7 @@ export default {
       required: false,
     },
   },
+
   data() {
     return {
       validations: {
@@ -168,6 +171,7 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapState("Addresses", ["addresses", "formStatus"]),
 
@@ -179,9 +183,11 @@ export default {
       return this.formStatus === addressFormStatus.EDIT;
     },
   },
+
   mounted() {
     this.$refs.address.focus();
   },
+
   methods: {
     async removeAddress() {
       await this.$store.dispatch("Addresses/removeAddress", this.newAddress.id);
@@ -217,4 +223,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/scss/blocks/address-form.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/input.scss";
+</style>
