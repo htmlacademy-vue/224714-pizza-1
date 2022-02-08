@@ -225,4 +225,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/blocks/address-form.scss";
+@import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/input.scss";
 </style>

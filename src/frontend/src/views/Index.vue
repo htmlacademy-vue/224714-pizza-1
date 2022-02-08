@@ -19,7 +19,7 @@
                 name="pizza_name"
                 placeholder="Введите название пиццы"
                 data-test="pizza-name"
-                @change="changeName($event.target.value)"
+                @keyup="changeName($event.target.value)"
               />
             </label>
 

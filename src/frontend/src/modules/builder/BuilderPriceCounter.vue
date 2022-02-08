@@ -42,6 +42,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.content__result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 25px;
+
+  p {
+    @include b-s24-h28;
+
+    margin: 0;
+  }
+
+  button {
+    margin-left: 12px;
+    padding: 16px 45px;
+  }
+}
+
+</style>
+<style lang="scss" scoped>
 @import "@/assets/scss/blocks/input.scss";
 @import "@/assets/scss/blocks/button.scss";
 </style>

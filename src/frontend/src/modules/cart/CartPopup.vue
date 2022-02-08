@@ -48,4 +48,9 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/blocks/close.scss";
 @import "@/assets/scss/blocks/button.scss";
+.popup__button {
+  a {
+    padding: 16px 32px;
+  }
+}
 </style>

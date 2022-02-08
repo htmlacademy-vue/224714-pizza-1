@@ -183,6 +183,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cart-form__select {
+  display: flex;
+  align-items: center;
+
+  margin-right: auto;
+
+  span {
+    margin-right: 16px;
+  }
+}
 @import "@/assets/scss/blocks/select.scss";
 @import "@/assets/scss/blocks/cart-form.scss";
+@import "@/assets/scss/blocks/input.scss";
 </style>

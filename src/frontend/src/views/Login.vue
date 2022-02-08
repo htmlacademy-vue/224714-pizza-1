@@ -118,8 +118,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sign-form {
+  button {
+    margin: 0 auto;
+    padding: 16px 14px;
+  }
+}
 @import "@/assets/scss/blocks/close.scss";
-@import "@/assets/scss/blocks/input.scss";
 @import "@/assets/scss/blocks/button.scss";
+@import "@/assets/scss/blocks/input.scss";
 @import "@/assets/scss/blocks/title.scss";
 </style>

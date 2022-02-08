@@ -79,7 +79,7 @@ export default {
 }
 </style>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/scss/blocks/pizza.scss";
 @import "@/assets/scss/blocks/input.scss";
 @import "@/assets/scss/blocks/button.scss";

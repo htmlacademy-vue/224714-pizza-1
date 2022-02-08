@@ -47,21 +47,3 @@
   margin-left: auto;
 }
 
-.content__result {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-top: 25px;
-
-  p {
-    @include b-s24-h28;
-
-    margin: 0;
-  }
-
-  button {
-    margin-left: 12px;
-    padding: 16px 45px;
-  }
-}

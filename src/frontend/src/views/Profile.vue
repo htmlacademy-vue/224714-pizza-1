@@ -150,12 +150,15 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/blocks/icon.scss";
 @import "@/assets/scss/blocks/input.scss";
-@import "@/assets/scss/blocks/button.scss";
 @import "@/assets/scss/blocks/title.scss";
 @import "@/assets/scss/blocks/user.scss";
 @import "@/assets/scss/blocks/address-form.scss";
+@import "@/assets/scss/blocks/button.scss";
 </style>
 <style scoped>
+.layout__button button {
+  padding: 12px 23px;
+}
 .layout__content {
   padding-bottom: 40px;
 }
